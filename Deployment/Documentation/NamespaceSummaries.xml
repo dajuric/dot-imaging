@@ -1,0 +1,23 @@
+﻿<?xml version="1.0"?>
+<doc>
+  <members>
+    <member name="R:Project">
+      <summary>About the project.</summary>
+    </member>
+
+    <!--******************************  Imaging ******************************-->
+    <member name="N:DotImaging">
+      <summary>
+        The namespace is shared across several packages.
+        Contains generic image class and extensions which include Bitmap interoperability extensions and algorithms which are mostly written in a form of an extension.
+      </summary>
+    </member>
+
+    <member name="N:DotImaging.Primitives2D">
+      <summary>
+        Contains portable 2D drawing primitives (Point, Size, Rectangle) compatible with System.Drawing structures and some additional ones.
+      </summary>
+    </member>
+    
+  </members>
+</doc>

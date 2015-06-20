@@ -1,0 +1,27 @@
+﻿<?xml version="1.0"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>DotImaging.Primitives2D</id>
+    <version>$version$</version>
+    <title>DotImaging.Primitives2D</title>
+    <authors>Darko Jurić</authors>
+    <owners>DotImaging</owners>
+    <licenseUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deployment/Licence.txt</licenseUrl>
+    <projectUrl>https://github.com/dajuric/dot-imaging</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deployment/Logo/logo-small.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>
+      Provides portable 2D drawing primitives (Point, Size, Rectangle) compatible with System.Drawing structures and some additional ones. 
+    </description>
+    <summary>Point, Size, Rectangle (compatible with System.Drawing) and Circle, Ellipse</summary>
+    <tags>imaging geometry structures 2D</tags>
+
+    <dependencies>      
+    </dependencies>
+  </metadata>
+  
+  <files>
+    <file src="..\..\..\bin\Release\DotImaging.Primitives2D.dll" target="lib\net45\DotImaging.Primitives2D.dll" />
+  </files>
+</package>

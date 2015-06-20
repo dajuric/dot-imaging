@@ -1,0 +1,49 @@
+﻿<?xml version="1.0"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>DotImaging.IO</id>
+    <version>$version$</version>
+    <title>DotImaging.IO</title>
+    <authors>Darko Jurić</authors>
+    <owners>DotImaging</owners>
+    <licenseUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deployment/Licence.txt</licenseUrl>
+    <projectUrl>https://github.com/dajuric/dot-imaging</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deployment/Logo/logo-small.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>
+      Provides unified API for IO video access: web-camera support, various video-format reading / writing, image-directory reader and functions for image reading and writing.
+      All operations on image streams are standard stream operations and do not depend on actual video source.
+      The library is made in platform-abstract fashion.
+    </description>
+    <summary>Provides unified API for IO video and image access.</summary>
+    <tags>video-capture image-IO</tags>
+
+    <dependencies>      
+      <dependency id="DotImaging.GenericImage"         version="$version$" />
+    </dependencies>
+  </metadata>
+  
+  <files>
+    <file src="..\..\..\bin\Release\DotImaging.IO.dll" target="lib\net45\DotImaging.IO.dll" />
+    <file src="..\..\..\bin\Release\DotImaging.IO.xml" target="lib\net45\DotImaging.IO.xml" />
+
+    <!--Unmanaged Libraries-->
+    <!--x86-->
+    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x86\opencv_core248.dll"      target="native\UnmanagedLibraries\Windows\x86\opencv_core248.dll" />
+    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x86\opencv_ffmpeg248.dll"    target="native\UnmanagedLibraries\Windows\x86\opencv_ffmpeg248.dll" />
+    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x86\opencv_highgui248.dll"   target="native\UnmanagedLibraries\Windows\x86\opencv_highgui248.dll" />
+    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x86\opencv_video248.dll"     target="native\UnmanagedLibraries\Windows\x86\opencv_video248.dll" />
+
+    <!--x64-->
+    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x64\opencv_core248.dll"      target="native\UnmanagedLibraries\Windows\x64\opencv_core248.dll" />
+    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x64\opencv_ffmpeg248_64.dll" target="native\UnmanagedLibraries\Windows\x64\opencv_ffmpeg248_64.dll" />
+    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x64\opencv_highgui248.dll"   target="native\UnmanagedLibraries\Windows\x64\opencv_highgui248.dll" />
+    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x64\opencv_video248.dll"     target="native\UnmanagedLibraries\Windows\x64\opencv_video248.dll" />
+    
+    <!--PostBuild tasks-->
+    <file src="IO.targets" target="build\DotImaging.IO.targets" />
+
+    <file src="readmeIO.txt" target="readme.txt" />
+  </files>
+</package>

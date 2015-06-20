@@ -1,0 +1,29 @@
+﻿<?xml version="1.0"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>DotImaging.Linq</id>
+    <version>$version$</version>
+    <title>DotImaging.Linq</title>
+    <authors>Darko Jurić</authors>
+    <owners>DotImaging</owners>
+    <licenseUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deployment/Licence.txt</licenseUrl>
+    <projectUrl>https://github.com/dajuric/dot-imaging</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deployment/Logo/logo-small.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>
+      Provides Linq extensions for 2D .NET arrays.
+    </description>
+    <summary>Provides Linq extensions for 2D .NET arrays.</summary>
+    <tags>2DArray LINQ portable</tags>
+
+    <dependencies>      
+      <dependency id="DotImaging.GenericImage"         version="$version$" />
+    </dependencies>
+  </metadata>
+  
+  <files>
+    <file src="..\..\..\Source\Linq\ImagingLinq.cs" target="content\net45\DotImaging\ImagingLinq.cs" />
+    <file src="readmeLinq.txt" target="readme.txt" />
+  </files>
+</package>

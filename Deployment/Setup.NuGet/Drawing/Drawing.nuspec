@@ -1,0 +1,41 @@
+﻿<?xml version="1.0"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>DotImaging.Drawing</id>
+    <version>$version$</version>
+    <title>DotImaging.Drawing</title>
+    <authors>Darko Jurić</authors>
+    <owners>DotImaging</owners>
+    <licenseUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deployment/Licence.txt</licenseUrl>
+    <projectUrl>https://github.com/dajuric/dot-imaging</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deployment/Logo/logo-small.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>
+      Provides platform independent drawing extensions which operate on native .NET arrays.
+    </description>
+    <summary>Provides platform independent drawing extensions which operate on native .NET arrays.</summary>
+    <tags>2DArray drawing portable</tags>
+
+    <dependencies>      
+      <dependency id="DotImaging.GenericImage"         version="$version$" />
+    </dependencies>
+  </metadata>
+  
+  <files>
+    <file src="..\..\..\bin\Release\DotImaging.Drawing.dll" target="lib\net45\DotImaging.Drawing.dll" />
+    <file src="..\..\..\bin\Release\DotImaging.Drawing.xml" target="lib\net45\DotImaging.Drawing.xml" />
+
+    <!--Unmanaged Libraries-->
+    <!--x86-->
+    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x86\opencv_core248.dll" target="native\UnmanagedLibraries\Windows\x86\opencv_core248.dll" />
+
+    <!--x64-->
+    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x64\opencv_core248.dll" target="native\UnmanagedLibraries\Windows\x64\opencv_core248.dll" />
+    
+    <!--PostBuild tasks-->
+    <file src="Drawing.targets" target="build\DotImaging.Drawing.targets" />
+
+    <file src="readmeDrawing.txt" target="readme.txt" />
+  </files>
+</package>
