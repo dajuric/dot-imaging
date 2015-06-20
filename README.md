@@ -30,7 +30,7 @@ Bgr<byte>[,] image = new Bgr<byte>[480, 640]; //or load it (IO package)
 image.SetValue(Bgr<byte>.Red);
 
 Gray<byte>[,] grayIm = image.ToGray()
-                             .Flip(FlipDirection.Horizontal);
+                                .Flip(FlipDirection.Horizontal);
  ```
 
 + <a href="https://www.nuget.org/packages/DotImaging.IO">DotImaging.IO</a>  
