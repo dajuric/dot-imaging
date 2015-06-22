@@ -100,6 +100,4 @@ The framework is the foundation for <a href="https://github.com/dajuric/accord-n
 Remember: Your opinion is important and will define the future roadmap.
 + questions, comments - message on Github, or write to: darko.juric2 [at] gmail.com
 + **spread the word** 
-
-## Final word
-If you like the project please **star it** in order to help to spread the word. That way you will make the framework more significant and in the same time you will motivate me to improve it, so the benefit is mutual.
++ **star it**
