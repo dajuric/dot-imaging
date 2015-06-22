@@ -94,7 +94,7 @@ var imageFromBmp = bmp.ToArray() as Bgr<byte>[,]; //from Bitmap
 + Samples
 
 ## Want image processing algorithms ?
-The framework is the foundation of <a href="https://github.com/dajuric/accord-net-extensions">Accord.NET Extensions</a> which exposes a full power of <a href="http://accord-framework.net/"> Accord.NET </a> through extensions!
+The framework is the foundation for <a href="https://github.com/dajuric/accord-net-extensions">Accord.NET Extensions</a> which exposes a full power of <a href="http://accord-framework.net/"> Accord.NET </a> through extensions!
 
 ## How to Engage, Contribute and Provide Feedback  
 Remember: Your opinion is important and will define the future roadmap.
