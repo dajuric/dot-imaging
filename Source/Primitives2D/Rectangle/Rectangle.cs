@@ -18,40 +18,37 @@
 //   You should have received a copy of the GNU Lesser General Public License
 //   along with this program.  If not, see <https://www.gnu.org/licenses/lgpl.txt>.
 //
+
+// Author:
+//   Mike Kestner (mkestner@speakeasy.net)
+//
+// Copyright (C) 2001 Mike Kestner
+// Copyright (C) 2004, 2007 Novell, Inc (http://www.novell.com)
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+// 
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
 using System;
-//using System.ComponentModel;
-using System.Runtime.InteropServices;
 
 namespace DotImaging.Primitives2D
 {
-    // Author:
-    //   Mike Kestner (mkestner@speakeasy.net)
-    //
-    // Copyright (C) 2001 Mike Kestner
-    // Copyright (C) 2004, 2007 Novell, Inc (http://www.novell.com)
-    //
-    // Permission is hereby granted, free of charge, to any person obtaining
-    // a copy of this software and associated documentation files (the
-    // "Software"), to deal in the Software without restriction, including
-    // without limitation the rights to use, copy, modify, merge, publish,
-    // distribute, sublicense, and/or sell copies of the Software, and to
-    // permit persons to whom the Software is furnished to do so, subject to
-    // the following conditions:
-    // 
-    // The above copyright notice and this permission notice shall be
-    // included in all copies or substantial portions of the Software.
-    // 
-    // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-    // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-    // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-    // NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-    // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-    // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-    // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-    //
-
     /// <summary>
     /// Stores a set of four integer numbers that represent the location and size of a rectangle.
     /// </summary>
@@ -60,33 +57,112 @@ namespace DotImaging.Primitives2D
         private int x, y, width, height;
 
         /// <summary>
-        ///	Empty Shared Field
+        /// Represents a Rectangle structure with its properties left uninitialized.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	An uninitialized Rectangle Structure.
-        /// </remarks>
-
         public static readonly Rectangle Empty;
 
-#if TARGET_JVM
-		internal java.awt.Rectangle NativeObject {
-			get {
-				return new java.awt.Rectangle(X,Y,Width,Height);
-			}
-		}
-#endif
+        /// <summary>
+        /// Creates a Rectangle structure with the specified edge locations.
+        /// </summary>
+        /// <param name="left">The x-coordinate of the upper-left corner of this Rectangle structure.</param>
+        /// <param name="top">The y-coordinate of the upper-left corner of this Rectangle structure.</param>
+        /// <param name="right">The x-coordinate of the lower-right corner of this Rectangle structure.</param>
+        /// <param name="bottom">The y-coordinate of the lower-right corner of this Rectangle structure.</param>
+        /// <returns>The new rectangle that this method creates.</returns>
+        public static Rectangle FromLTRB(int left, int top,
+                          int right, int bottom)
+        {
+            return new Rectangle(left, top, right - left,
+                          bottom - top);
+        }
 
         /// <summary>
-        ///	Ceiling Shared Method
+        /// Creates and returns an enlarged copy of the specified Rectangle structure. 
+        /// The copy is enlarged by the specified amount. 
+        /// The original Rectangle structure remains unmodified.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Produces a Rectangle structure from a RectangleF 
-        ///	structure by taking the ceiling of the X, Y, Width,
-        ///	and Height properties.
-        /// </remarks>
+        /// <param name="rect">The Rectangle with which to start. This rectangle is not modified.</param>
+        /// <param name="x">The amount to inflate this rectangle horizontally.</param>
+        /// <param name="y">The amount to inflate this rectangle vertically.</param>
+        /// <returns>The enlarged rectangle.</returns>
+        public static Rectangle Inflate(Rectangle rect, int x, int y)
+        {
+            Rectangle r = new Rectangle(rect.Location, rect.Size);
+            r.Inflate(x, y);
+            return r;
+        }
 
+        /// <summary>
+        /// Enlarges this rectangle by the specified amount.
+        /// </summary>
+        /// <param name="width">The amount to inflate this rectangle horizontally.</param>
+        /// <param name="height">The amount to inflate this rectangle vertically.</param>
+        public void Inflate(int width, int height)
+        {
+            Inflate(new Size(width, height));
+        }
+
+        /// <summary>
+        /// Enlarges this rectangle by the specified amount.
+        /// </summary>
+        /// <param name="size">The amount to inflate this rectangle.</param>
+        public void Inflate(Size size)
+        {
+            x -= size.Width;
+            y -= size.Height;
+            Width += size.Width * 2;
+            Height += size.Height * 2;
+        }
+
+        /// <summary>
+        /// Returns a third Rectangle structure that represents the intersection of two other Rectangle structures. 
+        /// If there is no intersection, an empty Rectangle is returned.
+        /// </summary>
+        /// <param name="a">A rectangle to intersect.</param>
+        /// <param name="b">A rectangle to intersect.</param>
+        /// <returns>A rectangle that represents the intersection of a and b.</returns>
+        public static Rectangle Intersect(Rectangle a, Rectangle b)
+        {
+            // MS.NET returns a non-empty rectangle if the two rectangles
+            // touch each other
+            if (!a.intersectsWithInclusive(b))
+                return Empty;
+
+            return Rectangle.FromLTRB(
+                Math.Max(a.Left, b.Left),
+                Math.Max(a.Top, b.Top),
+                Math.Min(a.Right, b.Right),
+                Math.Min(a.Bottom, b.Bottom));
+        }
+
+        /// <summary>
+        /// Replaces this rectangle with the intersection of itself and the specified rectangle.
+        /// </summary>
+        /// <param name="rect">The rectangle with which to intersect.</param>
+        public void Intersect(Rectangle rect)
+        {
+            this = Rectangle.Intersect(this, rect);
+        }
+
+        /// <summary>
+        /// Gets a Rectangle structure that contains the union of two Rectangle structures.
+        /// </summary>
+        /// <param name="a">A rectangle to union.</param>
+        /// <param name="b">A rectangle to union.</param>
+        /// <returns>A Rectangle structure that bounds the union of the two Rectangle structures.</returns>
+        public static Rectangle Union(Rectangle a, Rectangle b)
+        {
+            return FromLTRB(Math.Min(a.Left, b.Left),
+                     Math.Min(a.Top, b.Top),
+                     Math.Max(a.Right, b.Right),
+                     Math.Max(a.Bottom, b.Bottom));
+        }
+
+        /// <summary>
+        /// Converts the specified RectangleF structure to a Rectangle structure by rounding the RectangleF values to the next higher integer values.
+        /// </summary>
+        /// <param name="value">The RectangleF structure to be converted.</param>
+        /// <returns>Returns a rectangle.</returns>
         public static Rectangle Ceiling(RectangleF value)
         {
             int x, y, w, h;
@@ -102,111 +178,10 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	FromLTRB Shared Method
+        /// Converts the specified RectangleF to a Rectangle by rounding the RectangleF values to the nearest integer values.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Produces a Rectangle structure from left, top, right,
-        ///	and bottom coordinates.
-        /// </remarks>
-
-        public static Rectangle FromLTRB(int left, int top,
-                          int right, int bottom)
-        {
-            return new Rectangle(left, top, right - left,
-                          bottom - top);
-        }
-
-        /// <summary>
-        ///	Inflate Shared Method
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Produces a new Rectangle by inflating an existing 
-        ///	Rectangle by the specified coordinate values.
-        /// </remarks>
-
-        public static Rectangle Inflate(Rectangle rect, int x, int y)
-        {
-            Rectangle r = new Rectangle(rect.Location, rect.Size);
-            r.Inflate(x, y);
-            return r;
-        }
-
-        /// <summary>
-        ///	Inflate Method
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Inflates the Rectangle by a specified width and height.
-        /// </remarks>
-
-        public void Inflate(int width, int height)
-        {
-            Inflate(new Size(width, height));
-        }
-
-        /// <summary>
-        ///	Inflate Method
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Inflates the Rectangle by a specified Size.
-        /// </remarks>
-
-        public void Inflate(Size size)
-        {
-            x -= size.Width;
-            y -= size.Height;
-            Width += size.Width * 2;
-            Height += size.Height * 2;
-        }
-
-        /// <summary>
-        ///	Intersect Shared Method
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Produces a new Rectangle by intersecting 2 existing 
-        ///	Rectangles. Returns null if there is no	intersection.
-        /// </remarks>
-
-        public static Rectangle Intersect(Rectangle a, Rectangle b)
-        {
-            // MS.NET returns a non-empty rectangle if the two rectangles
-            // touch each other
-            if (!a.IntersectsWithInclusive(b))
-                return Empty;
-
-            return Rectangle.FromLTRB(
-                Math.Max(a.Left, b.Left),
-                Math.Max(a.Top, b.Top),
-                Math.Min(a.Right, b.Right),
-                Math.Min(a.Bottom, b.Bottom));
-        }
-
-        /// <summary>
-        ///	Intersect Method
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Replaces the Rectangle with the intersection of itself
-        ///	and another Rectangle.
-        /// </remarks>
-
-        public void Intersect(Rectangle rect)
-        {
-            this = Rectangle.Intersect(this, rect);
-        }
-
-        /// <summary>
-        ///	Round Shared Method
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Produces a Rectangle structure from a RectangleF by
-        ///	rounding the X, Y, Width, and Height properties.
-        /// </remarks>
+        /// <param name="value">The RectangleF to be converted.</param>
+        /// <returns>A rectangle.</returns>
         public static Rectangle Round(RectangleF value)
         {
             int x, y, w, h;
@@ -222,16 +197,10 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Truncate Shared Method
+        /// Converts the specified RectangleF to a Rectangle by truncating the RectangleF values.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Produces a Rectangle structure from a RectangleF by
-        ///	truncating the X, Y, Width, and Height properties.
-        /// </remarks>
-
-        // LAMESPEC: Should this be floor, or a pure cast to int?
-
+        /// <param name="value">The RectangleF to be converted.</param>
+        /// <returns>A rectangle.</returns>
         public static Rectangle Truncate(RectangleF value)
         {
             int x, y, w, h;
@@ -245,34 +214,15 @@ namespace DotImaging.Primitives2D
 
             return new Rectangle(x, y, w, h);
         }
-
+    
         /// <summary>
-        ///	Union Shared Method
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Produces a new Rectangle from the union of 2 existing 
-        ///	Rectangles.
-        /// </remarks>
-
-        public static Rectangle Union(Rectangle a, Rectangle b)
-        {
-            return FromLTRB(Math.Min(a.Left, b.Left),
-                     Math.Min(a.Top, b.Top),
-                     Math.Max(a.Right, b.Right),
-                     Math.Max(a.Bottom, b.Bottom));
-        }
-
-        /// <summary>
-        ///	Equality Operator
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Compares two Rectangle objects. The return value is
+        /// Compares two Rectangle objects. The return value is
         ///	based on the equivalence of the Location and Size 
-        ///	properties of the two Rectangles.
-        /// </remarks>
-
+        ///	properties of the two rectangles.
+        /// </summary>
+        /// <param name="left">A rectangle to compare.</param>
+        /// <param name="right">A rectangle to compare.</param>
+        /// <returns>True if two rectangles have the same location and size, false otherwise.</returns>
         public static bool operator ==(Rectangle left, Rectangle right)
         {
             return ((left.Location == right.Location) &&
@@ -280,15 +230,13 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Inequality Operator
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Compares two Rectangle objects. The return value is
+        /// Compares two Rectangle objects. The return value is
         ///	based on the equivalence of the Location and Size 
-        ///	properties of the two Rectangles.
-        /// </remarks>
-
+        ///	properties of the two rectangles.
+        /// </summary>
+        /// <param name="left">A rectangle to compare.</param>
+        /// <param name="right">A rectangle to compare.</param>
+        /// <returns>True if two rectangles do not have the same location and size, false otherwise.</returns>
         public static bool operator !=(Rectangle left, Rectangle right)
         {
             return ((left.Location != right.Location) ||
@@ -296,18 +244,11 @@ namespace DotImaging.Primitives2D
         }
 
 
-        // -----------------------
-        // Public Constructors
-        // -----------------------
-
         /// <summary>
-        ///	Rectangle Constructor
+        /// Creates a Rectangle from Point and Size values.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Creates a Rectangle from Point and Size values.
-        /// </remarks>
-
+        /// <param name="location">Location.</param>
+        /// <param name="size">Size.</param>
         public Rectangle(Point location, Size size)
         {
             x = location.X;
@@ -317,34 +258,24 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Rectangle Constructor
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Creates a Rectangle from a specified x,y location and
+        /// Creates a Rectangle from a specified x,y location and
         ///	width and height values.
-        /// </remarks>
-
+        /// </summary>
+        /// <param name="x">The x-coordinate of the upper-left corner.</param>
+        /// <param name="y">the y-coordinate of the upper-left corner.</param>
+        /// <param name="width">Width.</param>
+        /// <param name="height">Height.</param>
         public Rectangle(int x, int y, int width, int height)
         {
-            this.x = x;
+            this.x = x; 
             this.y = y;
             this.width = width;
-            this.height = height;
+            this.height = height; 
         }
 
-
-
         /// <summary>
-        ///	Bottom Property
+        /// Gets the y-coordinate that is the sum of the Y and Height property values of this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The Y coordinate of the bottom edge of the Rectangle.
-        ///	Read only.
-        /// </remarks>
-
-        //[Browsable(false)]
         public int Bottom
         {
             get
@@ -354,13 +285,8 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Height Property
+        /// Gets or sets the height of this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The Height of the Rectangle.
-        /// </remarks>
-
         public int Height
         {
             get
@@ -374,13 +300,8 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	IsEmpty Property
+        /// Tests whether all numeric properties of this Rectangle have values of zero.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Indicates if the width or height are zero. Read only.
-        /// </remarks>		
-        //[Browsable(false)]
         public bool IsEmpty
         {
             get
@@ -390,15 +311,8 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Left Property
+        /// Gets the x-coordinate of the left edge of this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The X coordinate of the left edge of the Rectangle.
-        ///	Read only.
-        /// </remarks>
-
-        //[Browsable(false)]
         public int Left
         {
             get
@@ -408,14 +322,8 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Location Property
+        /// Gets or sets the coordinates of the upper-left corner of this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The Location of the top-left corner of the Rectangle.
-        /// </remarks>
-
-        //[Browsable(false)]
         public Point Location
         {
             get
@@ -430,15 +338,8 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Right Property
+        /// Gets the x-coordinate that is the sum of X and Width property values of this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The X coordinate of the right edge of the Rectangle.
-        ///	Read only.
-        /// </remarks>
-
-        //[Browsable(false)]
         public int Right
         {
             get
@@ -448,14 +349,8 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Size Property
+        /// Gets or sets the size of this rectangle.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The Size of the Rectangle.
-        /// </remarks>
-
-        //[Browsable(false)]
         public Size Size
         {
             get
@@ -470,15 +365,8 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Top Property
+        /// Gets the y-coordinate of the top edge of this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The Y coordinate of the top edge of the Rectangle.
-        ///	Read only.
-        /// </remarks>
-
-        //[Browsable(false)]
         public int Top
         {
             get
@@ -488,13 +376,8 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Width Property
+        /// Gets or sets the width of this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The Width of the Rectangle.
-        /// </remarks>
-
         public int Width
         {
             get
@@ -508,13 +391,8 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	X Property
+        /// Gets or sets the x-coordinate of the upper-left corner of this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The X coordinate of the Rectangle.
-        /// </remarks>
-
         public int X
         {
             get
@@ -528,13 +406,8 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Y Property
+        /// Gets or sets the y-coordinate of the upper-left corner of this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The Y coordinate of the Rectangle.
-        /// </remarks>
-
         public int Y
         {
             get
@@ -548,13 +421,11 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Contains Method
+        /// Determines if the specified point is contained within this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Checks if an x,y coordinate lies within this Rectangle.
-        /// </remarks>
-
+        /// <param name="x">The x-coordinate of the point to test.</param>
+        /// <param name="y">The y-coordinate of the point to test.</param>
+        /// <returns>This method returns true if the point defined by x and y is contained within this Rectangle structure; otherwise false.</returns>
         public bool Contains(int x, int y)
         {
             return ((x >= Left) && (x < Right) &&
@@ -562,40 +433,30 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Contains Method
+        /// Determines if the specified point is contained within this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Checks if a Point lies within this Rectangle.
-        /// </remarks>
-
+        /// <param name="pt">The point to test.</param>
+        /// <returns>This method returns true if the point represented by <paramref name="pt"/> is contained within this Rectangle structure; otherwise false.</returns>
         public bool Contains(Point pt)
         {
             return Contains(pt.X, pt.Y);
         }
 
         /// <summary>
-        ///	Contains Method
+        /// Determines if the rectangular region represented by <paramref name="rect"/> is entirely contained within this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Checks if a Rectangle lies entirely within this 
-        ///	Rectangle.
-        /// </remarks>
-
+        /// <param name="rect">The Rectangle to test.</param>
+        /// <returns>This method returns true if the rectangular region represented by <paramref name="rect"/> is entirely contained within this Rectangle structure; otherwise false.</returns>
         public bool Contains(Rectangle rect)
         {
             return (rect == Intersect(this, rect));
         }
 
         /// <summary>
-        ///	Equals Method
+        /// Tests whether obj is a Rectangle structure with the same location and size of this Rectangle structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Checks equivalence of this Rectangle and another object.
-        /// </remarks>
-
+        /// <param name="obj">The System.Object to test.</param>
+        /// <returns>This method returns true if obj is a Rectangle structure and its X, Y, Width, and Height properties are equal to the corresponding properties of this Rectangle structure; otherwise, false.</returns>
         public override bool Equals(object obj)
         {
             if (!(obj is Rectangle))
@@ -605,46 +466,36 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	GetHashCode Method
+        /// Returns the hash code for this Rectangle structure. For information about the use of hash codes, see System.Object.GetHashCode() .
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Calculates a hashing value.
-        /// </remarks>
-
+        /// <returns>An integer that represents the hash code for this rectangle.</returns>
         public override int GetHashCode()
         {
             return (height + width) ^ x + y;
         }
 
         /// <summary>
-        ///	IntersectsWith Method
+        /// Determines if this rectangle intersects with <paramref name="rect"/>.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Checks if a Rectangle intersects with this one.
-        /// </remarks>
-
+        /// <param name="rect">The rectangle to test.</param>
+        /// <returns>This method returns true if there is any intersection, otherwise false.</returns>
         public bool IntersectsWith(Rectangle rect)
         {
             return !((Left >= rect.Right) || (Right <= rect.Left) ||
                 (Top >= rect.Bottom) || (Bottom <= rect.Top));
         }
 
-        private bool IntersectsWithInclusive(Rectangle r)
+        private bool intersectsWithInclusive(Rectangle r)
         {
             return !((Left > r.Right) || (Right < r.Left) ||
                 (Top > r.Bottom) || (Bottom < r.Top));
         }
 
         /// <summary>
-        ///	Offset Method
+        /// Adjusts the location of this rectangle by the specified amount.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Moves the Rectangle a specified distance.
-        /// </remarks>
-
+        /// <param name="x">The horizontal offset.</param>
+        /// <param name="y">The vertical offset.</param>
         public void Offset(int x, int y)
         {
             this.x += x;
@@ -652,13 +503,9 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Offset Method
+        /// Adjusts the location of this rectangle by the specified amount.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Moves the Rectangle a specified distance.
-        /// </remarks>
-
+        /// <param name="pos">Amount to offset the location.</param>
         public void Offset(Point pos)
         {
             x += pos.X;
@@ -666,18 +513,13 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	ToString Method
+        /// Converts the attributes of this System.Drawing.Rectangle to a human-readable string.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Formats the Rectangle as a string in (x,y,w,h) notation.
-        /// </remarks>
-
+        /// <returns>A string in (x,y,w,h) notation</returns>
         public override string ToString()
         {
             return String.Format("{{X={0},Y={1},Width={2},Height={3}}}",
                          x, y, width, height);
         }
-
     }
 }

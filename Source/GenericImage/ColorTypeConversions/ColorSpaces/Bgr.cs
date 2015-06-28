@@ -26,25 +26,6 @@ using System.Runtime.InteropServices;
 
 namespace DotImaging
 {
-    public static class E
-    {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Gray<byte> ToGray(this Bgr<byte> bgr)
-        {
-            Gray<byte> gray = default(Gray<byte>);
-            Bgr<byte>.Convert(bgr, ref gray);
-            return gray;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Hsv<byte> ToHsv(this Bgr<byte> bgr)
-        {
-            Hsv<byte> hsv = default(Hsv<byte>);
-            Bgr<byte>.Convert(bgr, ref hsv);
-            return hsv;
-        }
-    }
-
       /// <summary>
     /// Represents Bgr color type of type <typeparam name="T">color depth</typeparam>.
     /// </summary>
@@ -185,6 +166,25 @@ namespace DotImaging
             hsv.H = (byte)(hue / 2); //scale [0-360] . [0-180] (only needed for byte!)
 
             //Debug.Assert(hue >= 0 && hue <= 360);
+        }
+    }
+
+    public static class E
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Gray<byte> ToGray(this Bgr<byte> bgr)
+        {
+            Gray<byte> gray = default(Gray<byte>);
+            Bgr<byte>.Convert(bgr, ref gray);
+            return gray;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Hsv<byte> ToHsv(this Bgr<byte> bgr)
+        {
+            Hsv<byte> hsv = default(Hsv<byte>);
+            Bgr<byte>.Convert(bgr, ref hsv);
+            return hsv;
         }
     }
 

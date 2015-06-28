@@ -4,7 +4,7 @@
 
 <p align="center">
     <img src="https://img.shields.io/badge/Build-passing-brightgreen.svg?style=flat-square" alt="Build passing"/>
-    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v2.5.0-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
+    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v2.5.1-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
 </p>
 
 **DotImaging** - .NET array as imaging object  
@@ -88,7 +88,7 @@ var imageFromBmp = bmp.ToArray() as Bgr<byte>[,]; //from Bitmap
  
 ## Getting started
 + Just pick what you need. An appropriate readme file will be shown upon selected NuGet package installation. 
-+ Documentation: <a href="https://github.com/dajuric/dot-imaging/raw/master/Deployment/Documentation/Help/DotImaging%20Documentation.chm"> Offline </a> - <i>unblock after download!</i> </br/>
++ Each project in "Source" has a short readme
 + Samples
 
 ## Want image processing algorithms ?

@@ -39,7 +39,7 @@ namespace Test
         { 
             var resourceDir = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Resources");
             var imgColor = ImageIO.LoadColor(Path.Combine(resourceDir, "testColorBig.jpg")).Clone();
-            
+
             var rImg = imgColor.AsEnumerable().Select(x => x.G).ToArray2D(imgColor.Width(), imgColor.Height());                    
          }
 

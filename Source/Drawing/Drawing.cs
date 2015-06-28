@@ -201,12 +201,12 @@ namespace DotImaging
         #region Annotations
 
         /// <summary>
-        /// Draws rectangle annotation.
+        /// Draws rectangle with the specified text on top.
         /// </summary>
         /// <param name="image">Image.</param>
         /// <param name="rect">User specified area to annotate.</param>
         /// <param name="text">Label.</param>
-        /// <param name="font">Font to use. Default is "Arial" of size 10, style: Bold.</param>
+        /// <param name="font">Font to use.</param>
         public static void DrawAnnotation(this Bgr<byte>[,] image, Rectangle rect, string text, Font font)
         {
             const int VERTICAL_OFFSET = 5;
@@ -215,7 +215,7 @@ namespace DotImaging
 
             var textSize = font.GetTextSize(text, 0);
             var bottomLeftPt = new Point(rect.X + rect.Width / 2 - textSize.Width / 2, rect.Top - VERTICAL_OFFSET);
-            image.Draw(text, font, new Point(), Bgr<byte>.Black);
+            image.Draw(text, font, bottomLeftPt, Bgr<byte>.Black);
         }
 
         #endregion

@@ -26,8 +26,7 @@ using System.Collections.Generic;
 namespace DotImaging.Primitives2D
 {
     /// <summary>
-    /// <para>Defined functions can be used as object extensions.</para>
-    /// Provides extension methods for Rectangle class.
+    /// Provides extension methods for Rectangle and RectangleF structures.
     /// </summary>
     public static class RectangleExtennsions
     {

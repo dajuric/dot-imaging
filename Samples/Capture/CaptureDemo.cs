@@ -64,9 +64,10 @@ namespace Capture
 
             this.pictureBox.Image = frame.ToBitmap();
 
+            //LINQ Grayscale conversion
             /*this.pictureBox.Image = frame.AsEnumerable()
                                          .Select(x => x.ToGray())
-                                         .ToArray2D(1280, 720).ToBitmap();*/
+                                         .ToArray2D(frame.Size()).ToBitmap();*/
             GC.Collect();
         }
 
