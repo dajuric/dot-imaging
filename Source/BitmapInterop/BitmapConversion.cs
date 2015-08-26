@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2015 
+// Copyright © Darko Jurić, 2014-2015-2015 
 // darko.juric2@gmail.com
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -82,6 +82,36 @@ namespace DotImaging
             }
 
             return arr;
+        }
+
+        /// <summary>
+        /// Loads an Bgra image from the specified image array.
+        /// </summary>
+        /// <param name="arr">Image 2D array. The Bgra, Bgr and Gray 2D byte arrays are supported.</param>
+        /// <returns>Bgra image.</returns>
+        public static Bgra<byte>[,] ToBgra(this Bitmap bitmap)
+        {
+            var arr = bitmap.ToArray();
+
+            if (arr is Bgra<byte>[,])
+            {
+                return (Bgra<byte>[,])arr;
+            }
+            else if (arr is Bgr<byte>[,])
+            {
+                var bgra = ((Bgr<byte>[,])arr).ToBgra();
+                return bgra;
+            }
+            else if (arr is Gray<byte>[,])
+            {
+                var bgr = ((Gray<byte>[,])arr).ToBgr();
+                var bgra = bgr.ToBgra();
+                return bgra;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         #endregion

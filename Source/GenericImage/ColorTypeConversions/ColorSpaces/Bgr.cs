@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014 
+// Copyright © Darko Jurić, 2014-2015 
 // darko.juric2@gmail.com
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -120,6 +120,35 @@ namespace DotImaging
         }
 
         /// <summary>
+        /// Converts 8-bit Bgr to 8-bit Bgra. 
+        /// </summary>
+        /// <param name="bgr">Source color.</param>
+        /// <param name="bgra">Destination color.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Convert(Bgr<byte> bgr, ref Bgra<byte> bgra)
+        {
+            bgra.B = bgr.B;
+            bgra.G = bgr.G;
+            bgra.R = bgr.R;
+            bgra.A = System.Byte.MaxValue;
+        }
+
+        /// <summary>
+        /// Converts 8-bit Bgr to 8-bit Bgra. 
+        /// </summary>
+        /// <param name="bgr">Source color.</param>
+        /// <param name="bgra">Destination color.</param>
+        /// <param name="opacity">Opacity.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Convert(Bgr<byte> bgr, ref Bgra<byte> bgra, byte opacity = System.Byte.MaxValue)
+        {
+            bgra.B = bgr.B;
+            bgra.G = bgr.G;
+            bgra.R = bgr.R;
+            bgra.A = opacity;
+        }
+
+        /// <summary>
         /// Converts 8-bit Bgr to 8-bit Hsv color. Value range for 8-bit HSv color is  [0..180].
         /// </summary>
         /// <param name="bgr">Source color.</param>
@@ -169,7 +198,7 @@ namespace DotImaging
         }
     }
 
-    public static class E
+    public static class BgrColorConversionExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Gray<byte> ToGray(this Bgr<byte> bgr)

@@ -45,6 +45,7 @@
     <Compile Include="ColorTypeConversions\ColorSpaces\Gray.cs" />
     <Compile Include="ColorTypeConversions\ColorSpaces\Hsv.cs" />
     <Compile Include="ColorTypeConversions\ColorSpaces\IColor.cs" />
+    <Compile Include="ColorTypeConversions\ColorSpaces\Rgb.cs" />
     <Compile Include="ColorTypeConversions\Converters\ColorConversionExtensions.cs" />
     <Compile Include="ColorTypeConversions\Converters\PrimitiveChannelTypeConversion.cs" />
     <Compile Include="Extensions\BasicExtensions.cs" />

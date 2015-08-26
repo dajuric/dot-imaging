@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014 
+// Copyright © Darko Jurić, 2014-2015 
 // darko.juric2@gmail.com
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -190,6 +190,27 @@ namespace DotImaging
         /// </summary>
         /// <param name="image">Source image.</param>
         /// <returns>image with converted color.</returns>
+        public static Bgra<byte>[,] ToBgra(this Bgr<byte>[,] image)
+        {
+            return image.Convert<Bgr<byte>, Bgra<byte>>(Bgr<byte>.Convert);
+        }
+
+        /// <summary>
+        /// Converts the source color to the destination color.
+        /// </summary>
+        /// <param name="image">Source image.</param>
+        /// <param name="area">Working area.</param>
+        /// <returns>image with converted color.</returns>
+        public static Bgra<byte>[,] ToBgra(this Bgr<byte>[,] image, Rectangle area)
+        {
+            return image.Convert<Bgr<byte>, Bgra<byte>>(Bgr<byte>.Convert, area);
+        }
+
+        /// <summary>
+        /// Converts the source color to the destination color.
+        /// </summary>
+        /// <param name="image">Source image.</param>
+        /// <returns>image with converted color.</returns>
         public static Gray<byte>[,] ToGray(this Bgr<byte>[,] image)
         {
             return image.Convert<Bgr<byte>, Gray<byte>>(Bgr<byte>.Convert);
@@ -228,6 +249,187 @@ namespace DotImaging
         }
 
         #endregion
+
+
+        #region Rgb channel depth conversion
+
+        /// <summary>
+        /// Converts the source channel depth to the destination channel depth.
+        /// </summary>
+        /// <typeparam name="TDepth">Destination channel depth.</typeparam>
+        /// <param name="image">Image.</param>
+        /// <returns>Image with converted element depth.</returns>
+        public static Rgb<TDepth>[,] Cast<TDepth>(this Rgb<byte>[,] image)
+           where TDepth : struct
+        {
+            return image.ConvertChannelDepth<Rgb<byte>, Rgb<TDepth>>();
+        }
+
+        /// <summary>
+        /// Converts the source channel depth to the destination channel depth.
+        /// </summary>
+        /// <typeparam name="TDepth">Destination channel depth.</typeparam>
+        /// <param name="image">Image.</param>
+        /// <returns>Image with converted element depth.</returns>
+        public static Rgb<TDepth>[,] Cast<TDepth>(this Rgb<short>[,] image)
+          where TDepth : struct
+        {
+            return image.ConvertChannelDepth<Rgb<short>, Rgb<TDepth>>();
+        }
+
+        /// <summary>
+        /// Converts the source channel depth to the destination channel depth.
+        /// </summary>
+        /// <typeparam name="TDepth">Destination channel depth.</typeparam>
+        /// <param name="image">Image.</param>
+        /// <returns>Image with converted element depth.</returns>
+        public static Rgb<TDepth>[,] Cast<TDepth>(this Rgb<int>[,] image)
+          where TDepth : struct
+        {
+            return image.ConvertChannelDepth<Rgb<int>, Rgb<TDepth>>();
+        }
+
+        /// <summary>
+        /// Converts the source channel depth to the destination channel depth.
+        /// </summary>
+        /// <typeparam name="TDepth">Destination channel depth.</typeparam>
+        /// <param name="image">Image.</param>
+        /// <returns>Image with converted element depth.</returns>
+        public static Rgb<TDepth>[,] Cast<TDepth>(this Rgb<float>[,] image)
+          where TDepth : struct
+        {
+            return image.ConvertChannelDepth<Rgb<float>, Rgb<TDepth>>();
+        }
+
+        /// <summary>
+        /// Converts the source channel depth to the destination channel depth.
+        /// </summary>
+        /// <typeparam name="TDepth">Destination channel depth.</typeparam>
+        /// <param name="image">Image.</param>
+        /// <returns>Image with converted element depth.</returns>
+        public static Rgb<TDepth>[,] Cast<TDepth>(this Rgb<double>[,] image)
+          where TDepth : struct
+        {
+            return image.ConvertChannelDepth<Rgb<double>, Rgb<TDepth>>();
+        }
+
+        #endregion
+
+        #region Rgb color conversion
+
+        /// <summary>
+        /// Converts the source color to the destination color.
+        /// </summary>
+        /// <param name="image">Source image.</param>
+        /// <returns>image with converted color.</returns>
+        public static Bgr<byte>[,] ToBgr(this Rgb<byte>[,] image)
+        {
+            return image.Convert<Rgb<byte>, Bgr<byte>>(Rgb<byte>.Convert);
+        }
+
+        /// <summary>
+        /// Converts the source color to the destination color.
+        /// </summary>
+        /// <param name="image">Source image.</param>
+        /// <param name="area">Working area.</param>
+        /// <returns>image with converted color.</returns>
+        public static Bgr<byte>[,] ToBgr(this Rgb<byte>[,] image, Rectangle area)
+        {
+            return image.Convert<Rgb<byte>, Bgr<byte>>(Rgb<byte>.Convert, area);
+        }
+
+        #endregion
+
+
+        #region Bgra channel depth conversion
+
+        /// <summary>
+        /// Converts the source channel depth to the destination channel depth.
+        /// </summary>
+        /// <typeparam name="TDepth">Destination channel depth.</typeparam>
+        /// <param name="image">Image.</param>
+        /// <returns>Image with converted element depth.</returns>
+        public static Bgra<TDepth>[,] Cast<TDepth>(this Bgra<byte>[,] image)
+           where TDepth : struct
+        {
+            return image.ConvertChannelDepth<Bgra<byte>, Bgra<TDepth>>();
+        }
+
+        /// <summary>
+        /// Converts the source channel depth to the destination channel depth.
+        /// </summary>
+        /// <typeparam name="TDepth">Destination channel depth.</typeparam>
+        /// <param name="image">Image.</param>
+        /// <returns>Image with converted element depth.</returns>
+        public static Bgra<TDepth>[,] Cast<TDepth>(this Bgra<short>[,] image)
+          where TDepth : struct
+        {
+            return image.ConvertChannelDepth<Bgra<short>, Bgra<TDepth>>();
+        }
+
+        /// <summary>
+        /// Converts the source channel depth to the destination channel depth.
+        /// </summary>
+        /// <typeparam name="TDepth">Destination channel depth.</typeparam>
+        /// <param name="image">Image.</param>
+        /// <returns>Image with converted element depth.</returns>
+        public static Bgra<TDepth>[,] Cast<TDepth>(this Bgra<int>[,] image)
+          where TDepth : struct
+        {
+            return image.ConvertChannelDepth<Bgra<int>, Bgra<TDepth>>();
+        }
+
+        /// <summary>
+        /// Converts the source channel depth to the destination channel depth.
+        /// </summary>
+        /// <typeparam name="TDepth">Destination channel depth.</typeparam>
+        /// <param name="image">Image.</param>
+        /// <returns>Image with converted element depth.</returns>
+        public static Bgra<TDepth>[,] Cast<TDepth>(this Bgra<float>[,] image)
+          where TDepth : struct
+        {
+            return image.ConvertChannelDepth<Bgra<float>, Bgra<TDepth>>();
+        }
+
+        /// <summary>
+        /// Converts the source channel depth to the destination channel depth.
+        /// </summary>
+        /// <typeparam name="TDepth">Destination channel depth.</typeparam>
+        /// <param name="image">Image.</param>
+        /// <returns>Image with converted element depth.</returns>
+        public static Bgra<TDepth>[,] Cast<TDepth>(this Bgra<double>[,] image)
+          where TDepth : struct
+        {
+            return image.ConvertChannelDepth<Bgra<double>, Bgra<TDepth>>();
+        }
+
+        #endregion
+
+        #region Bgra color conversion
+
+        /// <summary>
+        /// Converts the source color to the destination color.
+        /// </summary>
+        /// <param name="image">Source image.</param>
+        /// <returns>Image with converted color.</returns>
+        public static Bgr<byte>[,] ToHsv(this Bgra<byte>[,] image)
+        {
+            return image.Convert<Bgra<byte>, Bgr<byte>>(Bgra<byte>.Convert);
+        }
+
+        /// <summary>
+        /// Converts the source color to the destination color.
+        /// </summary>
+        /// <param name="image">Source image.</param>
+        /// <param name="area">Working area.</param>
+        /// <returns>Image with converted color.</returns>
+        public static Bgr<byte>[,] ToHsv(this Bgra<byte>[,] image, Rectangle area)
+        {
+            return image.Convert<Bgra<byte>, Bgr<byte>>(Bgra<byte>.Convert, area);
+        }
+
+        #endregion
+
 
 
         #region Hsv channel depth conversion

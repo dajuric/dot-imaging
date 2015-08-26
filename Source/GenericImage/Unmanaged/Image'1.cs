@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014 
+// Copyright © Darko Jurić, 2014-2015 
 // darko.juric2@gmail.com
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -58,6 +58,26 @@ namespace DotImaging
             int height = array.GetLength(0);
 
             var image = new Image<TColor>(handle.AddrOfPinnedObject(), width, height, ColorInfo.GetInfo<TColor>().Size * width, 
+                                          handle, x => ((GCHandle)x).Free());
+
+            return image;
+        }
+
+        /// <summary>
+        /// Creates an unmanaged image representation from the provided array and image width (un-flattens the array).
+        /// <para>No data is copied.</para>
+        /// </summary>
+        /// <param name="array">Array to lock.</param>
+        /// <returns>Unmanaged image.</returns>
+        public static Image<TColor> Lock(byte[] rawImageArray, int width)
+        {
+            GCHandle handle = GCHandle.Alloc(rawImageArray, GCHandleType.Pinned);
+
+            float height = (float)rawImageArray.Length / (width * ColorInfo.GetInfo<TColor>().Size);
+            if (height != (int)height)
+                throw new ArgumentException("The calculated height is not integer. There is a mismatch between given width, the data length and the image pixel type.");
+
+            var image = new Image<TColor>(handle.AddrOfPinnedObject(), width, (int)height, ColorInfo.GetInfo<TColor>().Size * width,
                                           handle, x => ((GCHandle)x).Free());
 
             return image;

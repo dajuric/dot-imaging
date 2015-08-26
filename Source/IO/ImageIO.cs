@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014 
+// Copyright © Darko Jurić, 2014-2015 
 // darko.juric2@gmail.com
 //
 //   This program is free software: you can redistribute it and/or modify
@@ -51,7 +51,7 @@ namespace DotImaging
         /// <returns>Image.</returns>
         public unsafe static IImage LoadUnchanged(string fileName)
         {
-            return load(fileName, ImageLoadType.AnyColor | ImageLoadType.AnyDepth);
+            return load(fileName, ImageLoadType.AnyColor);
         }
 
         /// <summary>
