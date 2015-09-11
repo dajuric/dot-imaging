@@ -26,9 +26,9 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 
  ``` csharp
 //convert to grayscale and flip
-Bgr<byte> image = ImageIO.LoadColor("sample.jpg").Clone();
-Gray<byte> grayIm = image.ToGray()
-                             .Flip(FlipDirection.Horizontal);
+Bgr<byte>[,] image = ImageIO.LoadColor("sample.jpg").Clone();
+Gray<byte>[,] grayIm = image.ToGray()
+                                .Flip(FlipDirection.Horizontal);
  ```
 
 + <a href="https://www.nuget.org/packages/DotImaging.IO">DotImaging.IO</a>  
