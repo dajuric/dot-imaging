@@ -22,7 +22,7 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 + <a href="https://www.nuget.org/packages/DotImaging.GenericImage">DotImaging.GenericImage</a>    
   .NET image array extensions. Color and depth conversions. Slim unmanaged structure for fast pixel manipulation.
 
-  > **Tutorial:** <a href="http://www.codeproject.com/Articles/829349/Introducing-Portable-Generic-Image-Library-for-Csh" target="_blank">Portable Generic Image</a> <em>(update pending)</em>
+  > **Tutorial:** <a href="http://www.codeproject.com/Articles/829349/Introducing-Portable-Generic-Image-Library-for-Csh" target="_blank">Portable Generic Image</a>
 
  ``` csharp
 //convert to grayscale and flip
@@ -34,7 +34,7 @@ Gray<byte>[,] grayIm = image.ToGray()
 + <a href="https://www.nuget.org/packages/DotImaging.IO">DotImaging.IO</a>  
   A unified API for IO image access (camera, file, image directory). Portable image loading/saving.
 
-  > **Tutorial:** <a href="http://www.codeproject.com/Articles/828012/Introducing-Portable-Video-IO-Library-for-Csharp" target="_blank">Portable Imaging IO</a> <em>(update pending)</em>
+  > **Tutorial:** <a href="http://www.codeproject.com/Articles/828012/Introducing-Portable-Video-IO-Library-for-Csharp" target="_blank">Portable Imaging IO</a>
 
  ``` csharp
 //create camera (file or image-directory) capture
