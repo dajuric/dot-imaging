@@ -262,6 +262,7 @@ namespace DotImaging
         /// <summary>
         /// Copies values from source to destination image using mask. Destination values where mask == 0 are not erased!.
         /// </summary>
+        /// <typeparam name="TColor">Element type.</typeparam>
         /// <param name="source">Image.</param>
         /// <param name="destination">Destination image</param>
         /// <param name="mask">Mask. Color locations that need to be copied must be set to !=0 in mask.</param>
@@ -269,7 +270,7 @@ namespace DotImaging
             where TColor: struct
         {
             if (source.Size() != mask.Size() || source.Size() != destination.Size())
-                throw new Exception("Image, mask, destImg size must be the same!");
+                throw new Exception("Image, mask, destination image must have the same size.");
 
             ParallelLauncher.Launch((thread) =>
             {
@@ -279,5 +280,26 @@ namespace DotImaging
             source.Width(), source.Height());
         }
 
+        /// <summary>
+        /// Copies only those values from source to destination image area at which destination mask is true.
+        /// </summary>
+        /// <typeparam name="T">Element type.</typeparam>
+        /// <param name="source">Source.</param>
+        /// <param name="sourceArea">Source area.</param>
+        /// <param name="destination">Destination.</param>
+        /// <param name="destinationOffset">Destination location.</param>
+        /// <param name="destinationMask">Destination mask.</param>
+        public static void CopySelective<T>(this T[,] source, Rectangle sourceArea, T[,] destination, Point destinationOffset, bool[,] destinationMask)
+        {
+            if(source.Size() != destinationMask.Size() || source.Size() != destination.Size())
+                throw new Exception("Image, mask, destination image must have the same size.");
+
+            ParallelLauncher.Launch((thread) =>
+            {
+                if (destinationMask[destinationOffset.Y + thread.Y, destinationOffset.X + thread.X])
+                    destination[destinationOffset.Y + thread.Y, destinationOffset.X + thread.X] = source[sourceArea.Y + thread.Y, sourceArea.X + thread.X];
+            },
+            sourceArea.Width, sourceArea.Height);
+        }
     }
 }

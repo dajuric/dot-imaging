@@ -22,10 +22,6 @@
 
 using DotImaging.Primitives2D;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DotImaging
 {
@@ -90,39 +86,6 @@ namespace DotImaging
           where TColor : struct
         {
             return Image<TColor>.Lock(array).GetSubRect(area);
-        }
-
-        /// <summary>
-        /// Sets the specified value for each element of the array.
-        /// </summary>
-        /// <typeparam name="T">Element type.</typeparam>
-        /// <param name="array">Array with value type elements.</param>
-        /// <param name="value">Value to set.</param>
-        public static void SetValue<T>(this T[,] array, T value)
-            where T : struct
-        {
-            ParallelLauncher.Launch((thread) =>
-            {
-                array[thread.Y, thread.X] = value;
-            },
-            array.Width(), array.Height());
-        }
-
-        /// <summary>
-        /// Sets the specified value for each element of the array.
-        /// </summary>
-        /// <typeparam name="T">Element type.</typeparam>
-        /// <param name="array">Array with value type elements.</param>
-        /// <param name="value">Value to set.</param>
-        /// <param name="area">Working area.</param>
-        public static void SetValue<T>(this T[,] array, T value, Rectangle area)
-            where T : struct
-        {
-            ParallelLauncher.Launch((thread) =>
-            {
-                array[thread.Y + area.Y, thread.X + area.X] = value;
-            },
-            area.Width, area.Height);
         }
 
         /// <summary>
@@ -192,71 +155,129 @@ namespace DotImaging
         }
 
         /// <summary>
-        /// Two source filter operation.
+        /// Applies the specified conversion function to each source pixel, producing the destination image.
         /// </summary>
-        /// <param name="sourceA">First image.</param>
-        /// <param name="sourceB">Second image.</param>
-        /// <param name="destination">Destination image.</param>
-        public delegate void UnsafeTwoSourceFilterFunc(IImage sourceA, IImage sourceB, IImage destination);
-
-        /// <summary>
-        /// Executes the user defined two source filter operation.
-        /// </summary>
-        /// <typeparam name="TColor">Image color.</typeparam>
-        /// <param name="imageA">First image.</param>
-        /// <param name="imageB">Second image.</param>
-        /// <param name="func">User defined operation.</param>
-        /// <param name="inPlace">If true the result is going to be stored in the first image. If false a new image is going to be created.</param>
-        /// <returns>he result image. If <paramref name="inPlace"/> is set to true, the return value can be discarded.</returns>
-        public static TColor[,] Calculate<TColor>(this TColor[,] imageA, TColor[,] imageB, UnsafeTwoSourceFilterFunc func, bool inPlace = false)
-            where TColor : struct
+        /// <typeparam name="TSrc">Source element type.</typeparam>
+        /// <typeparam name="TDst">Destination element type.</typeparam>
+        /// <param name="source">Source array.</param>
+        /// <param name="convert">Pixel conversion function.</param>
+        /// <returns>Destination array.</returns>
+        public static TDst[,] Convert<TSrc, TDst>(this TSrc[,] source, Func<TSrc, TDst> convert)
         {
-            TColor[,] dest = imageA;
-            if (!inPlace)
-                dest = imageA.CopyBlank();
+            Size imSize = source.Size();
+            TDst[,] dest = new TDst[imSize.Height, imSize.Width];
 
-            using (var uImg = imageA.Lock())
-            using (var uImg2 = imageB.Lock())
-            using (var uDest = dest.Lock())
+            ParallelLauncher.Launch(thread => 
             {
-                func(uImg, uImg2, uDest);
-            }
+                dest[thread.Y, thread.X] = convert(source[thread.Y, thread.X]);
+            }, 
+            source.Width(), source.Height());
 
             return dest;
         }
 
         /// <summary>
-        /// Executes the user defined two source filter operation.
+        /// Applies the specified conversion function to each source pixel, producing the destination image.
         /// </summary>
-        /// <typeparam name="TColor">Image color.</typeparam>
-        /// <param name="imageA">First image.</param>
-        /// <param name="imageB">Second image.</param>
-        /// <param name="func">User defined operation.</param>
-        /// <param name="inPlace">If true the result is going to be stored in the first image. If false a new image is going to be created.</param>
-        /// <returns>he result image. If <paramref name="inPlace"/> is set to true, the return value can be discarded.</returns>
-        public static TColor[,] Calculate<TColor>(this TColor[,] imageA, TColor[,] imageB, TwoSourceFilterFunc<TColor> func, bool inPlace = false)
-            where TColor : struct
+        /// <typeparam name="T">Element type.</typeparam>
+        /// <param name="source">Source array.</param>
+        /// <param name="apply">Pixel conversion function.</param>
+        /// <param name="inPlace">
+        /// True to apply the function in place, false otherwise.
+        /// <para>If true the result image is the same as source image.</para>
+        /// </param>
+        /// <returns>Destination array.</returns>
+        public static T[,] Apply<T>(this T[,] source, Func<T, T> apply, bool inPlace = false)
         {
-            TColor[,] dest = imageA;
-            if (!inPlace)
-                dest = imageA.CopyBlank();
+            Size imSize = source.Size();
+            T[,] dest = inPlace ? source : new T[imSize.Height, imSize.Width];
 
             ParallelLauncher.Launch(thread =>
             {
-                func(ref imageA[thread.Y, thread.X], ref imageB[thread.Y, thread.X], ref dest[thread.Y, thread.X]);
+                dest[thread.Y, thread.X] = apply(source[thread.Y, thread.X]);
             },
-            imageA.Width(), imageA.Height());
+            source.Width(), source.Height());
 
             return dest;
         }
-    }
 
-    /// <summary>
-    /// Two source filter operation.
-    /// </summary>
-    /// <param name="src1">First image.</param>
-    /// <param name="src2">Second image.</param>
-    /// <param name="dest">Destination image.</param>
-    public delegate void TwoSourceFilterFunc<TColor>(ref TColor src1, ref TColor src2, ref TColor dest)
-        where TColor : struct;
+        #region Set value
+
+        /// <summary>
+        /// Sets the specified value for each element of the array.
+        /// </summary>
+        /// <typeparam name="T">Element type.</typeparam>
+        /// <param name="array">Array with value type elements.</param>
+        /// <param name="value">Value to set.</param>
+        public static void SetValue<T>(this T[,] array, T value)
+            where T : struct
+        {
+            ParallelLauncher.Launch((thread) =>
+            {
+                array[thread.Y, thread.X] = value;
+            },
+            array.Width(), array.Height());
+        }
+
+        /// <summary>
+        /// Sets the specified value for each element of the array.
+        /// </summary>
+        /// <typeparam name="T">Element type.</typeparam>
+        /// <param name="array">Array with value type elements.</param>
+        /// <param name="value">Value to set.</param>
+        /// <param name="area">Working area.</param>
+        public static void SetValue<T>(this T[,] array, T value, Rectangle area)
+            where T : struct
+        {
+            ParallelLauncher.Launch((thread) =>
+            {
+                array[thread.Y + area.Y, thread.X + area.X] = value;
+            },
+            area.Width, area.Height);
+        }
+
+        /// <summary>
+        /// Sets the specified value for only those element of the array where the mask is true.
+        /// </summary>
+        /// <typeparam name="T">Element type.</typeparam>
+        /// <param name="array">Array with value type elements.</param>
+        /// <param name="value">Value to set.</param>
+        /// <param name="area">Working area.</param>
+        /// <param name="mask">Mask.</param>
+        public static void SetValue<T>(this T[,] array, T value, Rectangle area, bool[,] mask)
+        {
+            if (array.Size() != mask.Size())
+                throw new ArgumentException("Array and mask must have the same size.");
+
+            ParallelLauncher.Launch((thread) =>
+            {
+                if (mask[thread.Y + area.Y, thread.X + area.X])
+                    array[thread.Y + area.Y, thread.X + area.X] = value;
+            },
+            area.Width, area.Height);
+        }
+
+        /// <summary>
+        /// Sets the specified value for only those element of the array where the mask is non-zero.
+        /// </summary>
+        /// <typeparam name="T">Element type.</typeparam>
+        /// <param name="array">Array with value type elements.</param>
+        /// <param name="value">Value to set.</param>
+        /// <param name="area">Working area.</param>
+        /// <param name="mask">Mask.</param>
+        public static void SetValue<T>(this T[,] array, T value, Rectangle area, Gray<byte>[,] mask)
+        {
+            if (array.Size() != mask.Size())
+                throw new ArgumentException("Array and mask must have the same size.");
+
+            ParallelLauncher.Launch((thread) =>
+            {
+                if (mask[thread.Y + area.Y, thread.X + area.X] != 0)
+                    array[thread.Y + area.Y, thread.X + area.X] = value;
+            },
+            area.Width, area.Height);
+        }
+
+        #endregion
+    }
 }

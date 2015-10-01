@@ -62,6 +62,18 @@ namespace DotImaging
         public Rectangle Area { get; private set; }
 
         /// <summary>
+        /// Gets or sets the specified value.
+        /// </summary>
+        /// <param name="y">Offset from the upper-left y area location.</param>
+        /// <param name="x">Offset from the upper-left x area location.</param>
+        /// <returns>Value.</returns>
+        public T this[int y, int x]
+        {
+            get { return Array[Area.Y + y, Area.X + x]; }
+            set { Array[Area.Y + y, Area.X + x] = value; }
+        }
+
+        /// <summary>
         /// Converts the array into grid representation.
         /// </summary>
         /// <param name="array">Array.</param>
