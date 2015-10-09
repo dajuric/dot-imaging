@@ -1,4 +1,4 @@
-#region Licence and Terms
+﻿#region Licence and Terms
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
@@ -22,28 +22,29 @@
 
 using System;
 using System.IO;
-using DotImaging;
 
-namespace ImageExtractor
+namespace DotImaging
 {
-    public class VideoExtractor
+
+    /// <summary>
+    /// Provides extensions for image extraction from image streams.
+    /// </summary>
+    public static class ImageWriterExtension
     {
-        ImageStreamReader imageSource;
-        string outputDir;
-        string fileNameFormat;
-
-        public VideoExtractor(ImageStreamReader imageSource, string outputDir, string fileNameFormat = "img-{0:000}.jpg")
+        /// <summary>
+        /// Reads the image source and save the extracted images to the specified folder.
+        /// </summary>
+        /// <param name="imageSource">Image stream reader.</param>
+        /// <param name="outputDir">Output directory.</param>
+        /// <param name="fileNameFormat">Image file name format.</param>
+        /// <param name="onFrameCompletition">Progress function executed after a frame is saved.</param>
+        public static void SaveFrames(this ImageStreamReader imageSource, string outputDir, 
+                                      string fileNameFormat = "img-{0:000}.png", 
+                                      Action<float> onFrameCompletition = null)
         {
-            this.imageSource = imageSource;
-            this.outputDir = outputDir;
-            this.fileNameFormat = fileNameFormat;
-
             if (!Directory.Exists(outputDir))
                 Directory.CreateDirectory(outputDir);
-        }
 
-        public void Start(Action<float> onFrameCompletition)
-        {
             if (imageSource.CanSeek)
                 imageSource.Seek(0, SeekOrigin.Begin);
 
@@ -56,7 +57,9 @@ namespace ImageExtractor
                     ImageIO.TrySave(frame, path); //TODO-noncritical: add compression options
                 }
 
-                onFrameCompletition((float)(idx + 1) / imageSource.Length);
+                if(onFrameCompletition != null)
+                    onFrameCompletition((float)(idx + 1) / imageSource.Length);
+
                 idx++;
             }
         }

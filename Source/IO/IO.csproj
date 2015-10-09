@@ -55,6 +55,7 @@
     <Compile Include="Base\CvHighGuiInvoke.cs" />
     <Compile Include="Readers\ImageDirectoryCapture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Writers\ImageWriterExtension.cs" />
     <Compile Include="Writers\VideoWriter.cs" />
   </ItemGroup>
   <ItemGroup>

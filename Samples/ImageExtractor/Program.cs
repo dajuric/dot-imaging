@@ -58,8 +58,7 @@ namespace ImageExtractor
 
             Console.WriteLine("Extracting video frames - {0}...", fileNameNoExt);
 
-            var videoExtractor = new VideoExtractor(reader, outputDir, "{0}.jpg");
-            videoExtractor.Start((percentage) =>
+            reader.SaveFrames(outputDir, "{0}.jpg", (percentage) =>
             {
                 Console.Write("\r Completed: {0} %", (int)(percentage * 100));
             });
