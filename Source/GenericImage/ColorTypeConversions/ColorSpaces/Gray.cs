@@ -85,5 +85,18 @@ namespace DotImaging
             bgr.G = gray.Intensity;
             bgr.R = gray.Intensity;
         }
+
+        /// <summary>
+        /// Converts 8-bit gray intensity to the 8-bit Bgra color.
+        /// </summary>
+        /// <param name="gray">Source color.</param>
+        /// <param name="bgra">Destination color.</param>
+        public static void Convert(Gray<byte> gray, ref Bgra<byte> bgra)
+        {
+            bgra.B = gray.Intensity;
+            bgra.G = gray.Intensity;
+            bgra.R = gray.Intensity;
+            bgra.A = System.Byte.MaxValue;
+        }
     }
 }

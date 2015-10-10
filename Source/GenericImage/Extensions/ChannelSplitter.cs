@@ -86,7 +86,7 @@ namespace DotImaging
             where TDepth : struct
         {
             Rectangle area = new Rectangle(0, 0, image.Width(), image.Height());
-            return image.GetChannel<TSrcColor, TDepth>(channelIndex);
+            return image.GetChannel<TSrcColor, TDepth>(area, channelIndex);
         }
 
         /// <summary>

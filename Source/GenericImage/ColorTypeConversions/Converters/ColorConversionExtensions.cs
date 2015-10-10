@@ -116,6 +116,27 @@ namespace DotImaging
             return grayIm.Convert<Gray<byte>, Bgr<byte>>(Gray<byte>.Convert, area);
         }
 
+        /// <summary>
+        /// Converts the source color to the destination color.
+        /// </summary>
+        /// <param name="grayIm">Source image.</param>
+        /// <returns>image with converted color.</returns>
+        public static Bgra<byte>[,] ToBgra(this Gray<byte>[,] grayIm)
+        {
+            return grayIm.Convert<Gray<byte>, Bgra<byte>>(Gray<byte>.Convert);
+        }
+
+        /// <summary>
+        /// Converts the source color to the destination color.
+        /// </summary>
+        /// <param name="grayIm">Source image.</param>
+        /// <param name="area">Working area.</param>
+        /// <returns>image with converted color.</returns>
+        public static Bgra<byte>[,] ToBgra(this Gray<byte>[,] grayIm, Rectangle area)
+        {
+            return grayIm.Convert<Gray<byte>, Bgra<byte>>(Gray<byte>.Convert, area);
+        }
+
         #endregion
 
 
