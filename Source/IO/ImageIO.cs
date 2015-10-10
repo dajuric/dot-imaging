@@ -51,7 +51,7 @@ namespace DotImaging
         /// <returns>Image.</returns>
         public unsafe static IImage LoadUnchanged(string fileName)
         {
-            return load(fileName, ImageLoadType.AnyColor);
+            return load(fileName, ImageLoadType.Unchanged);
         }
 
         /// <summary>

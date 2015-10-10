@@ -36,7 +36,7 @@ namespace Test
         /// </summary>
         [STAThread]
         unsafe static void Main()
-        { 
+        {
             var resourceDir = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Resources");
             var imgColor = ImageIO.LoadColor(Path.Combine(resourceDir, "testColorBig.jpg")).Clone();
 
