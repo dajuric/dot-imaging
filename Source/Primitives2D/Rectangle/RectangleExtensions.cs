@@ -110,10 +110,10 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        /// Gets rectangle vertices in clock-wise order staring from left-upper corner.
+        /// Gets rectangle vertexes in clock-wise order staring from left-upper corner.
         /// </summary>
         /// <param name="rect">Rectangle.</param>
-        /// <returns>Vertices.</returns>
+        /// <returns>Vertexes.</returns>
         public static Point[] Vertices(this Rectangle rect)
         {
             return new Point[] 
@@ -218,7 +218,7 @@ namespace DotImaging.Primitives2D
 
     /// <summary>
     /// <para>Defined functions can be used as object extensions.</para>
-    /// Provides extension methods for <see cref="Accord.Extensions.Rectangle"/>.
+    /// Provides extension methods for rectangle structure.
     /// </summary>
     public static class RectangleFExtensions
     {
@@ -290,10 +290,10 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        /// Gets rectangle vertices in clock-wise order staring from left-upper corner.
+        /// Gets rectangle vertexes in clock-wise order staring from left-upper corner.
         /// </summary>
         /// <param name="rect">Rectangle.</param>
-        /// <returns>Vertices.</returns>
+        /// <returns>Vertexes.</returns>
         public static PointF[] Vertices(this RectangleF rect)
         {
             return new PointF[] 
@@ -383,7 +383,7 @@ namespace DotImaging.Primitives2D
         /// Scales rectangles by the specified amount.
         /// </summary>
         /// <param name="rect">Rectangle.</param>
-        /// <param name="scaleFactor">Multiplication factor for vertices coordinates.</param>
+        /// <param name="scaleFactor">Multiplication factor for vertexes coordinates.</param>
         /// <returns>Scaled rectangle.</returns>
         public static RectangleF Scale(this RectangleF rect, float scaleFactor)
         {

@@ -19,6 +19,7 @@
 //   along with this program.  If not, see <https://www.gnu.org/licenses/lgpl.txt>.
 //
 
+//---------------------- original-----------------------
 // Author:
 //   Mike Kestner (mkestner@speakeasy.net)
 //
@@ -142,6 +143,23 @@ namespace DotImaging.Primitives2D
         public void Intersect(Rectangle rect)
         {
             this = Rectangle.Intersect(this, rect);
+        }
+
+        /// <summary>
+        /// Determines if this rectangle intersects with <paramref name="rect"/>.
+        /// </summary>
+        /// <param name="rect">The rectangle to test.</param>
+        /// <returns>This method returns true if there is any intersection, otherwise false.</returns>
+        public bool IntersectsWith(Rectangle rect)
+        {
+            return !((Left >= rect.Right) || (Right <= rect.Left) ||
+                (Top >= rect.Bottom) || (Bottom <= rect.Top));
+        }
+
+        private bool intersectsWithInclusive(Rectangle r)
+        {
+            return !((Left > r.Right) || (Right < r.Left) ||
+                (Top > r.Bottom) || (Bottom < r.Top));
         }
 
         /// <summary>
@@ -274,6 +292,50 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
+        /// Tests whether all numeric properties of this Rectangle have values of zero.
+        /// </summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                return ((x == 0) && (y == 0) && (width == 0) && (height == 0));
+            }
+        }
+
+        /// <summary>
+        /// Gets the x-coordinate of the left edge of this Rectangle structure.
+        /// </summary>
+        public int Left
+        {
+            get
+            {
+                return X;
+            }
+        }
+
+        /// <summary>
+        /// Gets the x-coordinate that is the sum of X and Width property values of this Rectangle structure.
+        /// </summary>
+        public int Right
+        {
+            get
+            {
+                return X + Width;
+            }
+        }
+
+        /// <summary>
+        /// Gets the y-coordinate of the top edge of this Rectangle structure.
+        /// </summary>
+        public int Top
+        {
+            get
+            {
+                return y;
+            }
+        }
+
+        /// <summary>
         /// Gets the y-coordinate that is the sum of the Y and Height property values of this Rectangle structure.
         /// </summary>
         public int Bottom
@@ -300,28 +362,6 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        /// Tests whether all numeric properties of this Rectangle have values of zero.
-        /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return ((x == 0) && (y == 0) && (width == 0) && (height == 0));
-            }
-        }
-
-        /// <summary>
-        /// Gets the x-coordinate of the left edge of this Rectangle structure.
-        /// </summary>
-        public int Left
-        {
-            get
-            {
-                return X;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the coordinates of the upper-left corner of this Rectangle structure.
         /// </summary>
         public Point Location
@@ -338,17 +378,6 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        /// Gets the x-coordinate that is the sum of X and Width property values of this Rectangle structure.
-        /// </summary>
-        public int Right
-        {
-            get
-            {
-                return X + Width;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the size of this rectangle.
         /// </summary>
         public Size Size
@@ -361,17 +390,6 @@ namespace DotImaging.Primitives2D
             {
                 Width = value.Width;
                 Height = value.Height;
-            }
-        }
-
-        /// <summary>
-        /// Gets the y-coordinate of the top edge of this Rectangle structure.
-        /// </summary>
-        public int Top
-        {
-            get
-            {
-                return y;
             }
         }
 
@@ -453,6 +471,27 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
+        /// Adjusts the location of this rectangle by the specified amount.
+        /// </summary>
+        /// <param name="x">The horizontal offset.</param>
+        /// <param name="y">The vertical offset.</param>
+        public void Offset(int x, int y)
+        {
+            this.x += x;
+            this.y += y;
+        }
+
+        /// <summary>
+        /// Adjusts the location of this rectangle by the specified amount.
+        /// </summary>
+        /// <param name="pos">Amount to offset the location.</param>
+        public void Offset(Point pos)
+        {
+            x += pos.X;
+            y += pos.Y;
+        }
+
+        /// <summary>
         /// Tests whether obj is a Rectangle structure with the same location and size of this Rectangle structure.
         /// </summary>
         /// <param name="obj">The System.Object to test.</param>
@@ -472,44 +511,6 @@ namespace DotImaging.Primitives2D
         public override int GetHashCode()
         {
             return (height + width) ^ x + y;
-        }
-
-        /// <summary>
-        /// Determines if this rectangle intersects with <paramref name="rect"/>.
-        /// </summary>
-        /// <param name="rect">The rectangle to test.</param>
-        /// <returns>This method returns true if there is any intersection, otherwise false.</returns>
-        public bool IntersectsWith(Rectangle rect)
-        {
-            return !((Left >= rect.Right) || (Right <= rect.Left) ||
-                (Top >= rect.Bottom) || (Bottom <= rect.Top));
-        }
-
-        private bool intersectsWithInclusive(Rectangle r)
-        {
-            return !((Left > r.Right) || (Right < r.Left) ||
-                (Top > r.Bottom) || (Bottom < r.Top));
-        }
-
-        /// <summary>
-        /// Adjusts the location of this rectangle by the specified amount.
-        /// </summary>
-        /// <param name="x">The horizontal offset.</param>
-        /// <param name="y">The vertical offset.</param>
-        public void Offset(int x, int y)
-        {
-            this.x += x;
-            this.y += y;
-        }
-
-        /// <summary>
-        /// Adjusts the location of this rectangle by the specified amount.
-        /// </summary>
-        /// <param name="pos">Amount to offset the location.</param>
-        public void Offset(Point pos)
-        {
-            x += pos.X;
-            y += pos.Y;
         }
 
         /// <summary>

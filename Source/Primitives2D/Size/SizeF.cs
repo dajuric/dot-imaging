@@ -18,91 +18,126 @@
 //   You should have received a copy of the GNU Lesser General Public License
 //   along with this program.  If not, see <https://www.gnu.org/licenses/lgpl.txt>.
 //
+
+//---------------------- original-----------------------
+// Author:
+//   Mike Kestner (mkestner@speakeasy.net)
+//
+// Copyright (C) 2001 Mike Kestner
+// Copyright (C) 2004 Novell, Inc. http://www.novell.com
+//
+
+//
+// Copyright (C) 2004 Novell, Inc (http://www.novell.com)
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+// 
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-using System;
-//using System.ComponentModel;
 using System.Globalization;
-using System.Runtime.InteropServices;
 
 namespace DotImaging.Primitives2D
 {
-    // Author:
-    //   Mike Kestner (mkestner@speakeasy.net)
-    //
-    // Copyright (C) 2001 Mike Kestner
-    // Copyright (C) 2004 Novell, Inc. http://www.novell.com
-    //
-
-    //
-    // Copyright (C) 2004 Novell, Inc (http://www.novell.com)
-    //
-    // Permission is hereby granted, free of charge, to any person obtaining
-    // a copy of this software and associated documentation files (the
-    // "Software"), to deal in the Software without restriction, including
-    // without limitation the rights to use, copy, modify, merge, publish,
-    // distribute, sublicense, and/or sell copies of the Software, and to
-    // permit persons to whom the Software is furnished to do so, subject to
-    // the following conditions:
-    // 
-    // The above copyright notice and this permission notice shall be
-    // included in all copies or substantial portions of the Software.
-    // 
-    // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-    // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-    // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-    // NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-    // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-    // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-    // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-    //
-
     /// <summary>
-    /// Stores an ordered pair of floating-point numbers, which specify a Height and Width and defines related functions.
+    /// Stores an ordered pair of floating-point numbers, which specify height and width and defines related functions.
     /// </summary>
     public struct SizeF
     {
-        // Private height and width fields.
         private float width, height;
 
-        // -----------------------
-        // Public Shared Members
-        // -----------------------
-
         /// <summary>
-        ///	Empty Shared Field
+        /// An uninitialized Size structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	An uninitialized SizeF Structure.
-        /// </remarks>
-
         public static readonly SizeF Empty;
 
         /// <summary>
-        ///	Addition Operator
+        /// Adds two SizeF structures.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Addition of two SizeF structures.
-        /// </remarks>
-
-        public static SizeF operator +(SizeF sz1, SizeF sz2)
+        /// <param name="sz1">First structure.</param>
+        /// <param name="sz2">Second structure.</param>
+        /// <returns>SizeF structure.</returns>
+        public static SizeF Add(SizeF sz1, SizeF sz2)
         {
-            return new SizeF(sz1.Width + sz2.Width,
-                      sz1.Height + sz2.Height);
+           return new SizeF(sz1.Width + sz2.Width,
+                            sz1.Height + sz2.Height);
         }
 
         /// <summary>
-        ///	Equality Operator
+        /// Subtracts two SizeF structures.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Compares two SizeF objects. The return value is
-        ///	based on the equivalence of the Width and Height 
-        ///	properties of the two Sizes.
-        /// </remarks>
+        /// <param name="sz1">First structure.</param>
+        /// <param name="sz2">Second structure.</param>
+        /// <returns>SizeF structure.</returns>
+        public static SizeF Subtract(SizeF sz1, SizeF sz2)
+        {
+            return new SizeF(sz1.Width - sz2.Width,
+                             sz1.Height - sz2.Height);
+        }
 
+        /// <summary>
+        /// Converts the structure to PointF representation.
+        /// </summary>
+        /// <returns>PointF.</returns>
+        public PointF ToPointF()
+        {
+            return (PointF)this;
+        }
+
+        /// <summary>
+        /// Converts the structure to Size representation.
+        /// </summary>
+        /// <returns>Size.</returns>
+        public Size ToSize()
+        {
+            return (Size)this;
+        }
+
+        /// <summary>
+        /// Adds two SizeF structures.
+        /// </summary>
+        /// <param name="sz1">First structure.</param>
+        /// <param name="sz2">Second structure.</param>
+        /// <returns>Size structure.</returns>
+        public static SizeF operator +(SizeF sz1, SizeF sz2)
+        {
+            return Add(sz1, sz2);
+        }
+
+        /// <summary>
+        /// Subtracts two Size structures.
+        /// </summary>
+        /// <param name="sz1">First structure.</param>
+        /// <param name="sz2">Second structure.</param>
+        /// <returns>Size structure.</returns>
+        public static SizeF operator -(SizeF sz1, SizeF sz2)
+        {
+            return Subtract(sz1, sz2);
+        }
+
+        /// <summary>
+        /// Compares two SizeF objects. The return value is
+        ///	based on the equivalence of the Width and Height 
+        ///	properties of the two SizeF structures.
+        /// </summary>
+        /// <param name="sz1">First structure.</param>
+        /// <param name="sz2">Second structure.</param>
+        /// <returns>SizeF structure.</returns>
         public static bool operator ==(SizeF sz1, SizeF sz2)
         {
             return ((sz1.Width == sz2.Width) &&
@@ -110,15 +145,13 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Inequality Operator
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Compares two SizeF objects. The return value is
+        /// Compares two SizeF objects. The return value is
         ///	based on the equivalence of the Width and Height 
-        ///	properties of the two Sizes.
-        /// </remarks>
-
+        ///	properties of the two SizeF structures.
+        /// </summary>
+        /// <param name="sz1">First structure.</param>
+        /// <param name="sz2">Second structure.</param>
+        /// <returns>SizeF structure.</returns>
         public static bool operator !=(SizeF sz1, SizeF sz2)
         {
             return ((sz1.Width != sz2.Width) ||
@@ -126,46 +159,18 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Subtraction Operator
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Subtracts two SizeF structures.
-        /// </remarks>
-
-        public static SizeF operator -(SizeF sz1, SizeF sz2)
-        {
-            return new SizeF(sz1.Width - sz2.Width,
-                      sz1.Height - sz2.Height);
-        }
-
-        /// <summary>
-        ///	SizeF to PointF Conversion
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Returns a PointF based on the dimensions of a given 
+        /// Returns a PointF based on the dimensions of a given 
         ///	SizeF. Requires explicit cast.
-        /// </remarks>
-
+        /// </summary>
         public static explicit operator PointF(SizeF size)
         {
             return new PointF(size.Width, size.Height);
         }
 
-
-        // -----------------------
-        // Public Constructors
-        // -----------------------
-
         /// <summary>
-        ///	SizeF Constructor
+        /// Creates a SizeF from a PointF value.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Creates a SizeF from a PointF value.
-        /// </remarks>
-
+        /// <param name="pt">PointF.</param>
         public SizeF(PointF pt)
         {
             width = pt.X;
@@ -173,46 +178,29 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	SizeF Constructor
+        /// Creates a SizeF from an existing SizeF value.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Creates a SizeF from an existing SizeF value.
-        /// </remarks>
-
-        public SizeF(SizeF size)
+        /// <param name="sz">Size.</param>
+        public SizeF(SizeF sz)
         {
-            width = size.Width;
-            height = size.Height;
+            width = sz.Width;
+            height = sz.Height;
         }
 
         /// <summary>
-        ///	SizeF Constructor
+        /// Creates a SizeF from specified dimensions.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Creates a SizeF from specified dimensions.
-        /// </remarks>
-
+        /// <param name="width">Width.</param>
+        /// <param name="height">Height.</param>
         public SizeF(float width, float height)
         {
             this.width = width;
             this.height = height;
         }
 
-        // -----------------------
-        // Public Instance Members
-        // -----------------------
-
         /// <summary>
-        ///	IsEmpty Property
+        /// Indicates if both width and height are zero.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Indicates if both Width and Height are zero.
-        /// </remarks>
-
-        //[Browsable(false)]
         public bool IsEmpty
         {
             get
@@ -222,53 +210,28 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Width Property
+        /// Gets or sets width value.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The Width coordinate of the SizeF.
-        /// </remarks>
-
         public float Width
         {
-            get
-            {
-                return width;
-            }
-            set
-            {
-                width = value;
-            }
+            get { return width; }
+            set { width = value; }
         }
 
         /// <summary>
-        ///	Height Property
+        /// Gets or sets height value.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The Height coordinate of the SizeF.
-        /// </remarks>
-
         public float Height
         {
-            get
-            {
-                return height;
-            }
-            set
-            {
-                height = value;
-            }
+            get { return height; }
+            set { height = value; }
         }
 
         /// <summary>
-        ///	Equals Method
+        /// Checks equivalence of this SizeF and another object.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Checks equivalence of this SizeF and another object.
-        /// </remarks>
-
+        /// <param name="obj">Other object.</param>
+        /// <returns>True if the provided object is equal to this structure, false otherwise.</returns>
         public override bool Equals(object obj)
         {
             if (!(obj is SizeF))
@@ -278,13 +241,9 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	GetHashCode Method
+        /// Calculates a hash value of the object.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Calculates a hashing value.
-        /// </remarks>
-
+        /// <returns>Hash code.</returns>
         public override int GetHashCode()
         {
             return (int)width ^ (int)height;
@@ -301,31 +260,13 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	ToString Method
+        /// Formats the structure as a string in coordinate notation.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Formats the SizeF as a string in coordinate notation.
-        /// </remarks>
-
+        /// <returns>Structure represented as a string.</returns>
         public override string ToString()
         {
             return string.Format("{{Width={0}, Height={1}}}", width.ToString(CultureInfo.CurrentCulture),
                 height.ToString(CultureInfo.CurrentCulture));
         }
-
-#if NET_2_0
-		public static SizeF Add (SizeF sz1, SizeF sz2)
-		{
-			return new SizeF (sz1.Width + sz2.Width, 
-					  sz1.Height + sz2.Height);
-		}
-
-		public static SizeF Subtract (SizeF sz1, SizeF sz2)
-		{
-			return new SizeF (sz1.Width - sz2.Width, 
-					  sz1.Height - sz2.Height);
-		}
-#endif
     }
 }

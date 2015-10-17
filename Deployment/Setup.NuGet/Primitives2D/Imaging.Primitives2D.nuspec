@@ -12,9 +12,10 @@
     <iconUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deployment/Logo/logo-small.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>
-      Provides portable 2D drawing primitives (Point, Size, Rectangle) compatible with System.Drawing structures and some additional ones. 
+      Provides portable 2D drawing primitives (Point, Size, Rectangle) compatible with System.Drawing structures.
+      Additional structures include Circle, Ellipse, Box2D.
     </description>
-    <summary>Point, Size, Rectangle (compatible with System.Drawing) and Circle, Ellipse</summary>
+    <summary>Point, Size, Rectangle (compatible with System.Drawing), Circle, Ellipse, Box2D</summary>
     <tags>imaging geometry structures 2D</tags>
 
     <dependencies>      

@@ -19,6 +19,7 @@
 //   along with this program.  If not, see <https://www.gnu.org/licenses/lgpl.txt>.
 //
 
+//---------------------- original-----------------------
 // Author:
 //   Mike Kestner (mkestner@speakeasy.net)
 //
@@ -144,6 +145,23 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
+        /// Determines if this rectangle intersects with <paramref name="rect"/>.
+        /// </summary>
+        /// <param name="rect">The rectangle to test.</param>
+        /// <returns>This method returns true if there is any intersection, otherwise false.</returns>
+        public bool IntersectsWith(RectangleF rect)
+        {
+            return !((Left >= rect.Right) || (Right <= rect.Left) ||
+                (Top >= rect.Bottom) || (Bottom <= rect.Top));
+        }
+
+        private bool intersectsWithInclusive(RectangleF r)
+        {
+            return !((Left > r.Right) || (Right < r.Left) ||
+                (Top > r.Bottom) || (Bottom < r.Top));
+        }
+
+        /// <summary>
         /// Gets a RectangleF structure that contains the union of two RectangleF structures.
         /// </summary>
         /// <param name="a">A rectangle to union.</param>
@@ -195,11 +213,6 @@ namespace DotImaging.Primitives2D
             return new RectangleF(r.X, r.Y, r.Width, r.Height);
         }
 
-
-        // -----------------------
-        // Public Constructors
-        // -----------------------
-
         /// <summary>
         /// Creates a RectangleF from PointF and SizeF values.
         /// </summary>
@@ -229,42 +242,12 @@ namespace DotImaging.Primitives2D
             this.height = height;
         }
 
-
-        /// <summary>
-        /// Gets the y-coordinate that is the sum of the Y and Height property values of this RectangleF structure.
-        /// </summary>
-        public float Bottom
-        {
-            get
-            {
-                return Y + Height;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the height of this RectangleF structure.
-        /// </summary>
-        public float Height
-        {
-            get
-            {
-                return height;
-            }
-            set
-            {
-                height = value;
-            }
-        }
-
         /// <summary>
         /// Tests whether all numeric properties of this RectangleF have values of zero.
         /// </summary>
         public bool IsEmpty
         {
-            get
-            {
-                return (width <= 0 || height <= 0);
-            }
+            get { return (width <= 0 || height <= 0); }
         }
 
         /// <summary>
@@ -272,10 +255,31 @@ namespace DotImaging.Primitives2D
         /// </summary>
         public float Left
         {
-            get
-            {
-                return X;
-            }
+            get { return X; }
+        }
+
+        /// <summary>
+        /// Gets the x-coordinate that is the sum of X and Width property values of this RectangleF structure.
+        /// </summary>
+        public float Right
+        {
+            get { return X + Width; }
+        }
+
+        /// <summary>
+        /// Gets the y-coordinate of the top edge of this RectangleF structure.
+        /// </summary>
+        public float Top
+        {
+            get { return Y; }
+        }
+
+        /// <summary>
+        /// Gets the y-coordinate that is the sum of the Y and Height property values of this RectangleF structure.
+        /// </summary>
+        public float Bottom
+        {
+            get { return Y + Height; }
         }
 
         /// <summary>
@@ -291,17 +295,6 @@ namespace DotImaging.Primitives2D
             {
                 x = value.X;
                 y = value.Y;
-            }
-        }
-
-        /// <summary>
-        /// Gets the x-coordinate that is the sum of X and Width property values of this RectangleF structure.
-        /// </summary>
-        public float Right
-        {
-            get
-            {
-                return X + Width;
             }
         }
 
@@ -322,29 +315,21 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        /// Gets the y-coordinate of the top edge of this RectangleF structure.
-        /// </summary>
-        public float Top
-        {
-            get
-            {
-                return Y;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the width of this RectangleF structure.
         /// </summary>
         public float Width
         {
-            get
-            {
-                return width;
-            }
-            set
-            {
-                width = value;
-            }
+            get { return width; }
+            set { width = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the height of this RectangleF structure.
+        /// </summary>
+        public float Height
+        {
+            get { return height; }
+            set { height = value; }
         }
 
         /// <summary>
@@ -352,14 +337,8 @@ namespace DotImaging.Primitives2D
         /// </summary>
         public float X
         {
-            get
-            {
-                return x;
-            }
-            set
-            {
-                x = value;
-            }
+            get { return x; }
+            set { x = value; }
         }
 
         /// <summary>
@@ -367,14 +346,8 @@ namespace DotImaging.Primitives2D
         /// </summary>
         public float Y
         {
-            get
-            {
-                return y;
-            }
-            set
-            {
-                y = value;
-            }
+            get { return y; }
+            set { y = value; }
         }
 
         /// <summary>
@@ -410,6 +383,26 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
+        /// Adjusts the location of this rectangle by the specified amount.
+        /// </summary>
+        /// <param name="x">The horizontal offset.</param>
+        /// <param name="y">The vertical offset.</param>
+        public void Offset(float x, float y)
+        {
+            X += x;
+            Y += y;
+        }
+
+        /// <summary>
+        /// Adjusts the location of this rectangle by the specified amount.
+        /// </summary>
+        /// <param name="pos">Amount to offset the location.</param>
+        public void Offset(PointF pos)
+        {
+            Offset(pos.X, pos.Y);
+        }
+
+        /// <summary>
         /// Tests whether obj is a RectangleF structure with the same location and size of this RectangleF structure.
         /// </summary>
         /// <param name="obj">The System.Object to test.</param>
@@ -432,49 +425,12 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        /// Determines if this rectangle intersects with <paramref name="rect"/>.
-        /// </summary>
-        /// <param name="rect">The rectangle to test.</param>
-        /// <returns>This method returns true if there is any intersection, otherwise false.</returns>
-        public bool IntersectsWith(RectangleF rect)
-        {
-            return !((Left >= rect.Right) || (Right <= rect.Left) ||
-                (Top >= rect.Bottom) || (Bottom <= rect.Top));
-        }
-
-        private bool intersectsWithInclusive(RectangleF r)
-        {
-            return !((Left > r.Right) || (Right < r.Left) ||
-                (Top > r.Bottom) || (Bottom < r.Top));
-        }
-
-        /// <summary>
-        /// Adjusts the location of this rectangle by the specified amount.
-        /// </summary>
-        /// <param name="x">The horizontal offset.</param>
-        /// <param name="y">The vertical offset.</param>
-        public void Offset(float x, float y)
-        {
-            X += x;
-            Y += y;
-        }
-
-        /// <summary>
-        /// Adjusts the location of this rectangle by the specified amount.
-        /// </summary>
-        /// <param name="pos">Amount to offset the location.</param>
-        public void Offset(PointF pos)
-        {
-            Offset(pos.X, pos.Y);
-        }
-
-        /// <summary>
         /// Converts the attributes of this System.Drawing.Rectangle to a human-readable string.
         /// </summary>
         /// <returns>A string in (x,y,w,h) notation</returns>
         public override string ToString()
         {
-            return String.Format("{{X={0},Y={1},Width={2},Height={3}}}",
+            return String.Format("{X={0},Y={1},Width={2},Height={3}}",
                          x, y, width, height);
         }
     }

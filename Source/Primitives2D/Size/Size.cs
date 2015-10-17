@@ -18,76 +18,106 @@
 //   You should have received a copy of the GNU Lesser General Public License
 //   along with this program.  If not, see <https://www.gnu.org/licenses/lgpl.txt>.
 //
+
+//---------------------- original-----------------------
+// Author:
+//   Mike Kestner (mkestner@speakeasy.net)
+//
+// Copyright (C) 2001 Mike Kestner
+// Copyright (C) 2004 Novell, Inc. http://www.novell.com
+//
+
+//
+// Copyright (C) 2004 Novell, Inc (http://www.novell.com)
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+// 
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
 using System;
-//using System.ComponentModel;
-using System.Runtime.InteropServices;
 
 namespace DotImaging.Primitives2D
 {
-    // Author:
-    //   Mike Kestner (mkestner@speakeasy.net)
-    //
-    // Copyright (C) 2001 Mike Kestner
-    // Copyright (C) 2004 Novell, Inc. http://www.novell.com
-    //
-
-    //
-    // Copyright (C) 2004 Novell, Inc (http://www.novell.com)
-    //
-    // Permission is hereby granted, free of charge, to any person obtaining
-    // a copy of this software and associated documentation files (the
-    // "Software"), to deal in the Software without restriction, including
-    // without limitation the rights to use, copy, modify, merge, publish,
-    // distribute, sublicense, and/or sell copies of the Software, and to
-    // permit persons to whom the Software is furnished to do so, subject to
-    // the following conditions:
-    // 
-    // The above copyright notice and this permission notice shall be
-    // included in all copies or substantial portions of the Software.
-    // 
-    // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-    // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-    // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-    // NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-    // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-    // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-    // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-    //
-
     /// <summary>
-    /// Stores an ordered pair of integer numbers, which specify a Height and Width and defines related functions.
+    /// Stores an ordered pair of integer numbers, which specify height and width and defines related functions.
     /// </summary>
     public struct Size
     {
-
-        // Private Height and width fields.
         private int width, height;
 
-        // -----------------------
-        // Public Shared Members
-        // -----------------------
-
         /// <summary>
-        ///	Empty Shared Field
+        /// An uninitialized Size structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	An uninitialized Size Structure.
-        /// </remarks>
-
         public static readonly Size Empty;
 
         /// <summary>
-        ///	Ceiling Shared Method
+        /// Adds two Size structures.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Produces a Size structure from a SizeF structure by
-        ///	taking the ceiling of the Width and Height properties.
-        /// </remarks>
+        /// <param name="sz1">First structure.</param>
+        /// <param name="sz2">Second structure.</param>
+        /// <returns>Size structure.</returns>
+        public static Size Add(Size sz1, Size sz2)
+        {
+            return new Size(sz1.Width + sz2.Width,
+                            sz1.Height + sz2.Height);
+        }
 
+        /// <summary>
+        /// Subtracts two Size structures.
+        /// </summary>
+        /// <param name="sz1">First structure.</param>
+        /// <param name="sz2">Second structure.</param>
+        /// <returns>Size structure.</returns>
+        public static Size Subtract(Size sz1, Size sz2)
+        {
+            return new Size(sz1.Width - sz2.Width,
+                            sz1.Height - sz2.Height);
+        }
+
+        /// <summary>
+        /// Addition of two Size structures.
+        /// </summary>
+        /// <param name="sz1">First structure.</param>
+        /// <param name="sz2">Second structure.</param>
+        /// <returns>Size structure.</returns>
+        public static Size operator +(Size sz1, Size sz2)
+        {
+            return Add(sz1, sz2);
+        }
+
+        /// <summary>
+        /// Subtracts two Size structures.
+        /// </summary>
+        /// <param name="sz1">First structure.</param>
+        /// <param name="sz2">Second structure.</param>
+        /// <returns>Size structure.</returns>
+        public static Size operator -(Size sz1, Size sz2)
+        {
+            return Subtract(sz1, sz2);
+        }
+
+        /// <summary>
+        /// Produces a Size structure from a SizeF structure by
+        ///	taking the ceiling of the Width and Height properties.
+        /// </summary>
+        /// <param name="value">Floating-point size structure.</param>
+        /// <returns>Integer size structure.</returns>
         public static Size Ceiling(SizeF value)
         {
             int w, h;
@@ -101,14 +131,11 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Round Shared Method
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Produces a Size structure from a SizeF structure by
+        /// Produces a Size structure from a SizeF structure by
         ///	rounding the Width and Height properties.
-        /// </remarks>
-
+        /// </summary>
+        /// <param name="value">Floating-point size structure.</param>
+        /// <returns>Integer size structure.</returns>
         public static Size Round(SizeF value)
         {
             int w, h;
@@ -122,14 +149,11 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Truncate Shared Method
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Produces a Size structure from a SizeF structure by
+        /// Produces a Size structure from a SizeF structure by
         ///	truncating the Width and Height properties.
-        /// </remarks>
-
+        /// </summary>
+        /// <param name="value">Floating-point size structure.</param>
+        /// <returns>Integer size structure.</returns>
         public static Size Truncate(SizeF value)
         {
             int w, h;
@@ -143,29 +167,13 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Addition Operator
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Addition of two Size structures.
-        /// </remarks>
-
-        public static Size operator +(Size sz1, Size sz2)
-        {
-            return new Size(sz1.Width + sz2.Width,
-                     sz1.Height + sz2.Height);
-        }
-
-        /// <summary>
-        ///	Equality Operator
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Compares two Size objects. The return value is
+        /// Compares two Size objects. The return value is
         ///	based on the equivalence of the Width and Height 
-        ///	properties of the two Sizes.
-        /// </remarks>
-
+        ///	properties of the two Size structures.
+        /// </summary>
+        /// <param name="sz1">First structure.</param>
+        /// <param name="sz2">Second structure.</param>
+        /// <returns>Size structure.</returns>
         public static bool operator ==(Size sz1, Size sz2)
         {
             return ((sz1.Width == sz2.Width) &&
@@ -173,15 +181,13 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Inequality Operator
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Compares two Size objects. The return value is
+        /// Compares two Size objects. The return value is
         ///	based on the equivalence of the Width and Height 
-        ///	properties of the two Sizes.
-        /// </remarks>
-
+        ///	properties of the two Size structures.
+        /// </summary>
+        /// <param name="sz1">First structure.</param>
+        /// <param name="sz2">Second structure.</param>
+        /// <returns>Size structure.</returns>
         public static bool operator !=(Size sz1, Size sz2)
         {
             return ((sz1.Width != sz2.Width) ||
@@ -189,60 +195,29 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Subtraction Operator
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Subtracts two Size structures.
-        /// </remarks>
-
-        public static Size operator -(Size sz1, Size sz2)
-        {
-            return new Size(sz1.Width - sz2.Width,
-                     sz1.Height - sz2.Height);
-        }
-
-        /// <summary>
-        ///	Size to Point Conversion
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Returns a Point based on the dimensions of a given 
+        /// Returns a Point based on the dimensions of a given 
         ///	Size. Requires explicit cast.
-        /// </remarks>
-
+        /// </summary>
+        /// <param name="size">Size structure.</param>
         public static explicit operator Point(Size size)
         {
             return new Point(size.Width, size.Height);
         }
 
         /// <summary>
-        ///	Size to SizeF Conversion
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Creates a SizeF based on the dimensions of a given 
+        /// Creates a SizeF based on the dimensions of a given 
         ///	Size. No explicit cast is required.
-        /// </remarks>
-
+        /// </summary>
+        /// <param name="p"></param>
         public static implicit operator SizeF(Size p)
         {
             return new SizeF(p.Width, p.Height);
         }
 
-
-        // -----------------------
-        // Public Constructors
-        // -----------------------
-
         /// <summary>
-        ///	Size Constructor
+        /// Creates a Size from a Point value.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Creates a Size from a Point value.
-        /// </remarks>
-
+        /// <param name="pt">Point.</param>
         public Size(Point pt)
         {
             width = pt.X;
@@ -250,88 +225,47 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	Size Constructor
+        /// Creates a Size from specified dimensions.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Creates a Size from specified dimensions.
-        /// </remarks>
-
+        /// <param name="width">Width.</param>
+        /// <param name="height">Height.</param>
         public Size(int width, int height)
         {
             this.width = width;
             this.height = height;
         }
 
-        // -----------------------
-        // Public Instance Members
-        // -----------------------
-
         /// <summary>
-        ///	IsEmpty Property
+        /// Indicates if both width and height are zero.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Indicates if both Width and Height are zero.
-        /// </remarks>
-
-        //[Browsable(false)]
         public bool IsEmpty
         {
-            get
-            {
-                return ((width == 0) && (height == 0));
-            }
+            get { return ((width == 0) && (height == 0)); }
         }
 
         /// <summary>
-        ///	Width Property
+        /// Gets or sets width value.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The Width coordinate of the Size.
-        /// </remarks>
-
         public int Width
         {
-            get
-            {
-                return width;
-            }
-            set
-            {
-                width = value;
-            }
+            get { return width; }
+            set { width = value; }
         }
 
         /// <summary>
-        ///	Height Property
+        /// Gets or sets height value.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The Height coordinate of the Size.
-        /// </remarks>
-
         public int Height
         {
-            get
-            {
-                return height;
-            }
-            set
-            {
-                height = value;
-            }
+            get { return height; }
+            set { height = value; }
         }
 
         /// <summary>
-        ///	Equals Method
+        /// Checks equivalence of this Size and another object.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Checks equivalence of this Size and another object.
-        /// </remarks>
-
+        /// <param name="obj">Other object.</param>
+        /// <returns>True if the provided object is equal to this structure, false otherwise.</returns>
         public override bool Equals(object obj)
         {
             if (!(obj is Size))
@@ -341,45 +275,21 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	GetHashCode Method
+        /// Calculates a hash value of the object.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Calculates a hashing value.
-        /// </remarks>
-
+        /// <returns>Hash code.</returns>
         public override int GetHashCode()
         {
             return width ^ height;
         }
 
         /// <summary>
-        ///	ToString Method
+        /// Formats the structure as a string in coordinate notation.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Formats the Size as a string in coordinate notation.
-        /// </remarks>
-
+        /// <returns>Structure represented as a string.</returns>
         public override string ToString()
         {
-            return String.Format("{{Width={0}, Height={1}}}", width, height);
+            return String.Format("{Width={0}, Height={1}}", width, height);
         }
-
-#if NET_2_0
-		public static Size Add (Size sz1, Size sz2)
-		{
-			return new Size (sz1.Width + sz2.Width, 
-					 sz1.Height + sz2.Height);
-
-		}
-
-		public static Size Subtract (Size sz1, Size sz2)
-		{
-			return new Size (sz1.Width - sz2.Width, 
-					 sz1.Height - sz2.Height);
-		}
-#endif
-
     }
 }

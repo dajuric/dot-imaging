@@ -26,8 +26,7 @@ using System.Runtime.InteropServices;
 namespace DotImaging.Primitives2D
 {
     /// <summary>
-    /// Ellipse structure.
-    /// See <see cref="Accord.Extensions.Math.Geometry.Box2D"/> also.
+    /// Ellipse structure containing center and ellipse size.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Ellipse

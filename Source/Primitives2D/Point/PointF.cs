@@ -1,11 +1,30 @@
-﻿//
-// System.Drawing.PointF.cs
+﻿#region Licence and Terms
+// DotImaging Framework
+// https://github.com/dajuric/dot-imaging
 //
+// Copyright © Darko Jurić, 2014-2015-2015 
+// darko.juric2@gmail.com
+//
+//   This program is free software: you can redistribute it and/or modify
+//   it under the terms of the GNU Lesser General Public License as published by
+//   the Free Software Foundation, either version 3 of the License, or
+//   (at your option) any later version.
+//
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU Lesser General Public License for more details.
+// 
+//   You should have received a copy of the GNU Lesser General Public License
+//   along with this program.  If not, see <https://www.gnu.org/licenses/lgpl.txt>.
+//
+
+//---------------------- original-----------------------
 // Author:
 //   Mike Kestner (mkestner@speakeasy.net)
 //
 // Copyright (C) 2001 Mike Kestner
-// Copyright (C) 2004,2006 Novell, Inc (http://www.novell.com)
+// Copyright (C) 2004, 2007 Novell, Inc (http://www.novell.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -25,12 +44,10 @@
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
+#endregion
 
 using System;
 using System.Globalization;
-using System.Runtime.InteropServices;
-//using System.ComponentModel;
 
 namespace DotImaging.Primitives2D
 {
@@ -39,123 +56,141 @@ namespace DotImaging.Primitives2D
     /// </summary>
     public struct PointF
     {
-        // Private x and y coordinate fields.
         private float x, y;
 
-        // -----------------------
-        // Public Shared Members
-        // -----------------------
-
         /// <summary>
-        ///	Empty Shared Field
+        /// An uninitialized PointF structure.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	An uninitialized PointF Structure.
-        /// </remarks>
-
         public static readonly PointF Empty;
 
         /// <summary>
-        ///	Addition Operator
+        /// Translates a PointF by the positive of a specified size.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Translates a PointF using the Width and Height
-        ///	properties of the given Size.
-        /// </remarks>
-
-        public static PointF operator +(PointF pt, Size sz)
+        /// <param name="pt">Point.</param>
+        /// <param name="sz">Offset.</param>
+        /// <returns>PointF structure.</returns>
+        public static PointF Add(PointF pt, SizeF sz)
         {
             return new PointF(pt.X + sz.Width, pt.Y + sz.Height);
         }
-#if NET_2_0
-		public static PointF operator + (PointF pt, SizeF sz)
-		{
-			return new PointF (pt.X + sz.Width, pt.Y + sz.Height);
-		}
-#endif
 
         /// <summary>
-        ///	Equality Operator
+        /// Translates a PointF by the negative of a specified size.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Compares two PointF objects. The return value is
+        /// <param name="pt">Point.</param>
+        /// <param name="sz">Offset.</param>
+        /// <returns>PointF structure.</returns>
+        public static PointF Subtract(PointF pt, SizeF sz)
+        {
+            return new PointF(pt.X - sz.Width, pt.Y - sz.Height);
+        }
+
+        /// <summary>
+        /// Translates a PointF by the positive of a specified size.
+        /// </summary>
+        /// <param name="pt">Point.</param>
+        /// <param name="sz">Offset.</param>
+        /// <returns>PointF structure.</returns>
+        public static PointF Add(PointF pt, Size sz)
+        {
+            return new PointF(pt.X + sz.Width, pt.Y + sz.Height);
+        }
+
+        /// <summary>
+        /// Translates a PointF by the negative of a specified size.
+        /// </summary>
+        /// <param name="pt">Point.</param>
+        /// <param name="sz">Offset.</param>
+        /// <returns>PointF structure.</returns>
+        public static PointF Subtract(PointF pt, Size sz)
+        {
+            return new PointF(pt.X - sz.Width, pt.Y - sz.Height);
+        }
+
+        /// <summary>
+        /// Translates a PointF by the positive of a specified size.
+        /// </summary>
+        /// <param name="pt">Point.</param>
+        /// <param name="sz">Offset.</param>
+        /// <returns>Translated point.</returns>
+        public static PointF operator +(PointF pt, SizeF sz)
+        {
+            return Add(pt, sz);
+        }
+
+        /// <summary>
+        /// Translates a PointF by the negative of a specified size.
+        /// </summary>
+        /// <param name="pt">Point.</param>
+        /// <param name="sz">Offset.</param>
+        /// <returns>Translated point.</returns>
+        public static PointF operator -(PointF pt, SizeF sz)
+        {
+            return Subtract(pt, sz);
+        }
+
+        /// <summary>
+        /// Translates a PointF by the positive of a specified size.
+        /// </summary>
+        /// <param name="pt">Point.</param>
+        /// <param name="sz">Offset.</param>
+        /// <returns>Translated point.</returns>
+        public static PointF operator +(PointF pt, Size sz)
+        {
+            return Add(pt, sz);
+        }
+
+        /// <summary>
+        /// Translates a PointF by the negative of a specified size.
+        /// </summary>
+        /// <param name="pt">Point.</param>
+        /// <param name="sz">Offset.</param>
+        /// <returns>Translated point.</returns>
+        public static PointF operator -(PointF pt, Size sz)
+        {
+            return Subtract(pt, sz);
+        }
+
+        /// <summary>
+        /// Compares two PointF objects. The return value is
         ///	based on the equivalence of the X and Y properties 
         ///	of the two points.
-        /// </remarks>
-
+        /// </summary>
+        /// <param name="left">First structure.</param>
+        /// <param name="right">Second structure.</param>
+        /// <returns>PointF structure.</returns>
         public static bool operator ==(PointF left, PointF right)
         {
             return ((left.X == right.X) && (left.Y == right.Y));
         }
 
         /// <summary>
-        ///	Inequality Operator
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Compares two PointF objects. The return value is
+        /// Compares two PointF objects. The return value is
         ///	based on the equivalence of the X and Y properties 
         ///	of the two points.
-        /// </remarks>
-
+        /// </summary>
+        /// <param name="left">First structure.</param>
+        /// <param name="right">Second structure.</param>
+        /// <returns>PointF structure.</returns>
         public static bool operator !=(PointF left, PointF right)
         {
             return ((left.X != right.X) || (left.Y != right.Y));
         }
 
         /// <summary>
-        ///	Subtraction Operator
+        /// Creates a PointF from a specified x,y coordinate pair.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Translates a PointF using the negation of the Width 
-        ///	and Height properties of the given Size.
-        /// </remarks>
-
-        public static PointF operator -(PointF pt, Size sz)
-        {
-            return new PointF(pt.X - sz.Width, pt.Y - sz.Height);
-        }
-#if NET_2_0
-		public static PointF operator - (PointF pt, SizeF sz)
-		{
-			return new PointF (pt.X - sz.Width, pt.Y - sz.Height);
-		}
-#endif
-
-        // -----------------------
-        // Public Constructor
-        // -----------------------
-
-        /// <summary>
-        ///	PointF Constructor
-        /// </summary>
-        ///
-        /// <remarks>
-        ///	Creates a PointF from a specified x,y coordinate pair.
-        /// </remarks>
-
+        /// <param name="x">X.</param>
+        /// <param name="y">Y.</param>
         public PointF(float x, float y)
         {
             this.x = x;
             this.y = y;
         }
 
-        // -----------------------
-        // Public Instance Members
-        // -----------------------
-
         /// <summary>
-        ///	IsEmpty Property
+        /// Indicates if both X and Y are zero.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Indicates if both X and Y are zero.
-        /// </remarks>
-
         public bool IsEmpty
         {
             get
@@ -165,53 +200,28 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	X Property
+        /// Gets or sets X value.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The X coordinate of the PointF.
-        /// </remarks>
-
         public float X
         {
-            get
-            {
-                return x;
-            }
-            set
-            {
-                x = value;
-            }
+            get { return x; }
+            set { x = value; }
         }
 
         /// <summary>
-        ///	Y Property
+        /// Gets or sets Y value.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	The Y coordinate of the PointF.
-        /// </remarks>
-
         public float Y
         {
-            get
-            {
-                return y;
-            }
-            set
-            {
-                y = value;
-            }
+            get { return y; }
+            set { y = value; }
         }
 
         /// <summary>
-        ///	Equals Method
+        /// Checks equivalence of this PointF and another object.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Checks equivalence of this PointF and another object.
-        /// </remarks>
-
+        /// <param name="obj">Other object.</param>
+        /// <returns>True if the provided object is equal to this structure, false otherwise.</returns>
         public override bool Equals(object obj)
         {
             if (!(obj is PointF))
@@ -221,53 +231,22 @@ namespace DotImaging.Primitives2D
         }
 
         /// <summary>
-        ///	GetHashCode Method
+        /// Calculates a hash value of the object.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Calculates a hashing value.
-        /// </remarks>
-
+        /// <returns>Hash code.</returns>
         public override int GetHashCode()
         {
             return (int)x ^ (int)y;
         }
 
         /// <summary>
-        ///	ToString Method
+        /// Formats the structure as a string in coordinate notation.
         /// </summary>
-        ///
-        /// <remarks>
-        ///	Formats the PointF as a string in coordinate notation.
-        /// </remarks>
-
+        /// <returns>Structure represented as a string.</returns>
         public override string ToString()
         {
-            return String.Format("{{X={0}, Y={1}}}", x.ToString(CultureInfo.CurrentCulture),
+            return String.Format("{X={0}, Y={1}}", x.ToString(CultureInfo.CurrentCulture),
                 y.ToString(CultureInfo.CurrentCulture));
         }
-
-#if NET_2_0
-		public static PointF Add (PointF pt, Size sz)
-		{
-			return new PointF (pt.X + sz.Width, pt.Y + sz.Height);
-		}
-		
-		public static PointF Add (PointF pt, SizeF sz)
-		{
-			return new PointF (pt.X + sz.Width, pt.Y + sz.Height);
-		}
-
-		public static PointF Subtract (PointF pt, Size sz)
-		{
-			return new PointF (pt.X - sz.Width, pt.Y - sz.Height);
-		}
-
-		public static PointF Subtract (PointF pt, SizeF sz)
-		{
-			return new PointF (pt.X - sz.Width, pt.Y - sz.Height);
-		}
-#endif
-
     }
 }
