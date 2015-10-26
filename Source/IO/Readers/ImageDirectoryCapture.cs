@@ -57,6 +57,8 @@ namespace DotImaging
         /// <exception cref="DirectoryNotFoundException">Directory can not be found.</exception>
         public ImageDirectoryCapture(string dirPath, string[] searchPatterns, bool useNaturalSorting = true, bool recursive = false)
         {
+            FileReadFunction = ImageIO.LoadUnchanged;
+
             if (Directory.Exists(dirPath) == false)
                 throw new DirectoryNotFoundException(String.Format("Dir: {0} cannot be found!", dirPath));
 
@@ -111,7 +113,7 @@ namespace DotImaging
                 if (this.Position >= this.Length)
                     return false;
 
-                image = ImageIO.LoadUnchanged(FileInfos[currentFrame].FullName);
+                image = FileReadFunction(FileInfos[currentFrame].FullName);
                 currentFrame++;
             }
 
@@ -168,6 +170,23 @@ namespace DotImaging
         public string CurrentImageName
         {
             get { return (this.Position < FileInfos.Length) ? FileInfos[this.Position].FullName : null; }
+        }
+
+        Func<string, IImage> fileReadFunction;
+        /// <summary>
+        /// Gets or sets the file read function.
+        /// <para>A default reading function loads image as it is (unchanged).</para>
+        /// </summary>
+        public Func<string, IImage> FileReadFunction
+        {
+            get { return fileReadFunction; }
+            set
+            {
+                if (value == null)
+                    new ArgumentNullException("File read function can not be null.");
+
+                fileReadFunction = value;
+            }
         }
 
         #endregion

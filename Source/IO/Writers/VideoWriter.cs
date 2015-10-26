@@ -137,6 +137,9 @@ namespace DotImaging
                 if (image.ColorInfo.ChannelCount == 1 && ColorFrames)
                     throw new Exception("Image must be color!");
 
+                if (image.ColorInfo.ChannelCount != 3 && ColorFrames)
+                    throw new Exception("Color images must have 3 channels!");
+
                 if (!image.Size.Equals(FrameSize))
                     throw new Exception("Input image must be the same size as defined frame size!");
 
