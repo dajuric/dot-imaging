@@ -1,4 +1,24 @@
-﻿
+﻿#region Licence and Terms
+// DotImaging Framework
+// https://github.com/dajuric/dot-imaging
+//
+// Copyright © Darko Jurić, 2014-2015
+// darko.juric2@gmail.com
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -44,7 +64,7 @@ namespace DotImaging
 
             using(var img = image.Lock())
             {
-                var iplImage = img.AsOpenCvImage();
+                var iplImage = img.AsCvIplImage();
                 CvCoreInvoke.cvRectangleR(&iplImage, rect, color.ToCvScalar(opacity), thickness, LineTypes.EightConnected, 0);
             }
         }
@@ -66,7 +86,7 @@ namespace DotImaging
         {
             using(var img = image.Lock())
             {
-                var iplImage = img.AsOpenCvImage();
+                var iplImage = img.AsCvIplImage();
                 CvCoreInvoke.cvPutText(&iplImage, text, botomLeftPoint, ref font, color.ToCvScalar());
             }
         }
@@ -92,7 +112,7 @@ namespace DotImaging
 
             using(var img = image.Lock())
             {
-                var iplImage = img.AsOpenCvImage();
+                var iplImage = img.AsCvIplImage();
 
                 for (int i = 0; i < vertices.Length; i++)
                 {
@@ -116,7 +136,7 @@ namespace DotImaging
         {
             using(var img = image.Lock())
             {
-                var iplImage = img.AsOpenCvImage();
+                var iplImage = img.AsCvIplImage();
                 CvCoreInvoke.cvEllipse(&iplImage, ellipse.Center.Round(), Size.Round(ellipse.Size), ellipse.Angle, 
                                           0, 2*System.Math.PI, color.ToCvScalar(), thickness, LineTypes.EightConnected, 0);
             }
@@ -140,7 +160,7 @@ namespace DotImaging
 
             using(var img = image.Lock())
             {
-                var iplImage = img.AsOpenCvImage();
+                var iplImage = img.AsCvIplImage();
 
                 //TODO - noncritical: implement with cvContour
                 CvCoreInvoke.cvPolyLine(&iplImage, new IntPtr[]{contourHandle.AddrOfPinnedObject()}, new int[]{ contour.Length}, 1, 
@@ -165,7 +185,7 @@ namespace DotImaging
         {
             using(var img = image.Lock())
             {
-                var iplImage = img.AsOpenCvImage();
+                var iplImage = img.AsCvIplImage();
                 var center = new Point(circle.X, circle.Y);
 
                 CvCoreInvoke.cvCircle(&iplImage, center, circle.Radius, color.ToCvScalar(), 
@@ -184,7 +204,7 @@ namespace DotImaging
         {
             using(var img = image.Lock())
             {
-                var iplImage = img.AsOpenCvImage();
+                var iplImage = img.AsCvIplImage();
 
                 foreach (var circle in circles)
 	            {

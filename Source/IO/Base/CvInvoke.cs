@@ -2,21 +2,20 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2015-2015 
+// Copyright © Darko Jurić, 2014-2015
 // darko.juric2@gmail.com
 //
-//   This program is free software: you can redistribute it and/or modify
-//   it under the terms of the GNU Lesser General Public License as published by
-//   the Free Software Foundation, either version 3 of the License, or
-//   (at your option) any later version.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU Lesser General Public License for more details.
-// 
-//   You should have received a copy of the GNU Lesser General Public License
-//   along with this program.  If not, see <https://www.gnu.org/licenses/lgpl.txt>.
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 //
 #endregion
 
@@ -137,121 +136,6 @@ namespace DotImaging
     }
 
     /// <summary>
-    /// Internal class for OpenCV highgui library invocation.
-    /// </summary>
-    internal static class CvHighGuiInvoke
-    {
-        public const CallingConvention CvCallingConvention = CallingConvention.Cdecl;
-        public const string OPENCV_CORE_LIBRARY = "opencv_core248";
-        public const string OPENCV_HIGHGUI_LIBRARY = "opencv_highgui248";
-
-        //[SuppressUnmanagedCodeSecurity]
-        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
-        public static extern IntPtr cvCreateCameraCapture(int index);
-
-        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
-        public static extern IntPtr cvCreateFileCapture([MarshalAs(UnmanagedType.LPStr)] string filename);
-
-
-        //[SuppressUnmanagedCodeSecurity]
-        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
-        public static extern void cvReleaseCapture(ref IntPtr capture);
-
-
-        //[SuppressUnmanagedCodeSecurity]
-        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
-        public static extern int cvGrabFrame(IntPtr capture);
-
-        //[SuppressUnmanagedCodeSecurity]
-        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
-        public static extern IntPtr cvQueryFrame(IntPtr capture);
-
-
-        //[SuppressUnmanagedCodeSecurity]
-        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
-        public static extern double cvGetCaptureProperty(IntPtr capture, CaptureProperty propertyId);
-
-        //[SuppressUnmanagedCodeSecurity]
-        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool cvSetCaptureProperty(IntPtr capture, CaptureProperty propertyId, double value);
-
-        public static Size GetImageSize(IntPtr capturePtr)
-        {
-            return new Size
-            {
-                Width = (int)CvHighGuiInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.FrameWidth),
-                Height = (int)CvHighGuiInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.FrameHeight)
-            };
-        }
-
-        public static bool SetImageSize(IntPtr capturePtr, Size newSize)
-        {
-            bool success;
-            success = CvHighGuiInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.FrameWidth, newSize.Width);
-            success &= CvHighGuiInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.FrameHeight, newSize.Height);
-
-            return success;
-        }
-
-
-        /************************************************ image IO ****************************************************/
-        //[SuppressUnmanagedCodeSecurity]
-        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
-        public unsafe static extern IplImage* cvLoadImage([MarshalAs(UnmanagedType.LPStr)] String filename, ImageLoadType loadType);
-
-        //[SuppressUnmanagedCodeSecurity]
-        [DllImport(OPENCV_CORE_LIBRARY, CallingConvention = CvCallingConvention)]
-        public unsafe static extern void cvReleaseImage(ref IplImage* image);
-
-        //[SuppressUnmanagedCodeSecurity]
-        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
-        public unsafe static extern bool cvSaveImage([MarshalAs(UnmanagedType.LPStr)] String filename, IplImage* image, IntPtr parameters);
-        /************************************************ image IO ****************************************************/
-
-        /************************************************ videoWriter IO ****************************************************/
-
-        /// <summary>
-        /// Creates video writer structure.
-        /// </summary>
-        /// <param name="filename">Name of the output video file.</param>
-        /// <param name="fourcc">4-character code of codec used to compress the frames. See <see cref="VideoCodec"/> class.</param>
-        /// <param name="fps">Frame rate of the created video stream. </param>
-        /// <param name="frameSize">Size of video frames.</param>
-        /// <param name="isColor">If true, the encoder will expect and encode color frames, otherwise it will work with grayscale frames </param>
-        /// <returns>The video writer</returns>
-        //[SuppressUnmanagedCodeSecurity]
-        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
-        public static extern IntPtr cvCreateVideoWriter([MarshalAs(UnmanagedType.LPStr)] String filename, int fourcc, double fps, Size frameSize, [MarshalAs(UnmanagedType.Bool)] bool isColor);
-
-        /// <summary>
-        /// Writes/appends one frame to video file.
-        /// </summary>
-        /// <param name="writer">video writer structure.</param>
-        /// <param name="image">the written frame</param>
-        /// <returns>True on success, false otherwise</returns>
-        //[SuppressUnmanagedCodeSecurity]
-        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool cvWriteFrame(IntPtr writer, IntPtr image);
-
-        /// <summary>
-        /// Finishes writing to video file and releases the structure.
-        /// </summary>
-        /// <param name="writer">pointer to video file writer structure</param>
-        //[SuppressUnmanagedCodeSecurity]
-        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
-        public static extern void cvReleaseVideoWriter(ref IntPtr writer);
-
-        /************************************************ videoWriter IO ****************************************************/
-
-        static CvHighGuiInvoke()
-        {
-            Platform.AddDllSearchPath();
-        }
-    }
-
-    /// <summary>
     /// OpenCV capture properties for camera and video.
     /// </summary>
     internal enum CaptureProperty: int
@@ -305,5 +189,140 @@ namespace DotImaging
         /// Loads the image of any depth
         /// </summary>
         AnyDepth = 2
+    }
+
+    /// <summary>
+    /// Internal class for OpenCV core / highgui library invocation.
+    /// </summary>
+    internal static class CvInvoke
+    {
+        public const CallingConvention CvCallingConvention = CallingConvention.Cdecl;
+        public const string OPENCV_CORE_LIBRARY = "opencv_core248";
+        public const string OPENCV_HIGHGUI_LIBRARY = "opencv_highgui248";
+
+        static CvInvoke()
+        {
+            Platform.AddDllSearchPath();
+        }
+
+        #region Core
+
+        [DllImport(OPENCV_CORE_LIBRARY, CallingConvention = CvCallingConvention)]
+        public unsafe static extern void cvReleaseMat(ref CvMat* mat);
+
+        //[SuppressUnmanagedCodeSecurity]
+        [DllImport(OPENCV_CORE_LIBRARY, CallingConvention = CvCallingConvention)]
+        public unsafe static extern void cvReleaseImage(ref IplImage* image);
+        #endregion
+
+        #region Video reader
+
+        //[SuppressUnmanagedCodeSecurity]
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        public static extern IntPtr cvCreateCameraCapture(int index);
+
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        public static extern IntPtr cvCreateFileCapture([MarshalAs(UnmanagedType.LPStr)] string filename);
+
+
+        //[SuppressUnmanagedCodeSecurity]
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        public static extern void cvReleaseCapture(ref IntPtr capture);
+
+
+        //[SuppressUnmanagedCodeSecurity]
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        public static extern int cvGrabFrame(IntPtr capture);
+
+        //[SuppressUnmanagedCodeSecurity]
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        public static extern IntPtr cvQueryFrame(IntPtr capture);
+
+
+        //[SuppressUnmanagedCodeSecurity]
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        public static extern double cvGetCaptureProperty(IntPtr capture, CaptureProperty propertyId);
+
+        //[SuppressUnmanagedCodeSecurity]
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool cvSetCaptureProperty(IntPtr capture, CaptureProperty propertyId, double value);
+
+        public static Size GetImageSize(IntPtr capturePtr)
+        {
+            return new Size
+            {
+                Width = (int)CvInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.FrameWidth),
+                Height = (int)CvInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.FrameHeight)
+            };
+        }
+
+        public static bool SetImageSize(IntPtr capturePtr, Size newSize)
+        {
+            bool success;
+            success = CvInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.FrameWidth, newSize.Width);
+            success &= CvInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.FrameHeight, newSize.Height);
+
+            return success;
+        }
+
+        #endregion
+
+        #region Video writer
+
+        /// <summary>
+        /// Creates video writer structure.
+        /// </summary>
+        /// <param name="filename">Name of the output video file.</param>
+        /// <param name="fourcc">4-character code of codec used to compress the frames. See <see cref="VideoCodec"/> class.</param>
+        /// <param name="fps">Frame rate of the created video stream. </param>
+        /// <param name="frameSize">Size of video frames.</param>
+        /// <param name="isColor">If true, the encoder will expect and encode color frames, otherwise it will work with grayscale frames </param>
+        /// <returns>The video writer</returns>
+        //[SuppressUnmanagedCodeSecurity]
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        public static extern IntPtr cvCreateVideoWriter([MarshalAs(UnmanagedType.LPStr)] String filename, int fourcc, double fps, Size frameSize, [MarshalAs(UnmanagedType.Bool)] bool isColor);
+
+        /// <summary>
+        /// Writes/appends one frame to video file.
+        /// </summary>
+        /// <param name="writer">video writer structure.</param>
+        /// <param name="image">the written frame</param>
+        /// <returns>True on success, false otherwise</returns>
+        //[SuppressUnmanagedCodeSecurity]
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool cvWriteFrame(IntPtr writer, IntPtr image);
+
+        /// <summary>
+        /// Finishes writing to video file and releases the structure.
+        /// </summary>
+        /// <param name="writer">pointer to video file writer structure</param>
+        //[SuppressUnmanagedCodeSecurity]
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        public static extern void cvReleaseVideoWriter(ref IntPtr writer);
+        #endregion
+
+        #region Image IO
+
+        //[SuppressUnmanagedCodeSecurity]
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        public unsafe static extern IplImage* cvLoadImage([MarshalAs(UnmanagedType.LPStr)] String filename, ImageLoadType loadType);
+
+        //[SuppressUnmanagedCodeSecurity]
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        public unsafe static extern bool cvSaveImage([MarshalAs(UnmanagedType.LPStr)] String filename, IplImage* image, IntPtr parameters);
+
+        public const int CV_IMWRITE_JPEG_QUALITY = 1;
+        public const int CV_IMWRITE_PNG_COMPRESSION = 16;
+        public const int CV_IMWRITE_PXM_BINARY = 32;
+
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        public unsafe static extern CvMat* cvEncodeImage([MarshalAs(UnmanagedType.LPStr)] string ext, CvMat* image, int* parameters = null);
+
+        [DllImport(OPENCV_HIGHGUI_LIBRARY, CallingConvention = CvCallingConvention)]
+        public unsafe static extern CvMat* cvDecodeImageM(void* buffer, ImageLoadType loadType);
+
+        #endregion Image IO
     }
 }

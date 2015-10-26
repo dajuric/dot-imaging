@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{80058A54-6223-480C-AA19-F99E7AE593F3}"
 EndProject
@@ -63,6 +63,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5A6626
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleCameraCapture", "Samples\MultipleCameraCapture\MultipleCameraCapture.csproj", "{C30A145E-02FB-49B4-8F3E-6673AF9D121A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -126,6 +128,10 @@ Global
 		{F46115E9-C4FC-4355-93AE-BE8E96B236C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F46115E9-C4FC-4355-93AE-BE8E96B236C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F46115E9-C4FC-4355-93AE-BE8E96B236C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C30A145E-02FB-49B4-8F3E-6673AF9D121A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C30A145E-02FB-49B4-8F3E-6673AF9D121A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C30A145E-02FB-49B4-8F3E-6673AF9D121A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C30A145E-02FB-49B4-8F3E-6673AF9D121A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,5 +152,6 @@ Global
 		{8F4ADF98-76E1-4893-A458-486542EED521} = {80058A54-6223-480C-AA19-F99E7AE593F3}
 		{D5767A78-E50A-4B5D-94F5-44A59B87F944} = {80058A54-6223-480C-AA19-F99E7AE593F3}
 		{F46115E9-C4FC-4355-93AE-BE8E96B236C9} = {80058A54-6223-480C-AA19-F99E7AE593F3}
+		{C30A145E-02FB-49B4-8F3E-6673AF9D121A} = {05BDC895-7F7B-4B6F-8D69-E7916837092D}
 	EndGlobalSection
 EndGlobal

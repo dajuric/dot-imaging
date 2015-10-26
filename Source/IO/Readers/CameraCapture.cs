@@ -2,21 +2,20 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2015-2015 
+// Copyright © Darko Jurić, 2014-2015
 // darko.juric2@gmail.com
 //
-//   This program is free software: you can redistribute it and/or modify
-//   it under the terms of the GNU Lesser General Public License as published by
-//   the Free Software Foundation, either version 3 of the License, or
-//   (at your option) any later version.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU Lesser General Public License for more details.
-// 
-//   You should have received a copy of the GNU Lesser General Public License
-//   along with this program.  If not, see <https://www.gnu.org/licenses/lgpl.txt>.
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 //
 #endregion
 
@@ -26,7 +25,7 @@ using DotImaging.Primitives2D;
 namespace DotImaging
 {
     /// <summary>
-    /// Represents camera streamable source and provides functions and properties to access a device in a streamable way.
+    /// Represents camera stream-able source and provides functions and properties to access a device in a stream-able way.
     /// </summary>
     public class CameraCapture: VideoCaptureBase
     {
@@ -52,7 +51,7 @@ namespace DotImaging
             if (capturePtr != IntPtr.Zero)
                 return;
             
-            capturePtr = CvHighGuiInvoke.cvCreateCameraCapture(cameraIdx);
+            capturePtr = CvInvoke.cvCreateCameraCapture(cameraIdx);
             if (capturePtr == IntPtr.Zero)
                 throw new Exception("Cannot open camera stream! It seems that camera device can not be found.");
         }
@@ -63,8 +62,8 @@ namespace DotImaging
         /// </summary>
         public double Brightness
         {
-            get { return CvHighGuiInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.Brightness); }
-            set { CvHighGuiInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.Brightness, value); }
+            get { return CvInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.Brightness); }
+            set { CvInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.Brightness, value); }
         }
 
         /// <summary>
@@ -73,8 +72,8 @@ namespace DotImaging
         /// </summary>
         public double Contrast
         {
-            get { return CvHighGuiInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.Contrast); }
-            set { CvHighGuiInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.Contrast, value); }
+            get { return CvInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.Contrast); }
+            set { CvInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.Contrast, value); }
         }
 
         /// <summary>
@@ -83,8 +82,8 @@ namespace DotImaging
         /// </summary>
         public double Exposure
         {
-            get { return CvHighGuiInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.Exposure); }
-            set { CvHighGuiInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.Exposure, value); }
+            get { return CvInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.Exposure); }
+            set { CvInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.Exposure, value); }
         }
 
         /// <summary>
@@ -93,8 +92,8 @@ namespace DotImaging
         /// </summary>
         public double Gain
         {
-            get { return CvHighGuiInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.Gain); }
-            set { CvHighGuiInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.Gain, value); }
+            get { return CvInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.Gain); }
+            set { CvInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.Gain, value); }
         }
 
         /// <summary>
@@ -103,8 +102,8 @@ namespace DotImaging
         /// </summary>
         public double Hue
         {
-            get { return CvHighGuiInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.Hue); }
-            set { CvHighGuiInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.Hue, value); }
+            get { return CvInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.Hue); }
+            set { CvInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.Hue, value); }
         }
 
         /// <summary>
@@ -113,8 +112,8 @@ namespace DotImaging
         /// </summary>
         public double Saturation
         {
-            get { return CvHighGuiInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.Saturation); }
-            set { CvHighGuiInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.Saturation, value); }
+            get { return CvInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.Saturation); }
+            set { CvInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.Saturation, value); }
         }
 
         /// <summary>
@@ -122,8 +121,8 @@ namespace DotImaging
         /// </summary>
         public new Size FrameSize
         {
-            get { return CvHighGuiInvoke.GetImageSize(capturePtr); }
-            set { CvHighGuiInvoke.SetImageSize(capturePtr, value); }
+            get { return CvInvoke.GetImageSize(capturePtr); }
+            set { CvInvoke.SetImageSize(capturePtr, value); }
         }
 
         /// <summary>
@@ -132,8 +131,33 @@ namespace DotImaging
         /// </summary>
         public new double FrameRate
         {
-            get { return CvHighGuiInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.FPS); }
-            set { CvHighGuiInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.FPS, value); }
+            get { return CvInvoke.cvGetCaptureProperty(capturePtr, CaptureProperty.FPS); }
+            set { CvInvoke.cvSetCaptureProperty(capturePtr, CaptureProperty.FPS, value); }
+        }
+
+        /// <summary>
+        /// Gets the available device count.
+        /// <para>Warning: the function closes existing streams, so use it before any camera capture object is created.</para>
+        /// </summary>
+        public static int CameraCount
+        {
+            get
+            {
+                int cameraIdx = 0;
+                while (true)
+                {
+                    var capturePtr = CvInvoke.cvCreateCameraCapture(cameraIdx);
+                    if (capturePtr != IntPtr.Zero)
+                    {
+                        CvInvoke.cvReleaseCapture(ref capturePtr);
+                        cameraIdx++;
+                    }
+                    else
+                        break;
+                }
+
+                return cameraIdx;
+            }
         }
     }
 }

@@ -12,12 +12,11 @@
     <iconUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deployment/Logo/logo-small.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>
-      Provides unified API for IO video access: web-camera support, various video-format reading / writing, image-directory reader and functions for image reading and writing.
-      All operations on image streams are standard stream operations and do not depend on actual video source.
-      The library is made in platform-abstract fashion.
+      Unified stream-like platform-abstract API for IO video access: web-camera support, various video-format reading / writing, image-directory reader.
+      Image loading/saving (file or in-memory).
     </description>
-    <summary>Provides unified API for IO video and image access.</summary>
-    <tags>video-capture image-IO</tags>
+    <summary>Loading and saving images and image streams (file, in-memory, camera, video, directory).</summary>
+    <tags>image-encode, image-decode, image-load, image-save, image-directory, camera-capture, multiple-camera-capture, video-capture, video-write</tags>
 
     <dependencies>      
       <dependency id="DotImaging.GenericImage"         version="$version$" />

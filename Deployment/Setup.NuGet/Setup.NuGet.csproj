@@ -32,6 +32,9 @@
   <ItemGroup>
     <None Include="BitmapInterop\BitmapInterop.nuspec" />
     <None Include="Build.cmd" />
+    <None Include="Core\Platform.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Linq\Linq.nuspec">
       <SubType>Designer</SubType>
     </None>
@@ -57,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BitmapInterop\readmeBitmapInterop.txt" />
+    <Content Include="Core\readmePlatform.txt" />
     <Content Include="Drawing\readmeDrawing.txt" />
     <Content Include="GenericImage\readmeGenericImage.txt" />
     <Content Include="IO\readmeIO.txt" />

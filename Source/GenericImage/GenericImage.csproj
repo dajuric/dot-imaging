@@ -54,7 +54,8 @@
     <Compile Include="Extensions\Copy.cs" />
     <Compile Include="Extensions\Convert.cs" />
     <Compile Include="Extensions\ImageFlipping.cs" />
-    <Compile Include="Extensions\Interop\IplImageConversions.cs" />
+    <Compile Include="Extensions\Interop\CvMat.cs" />
+    <Compile Include="Extensions\Interop\IplImage.cs" />
     <Compile Include="Extensions\SpatialConvolution.cs" />
     <Compile Include="Slice2D.cs" />
     <Compile Include="ParallelLauncher.cs" />
