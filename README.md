@@ -5,8 +5,6 @@
 <p align="center">
      <a href="https://ci.appveyor.com/project/dajuric/dot-imaging"> <img src="https://ci.appveyor.com/api/projects/status/jd7i10im85jg0bxf?svg=true" alt="Build status"/>  </a>
      
-    <img src="https://img.shields.io/badge/Build-passing-brightgreen.svg?style=flat-square" alt="Build passing"/>
-    
     <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v3.0.2-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
 </p>
 
