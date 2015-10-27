@@ -14,7 +14,7 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 
 + leverages existing .NET structures
 + portable - designed for ASP.NET vNext
-+ lightweight (no 3rd party dependencies), but powerful
++ lightweight (no 3rd party managed libraries)
 + so simple, you don't need a help file
 
 ## Libraries / NuGet packages
