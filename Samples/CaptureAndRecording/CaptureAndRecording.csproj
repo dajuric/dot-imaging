@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{867ED0BD-FBFB-4C0C-A34B-D71361874AA0}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CaptureAndRecording</RootNamespace>
     <AssemblyName>CaptureAndRecording</AssemblyName>
@@ -31,24 +31,23 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Eto, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Eto.Forms.2.2.0\lib\net45\Eto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Eto.WinForms, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Eto.Platform.Windows.2.2.0\lib\net45\Eto.WinForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CaptureAndRecordingDemo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CaptureAndRecordingDemo.Designer.cs">
-      <DependentUpon>CaptureAndRecordingDemo.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CaptureAndRecordingDemo.resx">
-      <DependentUpon>CaptureAndRecordingDemo.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -58,6 +57,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -69,10 +69,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\BitmapInterop\BitmapInterop.csproj">
-      <Project>{ce222a84-b03b-4053-8ba4-f237063382f2}</Project>
-      <Name>BitmapInterop</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Source\GenericImage\GenericImage.csproj">
       <Project>{3cf8f155-3da1-4529-9b28-d409e86ed4e2}</Project>
       <Name>GenericImage</Name>
@@ -84,6 +80,10 @@
     <ProjectReference Include="..\..\Source\Primitives2D\Primitives2D.csproj">
       <Project>{d5767a78-e50a-4b5d-94f5-44a59b87f944}</Project>
       <Name>Primitives2D</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\UI\UI.csproj">
+      <Project>{8ff4684e-0aa5-4169-a6b1-c54969f8fcb8}</Project>
+      <Name>UI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

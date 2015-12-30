@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2015
+// Copyright © Darko Jurić, 2014-2016
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,25 +19,48 @@
 //
 #endregion
 
+using DotImaging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.IO;
 
 namespace CaptureAndRecording
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CaptureAndRecordingDemo());
+           var reader = new CameraCapture(0); //capture from camera
+           //reader = new FileCapture(Path.Combine(getResourceDir(), "Welcome.mp4"));
+           reader.Open();
+
+           var writer = new VideoWriter(@"output.avi", reader.FrameSize, /*reader.FrameRate does not work Cameras*/ 30); //TODO: bug: FPS does not work for cameras
+           writer.Open();
+
+            Bgr<byte>[,] frame = null;
+            do
+            {
+                reader.ReadTo(ref frame);
+                if (frame == null)
+                    break;
+
+                using (var uFrame = frame.Lock())
+                { writer.Write(uFrame); }
+
+                frame.Show(scaleForm: true);
+            }
+            while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
+
+            reader.Dispose();
+            writer.Dispose();
+        }
+
+        private static string getResourceDir()
+        {
+            var directoryInfo = new DirectoryInfo(Environment.CurrentDirectory).Parent;
+            if (directoryInfo != null)
+                return Path.Combine(directoryInfo.FullName, "Resources");
+
+            return null;
         }
     }
 }

@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2015
+// Copyright © Darko Jurić, 2014-2016
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,10 @@
 // limitations under the License.
 //
 #endregion
+
+#if DNXCORE50
+using System.Runtime.InteropServices;
+#endif
 
 using System;
 using System.IO;
@@ -55,12 +59,20 @@ namespace DotImaging
 
         /// <summary>
         /// Gets operating system name.
-        /// <para>
-        /// Taken from: <a href="http://stackoverflow.com/questions/10138040/how-to-detect-properly-windows-linux-mac-operating-systems"/> and modified.
-        /// </para>
         /// </summary>
         private static OperatingSystem getRunningPlatform()
-        { 
+        {
+#if DNXCORE50
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                return OperatingSystem.Windows;
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                return OperatingSystem.Linux;
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                return OperatingSystem.MacOS;
+            else
+                throw new PlatformNotSupportedException();
+#else 
+            //Taken from: <a href="http://stackoverflow.com/questions/10138040/how-to-detect-properly-windows-linux-mac-operating-systems"/> and modified.
             switch (Environment.OSVersion.Platform)
             {
                 case PlatformID.Unix:
@@ -80,6 +92,7 @@ namespace DotImaging
                 default:
                     return OperatingSystem.Windows;
             }
+#endif
         }
 
         /// <summary>
@@ -89,6 +102,14 @@ namespace DotImaging
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Gets whether the process is the 64-bit process.
+        /// </summary>
+        public static bool Is64BitProcess
+        {
+            get { return IntPtr.Size == sizeof(long); }
         }
 
         /// <summary>
@@ -104,7 +125,7 @@ namespace DotImaging
             switch (RunningPlatform)
             {
                 case OperatingSystem.Windows:
-                    path = "PATH";  
+                    path = "PATH";
                     break;
                 case OperatingSystem.MacOS:
                     path = "LD_LIBRARY_PATH";
@@ -132,7 +153,7 @@ namespace DotImaging
             var loadDirectory = Path.Combine(baseDirectory, Platform.RunningPlatform.ToString());
 
             if (Platform.RunningPlatform == Platform.OperatingSystem.Windows)
-                loadDirectory = Path.Combine(loadDirectory, Environment.Is64BitProcess ? "x64" : "x86");
+                loadDirectory = Path.Combine(loadDirectory, Is64BitProcess ? "x64" : "x86");
 
             return loadDirectory;
         }
@@ -145,7 +166,7 @@ namespace DotImaging
         /// <para>  Linux: /UnmanagedLibraries/Linux/</para>
         /// </summary>
         public static void AddDllSearchPath()
-        { 
+        {
             var dllSearchPathPath = GetDefaultDllSearchPath(Directory.GetCurrentDirectory());
             AddDllSearchPath(dllSearchPathPath);
         }

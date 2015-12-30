@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="BitmapInterop\BitmapInterop.nuspec" />
+    <None Include="BitmapSourceInterop\BitmapSourceInterop.nuspec" />
     <None Include="Build.cmd" />
     <None Include="Core\Platform.nuspec">
       <SubType>Designer</SubType>
@@ -53,6 +54,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="GenericImage\GenericImage.nuspec" />
+    <None Include="UI\UI.nuspec" />
     <None Include="UpdateNuGet.cmd" />
   </ItemGroup>
   <ItemGroup>
@@ -60,11 +62,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BitmapInterop\readmeBitmapInterop.txt" />
+    <Content Include="BitmapSourceInterop\readmeBitmapSourceInterop.txt" />
     <Content Include="Core\readmePlatform.txt" />
     <Content Include="Drawing\readmeDrawing.txt" />
     <Content Include="GenericImage\readmeGenericImage.txt" />
     <Content Include="IO\readmeIO.txt" />
     <Content Include="Linq\readmeLinq.txt" />
+    <Content Include="UI\readmeUI.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- Redefine targets (do nothing) -->

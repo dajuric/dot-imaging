@@ -1,0 +1,159 @@
+﻿#region Licence and Terms
+// DotImaging Framework
+// https://github.com/dajuric/dot-imaging
+//
+// Copyright © Darko Jurić, 2014-2016
+// darko.juric2@gmail.com
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+#endregion
+
+using Eto;
+using Eto.Forms;
+using System;
+using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Threading;
+
+namespace DotImaging
+{
+    /// <summary>
+    /// Form collection management.
+    /// </summary>
+    internal static class FormCollection
+    {
+        #region Base
+
+        /// <summary>
+        /// Timeout for application initialization
+        /// </summary>
+        const int ApplicationTimeout = 10000;
+
+        /// <summary>
+        /// Initializes the UI application.
+        /// </summary>
+        public static void Initialize()
+        {
+            if (Platform.Instance != null)
+                return; //it is already initialized
+
+            Platform platform = null;
+            try { platform = Platform.Detect; }
+            catch (Exception ex) { throw ex; }
+
+            Platform.Initialize(platform);
+
+            if (platform.Supports<Application>())
+            {
+                var ev = new ManualResetEvent(false);
+                Exception exception = null;
+
+                Thread thread = new Thread(() =>
+                {
+                    try
+                    {
+                        var app = new Application(platform);
+                        app.Initialized += (sender, e) => ev.Set();
+                        app.Run();
+                    }
+                    catch (Exception ex)
+                    {
+                        //Debug.WriteLine("Error running test application: {0}", ex);
+                        exception = ex;
+                        ev.Set();
+                    }
+                });
+
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();
+
+                if (!ev.WaitOne(ApplicationTimeout))
+                    throw new Exception("Could not initialize application");
+                if (exception != null)
+                    ExceptionDispatchInfo.Capture(exception).Throw();
+            }
+        }
+
+        static TForm createAndShow<TForm>(Func<TForm> creator)
+            where TForm : Form
+        {
+            var ev = new ManualResetEvent(false);
+            var application = Application.Instance;
+            Exception exception = null;
+
+            TForm form = null;
+
+            Action run = () =>
+            {
+                try
+                {
+                    if (!Platform.Instance.Supports<Form>())
+                        throw new NotSupportedException("This platform does not support IForm");
+
+                    form = creator();
+                    form.Show();
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                    ev.Set();
+                }
+            };
+
+            application.Invoke(run);
+
+            if (exception != null)
+                ExceptionDispatchInfo.Capture(exception).Throw();
+
+            return form;
+        }
+
+        /// <summary>
+        /// Creates a new form or updates the existing one based on window title used as ID.
+        /// </summary>
+        /// <typeparam name="TForm">Form type.</typeparam>
+        /// <param name="creator">Form creator function.</param>
+        /// <param name="update">Form update function.</param>
+        /// <param name="windowTitle">Window title (ID).</param>
+        public static void CreateOrUpdate<TForm>(Func<TForm> creator, Action<TForm> update, string windowTitle = "")
+            where TForm : Form
+        {
+            Application.Instance.Invoke(() =>
+            {
+                var form = Application.Instance.Windows.Where(x => x.Title == windowTitle).FirstOrDefault();
+
+                if (form == null)
+                    form = createAndShow(creator);
+
+                if (form != null)
+                {
+                    if (form is TForm == false)
+                        return;
+
+                    update(form as TForm);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Closes all form windows if displayed.
+        /// </summary>
+        public static void CloseAll()
+        {
+            Application.Instance.Invoke(() => Application.Instance.Quit());
+        }
+
+        #endregion
+    }
+}

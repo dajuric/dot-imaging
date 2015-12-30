@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2015
+// Copyright © Darko Jurić, 2014-2016
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,25 +19,39 @@
 //
 #endregion
 
+using DotImaging;
+using DotImaging.Primitives2D;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 namespace Capture
 {
-    static class Program
+    class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CaptureDemo());
+            Console.WriteLine("Press ESC to stop playing");
+
+            var reader = new CameraCapture(0); //capture from camera
+            (reader as CameraCapture).FrameSize = new Size(640, 480);
+
+            //reader = new FileCapture(Path.Combine(getResourceDir(), "Welcome.mp4")); //capture from video
+            //reader = new ImageDirectoryCapture(Path.Combine(getResourceDir(), "Sequence"), "*.jpg");
+            reader.Open();
+
+            Bgr<byte>[,] frame = null;
+            do
+            {
+                reader.ReadTo(ref frame);
+                if (frame == null)
+                    break;
+
+                frame.Show(scaleForm: true);
+            }
+            while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
+
+            reader.Dispose();
         }
     }
 }

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5F5FE08B-37C1-4C62-BB1A-DFFF61B3516A}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BasicImageOperations</RootNamespace>
     <AssemblyName>BasicImageOperations</AssemblyName>
@@ -35,23 +35,23 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Eto, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Eto.Forms.2.2.0\lib\net45\Eto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Eto.Wpf, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Eto.Platform.Wpf.2.2.0\lib\net45\Eto.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicImageOperationsDemo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BasicImageOperationsDemo.Designer.cs">
-      <DependentUpon>BasicImageOperationsDemo.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="BasicImageOperationsDemo.resx">
-      <DependentUpon>BasicImageOperationsDemo.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -61,6 +61,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -72,17 +73,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\BitmapInterop\BitmapInterop.csproj">
-      <Project>{ce222a84-b03b-4053-8ba4-f237063382f2}</Project>
-      <Name>BitmapInterop</Name>
+    <ProjectReference Include="..\..\Source\Drawing\Drawing.csproj">
+      <Project>{00a17086-903d-4047-bfb2-c7b4aa110b97}</Project>
+      <Name>Drawing</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Source\GenericImage\GenericImage.csproj">
       <Project>{3cf8f155-3da1-4529-9b28-d409e86ed4e2}</Project>
       <Name>GenericImage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Source\Drawing\Drawing.csproj">
-      <Project>{00a17086-903d-4047-bfb2-c7b4aa110b97}</Project>
-      <Name>Drawing</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Source\IO\IO.csproj">
       <Project>{ed70a44e-9443-4a28-9b95-31299f8b2d08}</Project>
@@ -91,6 +88,10 @@
     <ProjectReference Include="..\..\Source\Primitives2D\Primitives2D.csproj">
       <Project>{d5767a78-e50a-4b5d-94f5-44a59b87f944}</Project>
       <Name>Primitives2D</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\UI\UI.csproj">
+      <Project>{8ff4684e-0aa5-4169-a6b1-c54969f8fcb8}</Project>
+      <Name>UI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

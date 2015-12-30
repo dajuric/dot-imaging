@@ -36,9 +36,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -48,6 +51,10 @@
     <ProjectReference Include="..\..\Source\BitmapInterop\BitmapInterop.csproj">
       <Project>{ce222a84-b03b-4053-8ba4-f237063382f2}</Project>
       <Name>BitmapInterop</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\BitmapSourceInterop\BitmapSourceInterop.csproj">
+      <Project>{df710a32-937e-4609-b803-1d3d67f2be6e}</Project>
+      <Name>BitmapSourceInterop</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Source\GenericImage\GenericImage.csproj">
       <Project>{3cf8f155-3da1-4529-9b28-d409e86ed4e2}</Project>

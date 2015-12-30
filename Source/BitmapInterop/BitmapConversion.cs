@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2015
+// Copyright © Darko Jurić, 2014-2016
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,12 +22,11 @@
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 
 namespace DotImaging
 {
     /// <summary>
-    /// Provides extension methods for converting generic image into <see cref="System.Drawing.Bitmap"/>.
+    /// Provides conversion extension methods between generic image and <see cref="System.Drawing.Bitmap"/>.
     /// </summary>
     public static class BitmapConversionExtensions
     {

@@ -1,5 +1,4 @@
-﻿ Provides the portable way to determine the execution platform. 
- Provides some additional platform related interoperability functions.
+﻿Provides the portable way to determine the execution platform + interoperability functions. 
 
 1)
 Console.WriteLine(Platform.RunningPlatform); //Windows, Linux, MacOS

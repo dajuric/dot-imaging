@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2015
+// Copyright © Darko Jurić, 2014-2016
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -55,14 +55,12 @@ namespace ImageExtractor
             var reader = new FileCapture(fileName);
             reader.Open();
 
-            Console.WriteLine("Extracting video frames - {0}...", fileNameNoExt);
-
             reader.SaveFrames(outputDir, "{0}.jpg", (percentage) =>
             {
-                Console.Write("\r Completed: {0} %", (int)(percentage * 100));
+                ((double)percentage).Progress(message: "Extracting " + fileNameNoExt);
             });
 
-            Console.WriteLine();
+            UI.CloseAll();
         }
 
         private static IEnumerable<string> enumerateFiles(string fileMask)

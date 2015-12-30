@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2015
+// Copyright © Darko Jurić, 2014-2016
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace GenericImageInteropDemo
 {
@@ -60,6 +61,17 @@ namespace GenericImageInteropDemo
             var bmp = img.ToBitmap();
             //from Bitmap
             var imgFromBmp = bmp.ToArray();
+
+            //***********************************************************************************************************************************************************************
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("*********** Image<,> <=> BitmapSource conversions (BitmapSourceInterop) ****************"); Console.ResetColor();
+            //to generic-image
+            var colorBitmap = new BitmapImage(new Uri("http://www.online-image-editor.com//styles/2014/images/example_image.png"));
+            Bgra<byte>[,] colorImg = colorBitmap.ToArray<Bgra<byte>>();
+
+            //to BitmapSource
+            Gray<byte>[,] grayImg = img.ToGray();
+            BitmapSource grayBitmap = grayImg.ToBitmapSource();
         }
     }
 }

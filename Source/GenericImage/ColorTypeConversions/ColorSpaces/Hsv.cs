@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2015
+// Copyright © Darko Jurić, 2014-2016
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -126,6 +126,25 @@ namespace DotImaging
                     bgr.R = hsv.V; bgr.G = p; bgr.B = q;
                     break;
             }
+        }
+    }
+
+    /// <summary>
+    /// Provides extension conversion methods for 8-bit Hsv type.
+    /// </summary>
+    public static class HsvColorConversionExtensions
+    {
+        /// <summary>
+        /// Converts 8-bit Hsv color to 8-bit Bgr.
+        /// </summary>
+        /// <param name="hsv">8-bit Hsv color.</param>
+        /// <returns>8-bit Bgr</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Bgr<byte> ToBgr(this Hsv<byte> hsv)
+        {
+            Bgr<byte> bgr = default(Bgr<byte>);
+            Hsv<byte>.Convert(hsv, ref bgr);
+            return bgr;
         }
     }
 

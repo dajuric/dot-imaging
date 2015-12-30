@@ -12,21 +12,25 @@
     <iconUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deployment/Logo/logo-small.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>
-      Provides the portable way to determine the execution platform.
-      For now, .NET 4.5 only!
+      Provides the portable way to determine the execution platform + interoperability functions.
     </description>
     <summary>
-      Provides the portable way to determine the execution platform. 
-      Provides some additional platform related interoperability functions.
+      Provides the portable way to determine the execution platform + interoperability functions. 
     </summary>
     <tags>execution-platform, OS, portable</tags>
 
-    <dependencies>      
+    <dependencies>
+      <group targetFramework=".NETPlatform5.0">
+        <dependency id="System.Runtime" version="4.0.0" />
+        <dependency id="System.Runtime.Extensions" version="4.0.0" />
+        <dependency id="System.IO" version="4.0.0" />
+        <dependency id="System.IO.FileSystem.Primitives" version="4.0.0" />
+      </group>
     </dependencies>
   </metadata>
   
   <files>
-    <file src="..\..\..\Source\Core\Platform.cs" target="content\net45\DotImaging\Platform.cs" />
+    <file src="..\..\..\Source\Core\Platform.cs" target="content\DotImaging\Platform.cs" />
     <file src="readmePlatform.txt" target="readme.txt" />
   </files>
 </package>

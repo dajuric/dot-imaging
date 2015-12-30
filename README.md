@@ -4,7 +4,7 @@
 
 <p align="center">
     <img src="https://img.shields.io/badge/Build-passing-brightgreen.svg?style=flat-square" alt="Build passing"/>
-    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v3.0.2-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
+    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v4.0.1-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
 </p>
 
 **DotImaging** - .NET array as imaging object  
@@ -82,7 +82,30 @@ var bmp = image.ToBitmap(); //to Bitmap
 
 var imageFromBmp = bmp.ToArray() as Bgr<byte>[,]; //from Bitmap
  ``` 
+ 
++ <a href="https://www.nuget.org/packages/DotImaging.BitmapSourceInterop">DotImaging.BitmapSourceInterop</a>  
+  Interoperability extensions between .NET array and BitmapSource (WPF).
 
+ ``` csharp
+var bmp = new BitmapImage(new Uri("<path>"));
+Bgra<byte>[,] colorImg = bmp.ToArray<Bgra<byte>>(); //to Bitmap
+var imageFromBitmap = colorImg.ToBitmapSource(); //from bitmap
+ ```
+
++ <a href="https://www.nuget.org/packages/DotImaging.UI">DotImaging.UI</a>  
+  Portable UI elements (image display, progress bar, open-save file dialogs, folder-selection dialog, color-picker).
+
+ ``` csharp
+Bgr<byte>[,] image = new Bgr<byte>[480, 640];
+image.Show(); //show image
+
+(0.4d).Progress(); //progress bar (40%)
+
+string fileName = UI.OpenFile(); //open-file dialog
+
+Bgr<byte> color = UI.PickColor(); //color picker
+ ```
+ 
 + <a href="https://www.nuget.org/packages/DotImaging.Primitives2D">DotImaging.Primitives2D</a>  
   Portable 2D drawing primitives (Point, Size, Rectangle, ...)
  

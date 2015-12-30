@@ -1,5 +1,25 @@
-﻿using System;
-using System.Windows.Forms;
+﻿#region Licence and Terms
+// DotImaging Framework
+// https://github.com/dajuric/dot-imaging
+//
+// Copyright © Darko Jurić, 2014-2016
+// darko.juric2@gmail.com
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+#endregion
+
+using System;
 using DotImaging;
 using System.Collections.Generic;
 
@@ -7,51 +27,46 @@ namespace MultipleCameraCapture
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            Console.WriteLine("Press ESC to stop playing");
 
-            var activeForms = new List<Form>();
+            List<CameraCapture> captures = new List<CameraCapture>();
 
             var cameraCount = CameraCapture.CameraCount;
-            for (int camIdx = 0; camIdx < cameraCount; camIdx++)
-            {
-                var activeForm = new CaptureWindow(camIdx);
-                activeForms.Add(activeForm);
-            }
-
             if (cameraCount == 0)
             {
-                MessageBox.Show("No camera device is present.");
+                Console.WriteLine("No camera device is present.");
                 return;
             }
 
-            Application.Run(new MultiFormApplicationContext(activeForms));
-        }
-
-        class MultiFormApplicationContext : ApplicationContext
-        {
-            private void onFormClosed(object sender, EventArgs e)
+            //initialize
+            for (int camIdx = 0; camIdx < cameraCount; camIdx++)
             {
-                if (Application.OpenForms.Count == 0)
-                {
-                    ExitThread();
-                }
+                var cap = new CameraCapture(camIdx);
+                cap.Open();
+
+                captures.Add(cap);
             }
 
-            public MultiFormApplicationContext(IEnumerable<Form> forms)
+            //grab frames
+            Bgr<byte>[][,] frames = new Bgr<byte>[cameraCount][,];
+            do
             {
-                foreach (var form in forms)
+                for (int camIdx = 0; camIdx < cameraCount; camIdx++)
                 {
-                    form.Show();
-                    form.FormClosed += onFormClosed;
+                    captures[camIdx].ReadTo(ref frames[camIdx]);
+                    if (frames[camIdx] == null)
+                        break;
+
+                    frames[camIdx].Show(String.Format("Camera {0}", camIdx), scaleForm: false);
                 }
             }
+            while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
+
+            //dispose
+            captures.ForEach(x => x.Dispose());
+            UI.CloseAll();
         }
     }
 }
