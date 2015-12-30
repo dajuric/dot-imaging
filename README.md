@@ -74,7 +74,7 @@ var imageFromBmp = bmp.ToArray() as Bgr<byte>[,]; //from Bitmap
 
  ``` csharp
 var bmp = new BitmapImage(new Uri("<path>"));
-Bgra<byte>[,] colorImg = bmp.ToArray<Bgra<byte>>(); //to Bitmap
+Bgra<byte>[,] colorImg = bmp.ToArray<Bgra<byte>>(); //to bitmap
 var imageFromBitmap = colorImg.ToBitmapSource(); //from bitmap
  ```
 
