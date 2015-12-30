@@ -75,6 +75,7 @@ var imageFromBmp = bmp.ToArray() as Bgr<byte>[,]; //from Bitmap
  ``` csharp
 var bmp = new BitmapImage(new Uri("<path>"));
 Bgra<byte>[,] colorImg = bmp.ToArray<Bgra<byte>>(); //to bitmap
+
 var imageFromBitmap = colorImg.ToBitmapSource(); //from bitmap
  ```
 
@@ -83,13 +84,13 @@ var imageFromBitmap = colorImg.ToBitmapSource(); //from bitmap
 
  ``` csharp
 Bgr<byte>[,] image = new Bgr<byte>[480, 640];
-image.Show(); //show image
+image.Show(); //show image (non-blocking)
 
-(0.4d).Progress(); //progress bar (40%)
+(0.4d).Progress(); //progress bar -40% (non-blocking)
 
 string fileName = UI.OpenFile(); //open-file dialog
 
-Bgr<byte> color = UI.PickColor(); //color picker
+Bgr<byte> color = UI.PickColor(); //color picker 
  ```
  
 + <a href="https://www.nuget.org/packages/DotImaging.Linq">DotImaging.Linq</a>  
