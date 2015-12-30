@@ -13,8 +13,8 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 
 + leverages existing .NET structures
 + portable - designed for ASP.NET vNext
-+ lightweight (no 3rd party dependencies), but powerful
-+ so simple, you don't need a help file
++ lightweight (no 3rd party dependencies)
++ **so simple**, you don't need a help file
 
 ## Libraries / NuGet packages
 
@@ -47,19 +47,6 @@ var frame = reader.ReadAs<Bgr<byte>>();
 reader.Close();
  ``` 
 
-+ <a href="https://www.nuget.org/packages/DotImaging.Linq">DotImaging.Linq</a>  
-  2D array Linq extensions
-
- ``` csharp
-//create a managed image
-Bgr<byte>[,] image = ...; 
-
-//get the modified blue channel 
-var modifiedImage = image.AsEnumerable()
-	                         .Select(x => x.B / 2)
-							 .ToArray2D(image.Size());
- ``` 
-
 + <a href="https://www.nuget.org/packages/DotImaging.Drawing">DotImaging.Drawing</a>  
   .NET image drawing array extensions.
 
@@ -73,7 +60,7 @@ image.Draw(new Circle(50, 50, 25), Bgr<byte>.Blue, 5);
  ``` 
 
 + <a href="https://www.nuget.org/packages/DotImaging.BitmapInterop">DotImaging.BitmapInterop</a>  
-  Interoperability extensions between .NET array and Bitmap.
+  Interoperability extensions between .NET array and Bitmap (WinForms).
 
  ``` csharp
 var image = new Gray<byte>[240, 320];
@@ -104,6 +91,19 @@ string fileName = UI.OpenFile(); //open-file dialog
 
 Bgr<byte> color = UI.PickColor(); //color picker
  ```
+ 
++ <a href="https://www.nuget.org/packages/DotImaging.Linq">DotImaging.Linq</a>  
+  2D array Linq extensions
+
+ ``` csharp
+//create a managed image
+Bgr<byte>[,] image = ...; 
+
+//get the modified blue channel 
+var modifiedImage = image.AsEnumerable()
+	                         .Select(x => x.B / 2)
+							 .ToArray2D(image.Size());
+ ``` 
  
 + <a href="https://www.nuget.org/packages/DotImaging.Primitives2D">DotImaging.Primitives2D</a>  
   Portable 2D drawing primitives (Point, Size, Rectangle, ...)
