@@ -20,6 +20,9 @@
     <tags>execution-platform, OS, portable</tags>
 
     <dependencies>
+      <group targetFramework="net40">
+      </group>
+
       <group targetFramework=".NETPlatform5.0">
         <dependency id="System.Runtime" version="4.0.0" />
         <dependency id="System.Runtime.Extensions" version="4.0.0" />
