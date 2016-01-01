@@ -3,7 +3,6 @@
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/Build-passing-brightgreen.svg?style=flat-square" alt="Build passing"/>
     <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v4.0.1-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
 </p>
 
@@ -14,8 +13,8 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 
 + leverages existing .NET structures
 + portable - designed for ASP.NET vNext
-+ lightweight (no 3rd party dependencies), but powerful
-+ so simple, you don't need a help file
++ lightweight (no 3rd party dependencies)
++ **so simple**, you don't need a help file
 
 ## Libraries / NuGet packages
 
@@ -48,19 +47,6 @@ var frame = reader.ReadAs<Bgr<byte>>();
 reader.Close();
  ``` 
 
-+ <a href="https://www.nuget.org/packages/DotImaging.Linq">DotImaging.Linq</a>  
-  2D array Linq extensions
-
- ``` csharp
-//create a managed image
-Bgr<byte>[,] image = ...; 
-
-//get the modified blue channel 
-var modifiedImage = image.AsEnumerable()
-	                         .Select(x => x.B / 2)
-							 .ToArray2D(image.Size());
- ``` 
-
 + <a href="https://www.nuget.org/packages/DotImaging.Drawing">DotImaging.Drawing</a>  
   .NET image drawing array extensions.
 
@@ -74,7 +60,7 @@ image.Draw(new Circle(50, 50, 25), Bgr<byte>.Blue, 5);
  ``` 
 
 + <a href="https://www.nuget.org/packages/DotImaging.BitmapInterop">DotImaging.BitmapInterop</a>  
-  Interoperability extensions between .NET array and Bitmap.
+  Interoperability extensions between .NET array and Bitmap (WinForms).
 
  ``` csharp
 var image = new Gray<byte>[240, 320];
@@ -88,7 +74,8 @@ var imageFromBmp = bmp.ToArray() as Bgr<byte>[,]; //from Bitmap
 
  ``` csharp
 var bmp = new BitmapImage(new Uri("<path>"));
-Bgra<byte>[,] colorImg = bmp.ToArray<Bgra<byte>>(); //to Bitmap
+Bgra<byte>[,] colorImg = bmp.ToArray<Bgra<byte>>(); //to bitmap
+
 var imageFromBitmap = colorImg.ToBitmapSource(); //from bitmap
  ```
 
@@ -97,14 +84,27 @@ var imageFromBitmap = colorImg.ToBitmapSource(); //from bitmap
 
  ``` csharp
 Bgr<byte>[,] image = new Bgr<byte>[480, 640];
-image.Show(); //show image
+image.Show(); //show image (non-blocking)
 
-(0.4d).Progress(); //progress bar (40%)
+(0.4d).Progress(); //progress bar -40% (non-blocking)
 
 string fileName = UI.OpenFile(); //open-file dialog
 
-Bgr<byte> color = UI.PickColor(); //color picker
+Bgr<byte> color = UI.PickColor(); //color picker 
  ```
+ 
++ <a href="https://www.nuget.org/packages/DotImaging.Linq">DotImaging.Linq</a>  
+  2D array Linq extensions
+
+ ``` csharp
+//create a managed image
+Bgr<byte>[,] image = ...; 
+
+//get the modified blue channel 
+var modifiedImage = image.AsEnumerable()
+	                         .Select(x => x.B / 2)
+							 .ToArray2D(image.Size());
+ ``` 
  
 + <a href="https://www.nuget.org/packages/DotImaging.Primitives2D">DotImaging.Primitives2D</a>  
   Portable 2D drawing primitives (Point, Size, Rectangle, ...)
