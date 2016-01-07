@@ -12,7 +12,7 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 ## So why DotImaging ?
 
 + leverages existing .NET structures
-+ portable - designed for ASP.NET vNext
++ portable - (designed for ASP.NET vNext - 99% compatibility for now)
 + lightweight (no 3rd party dependencies)
 + **so simple**, you don't need a help file
 
