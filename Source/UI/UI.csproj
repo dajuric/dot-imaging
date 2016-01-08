@@ -46,7 +46,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\DrawingPenAdorner.cs" />
+    <Compile Include="Components\PictureBox.cs" />
     <Compile Include="FormCollection.cs" />
+    <Compile Include="Forms\MaskImageForm.cs" />
     <Compile Include="Forms\ImageForm.cs" />
     <Compile Include="Forms\ProgressForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

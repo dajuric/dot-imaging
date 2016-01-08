@@ -432,7 +432,7 @@ namespace DotImaging
         /// </summary>
         /// <param name="image">Source image.</param>
         /// <returns>Image with converted color.</returns>
-        public static Bgr<byte>[,] ToHsv(this Bgra<byte>[,] image)
+        public static Bgr<byte>[,] ToBgr(this Bgra<byte>[,] image)
         {
             return image.Convert<Bgra<byte>, Bgr<byte>>(Bgra<byte>.Convert);
         }
@@ -443,11 +443,31 @@ namespace DotImaging
         /// <param name="image">Source image.</param>
         /// <param name="area">Working area.</param>
         /// <returns>Image with converted color.</returns>
-        public static Bgr<byte>[,] ToHsv(this Bgra<byte>[,] image, Rectangle area)
+        public static Bgr<byte>[,] ToBgr(this Bgra<byte>[,] image, Rectangle area)
         {
             return image.Convert<Bgra<byte>, Bgr<byte>>(Bgra<byte>.Convert, area);
         }
 
+        /// <summary>
+        /// Converts the source color to the destination color.
+        /// </summary>
+        /// <param name="image">Source image.</param>
+        /// <returns>Image with converted color.</returns>
+        public static Gray<byte>[,] ToGray(this Bgra<byte>[,] image)
+        {
+            return image.Convert<Bgra<byte>, Gray<byte>>(Bgra<byte>.Convert);
+        }
+
+        /// <summary>
+        /// Converts the source color to the destination color.
+        /// </summary>
+        /// <param name="image">Source image.</param>
+        /// <param name="area">Working area.</param>
+        /// <returns>Image with converted color.</returns>
+        public static Gray<byte>[,] ToGray(this Bgra<byte>[,] image, Rectangle area)
+        {
+            return image.Convert<Bgra<byte>, Gray<byte>>(Bgra<byte>.Convert, area);
+        }
         #endregion
 
 

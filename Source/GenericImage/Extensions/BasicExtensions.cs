@@ -277,6 +277,46 @@ namespace DotImaging
             area.Width, area.Height);
         }
 
+        /// <summary>
+        /// Sets the specified value for only those element of the array where the mask is non-zero.
+        /// </summary>
+        /// <typeparam name="T">Element type.</typeparam>
+        /// <param name="array">Array with value type elements.</param>
+        /// <param name="value">Value to set.</param>
+        /// <param name="mask">Mask.</param>
+        public static void SetValue<T>(this T[,] array, T value, Gray<byte>[,] mask)
+        {
+            if (array.Size() != mask.Size())
+                throw new ArgumentException("Array and mask must have the same size.");
+
+            ParallelLauncher.Launch((thread) =>
+            {
+                if (mask[thread.Y, thread.X] != 0)
+                    array[thread.Y, thread.X] = value;
+            },
+            array.Width(), array.Height());
+        }
+
+        /// <summary>
+        /// Sets the specified value for only those element of the array where the mask is true.
+        /// </summary>
+        /// <typeparam name="T">Element type.</typeparam>
+        /// <param name="array">Array with value type elements.</param>
+        /// <param name="value">Value to set.</param>
+        /// <param name="mask">Mask.</param>
+        public static void SetValue<T>(this T[,] array, T value, bool[,] mask)
+        {
+            if (array.Size() != mask.Size())
+                throw new ArgumentException("Array and mask must have the same size.");
+
+            ParallelLauncher.Launch((thread) =>
+            {
+                if (mask[thread.Y, thread.X])
+                    array[thread.Y, thread.X] = value;
+            },
+            array.Width(), array.Height());
+        }
+
         #endregion
     }
 }

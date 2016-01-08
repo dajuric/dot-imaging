@@ -99,5 +99,17 @@ namespace DotImaging
             bgr.G = bgra.G;
             bgr.R = bgra.R;
         }
+
+        /// <summary>
+        /// Converts 8-bit Bgra to 8-bit Gray.
+        /// </summary>
+        /// <param name="bgra">Source color.</param>
+        /// <param name="gray">Destination color.</param>
+        public static void Convert(Bgra<byte> bgra, ref Gray<byte> gray)
+        {
+            Bgr<byte> bgr = default(Bgr<byte>);
+            Convert(bgra, ref bgr);
+            Bgr<byte>.Convert(bgr, ref gray);
+        }
     }
 }

@@ -12,7 +12,7 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 ## So why DotImaging ?
 
 + leverages existing .NET structures
-+ portable - designed for ASP.NET vNext
++ portable 
 + lightweight (no 3rd party dependencies)
 + **so simple**, you don't need a help file
 
@@ -25,7 +25,7 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 
  ``` csharp
 //convert to grayscale and flip
-Bgr<byte>[,] image = ImageIO.LoadColor("sample.jpg").Clone();
+Bgr<byte>[,] image = ImageIO.LoadColor("sample.jpg").Clone(); //IO package
 Gray<byte>[,] grayIm = image.ToGray()
                                 .Flip(FlipDirection.Horizontal);
  ```
@@ -38,13 +38,11 @@ Gray<byte>[,] grayIm = image.ToGray()
  ``` csharp
 //create camera (file or image-directory) capture
 var reader = new CameraCapture();
-
 reader.Open();
-
-//read single frame
-var frame = reader.ReadAs<Bgr<byte>>();
-
+var frame = reader.ReadAs<Bgr<byte>>(); //read single frame
 reader.Close();
+
+frame.Save("out.png");
  ``` 
 
 + <a href="https://www.nuget.org/packages/DotImaging.Drawing">DotImaging.Drawing</a>  
@@ -90,7 +88,9 @@ image.Show(); //show image (non-blocking)
 
 string fileName = UI.OpenFile(); //open-file dialog
 
-Bgr<byte> color = UI.PickColor(); //color picker 
+Bgr<byte> color = UI.PickColor(); //color picker dialog
+
+Gray<byte>[,] mask = image.GetMask(); //get user-defined mask dialog 
  ```
  
 + <a href="https://www.nuget.org/packages/DotImaging.Linq">DotImaging.Linq</a>  

@@ -36,6 +36,16 @@ namespace DotImaging.Primitives2D
         {
             return size.Width * size.Height;
         }
+
+        /// <summary>
+        /// Converts the specified size into the rectangle representation with zero offset.
+        /// </summary>
+        /// <param name="size">Size.</param>
+        /// <returns>Rectangle with zero offset.</returns>
+        public static Rectangle ToRectangle(this Size size)
+        {
+            return new Rectangle(Point.Empty, size);
+        }
     }
 
     /// <summary>
@@ -52,6 +62,16 @@ namespace DotImaging.Primitives2D
         public static float Area(this SizeF size)
         {
             return size.Width * size.Height;
+        }
+
+        /// <summary>
+        /// Converts the specified size into the rectangle representation with zero offset.
+        /// </summary>
+        /// <param name="size">Size.</param>
+        /// <returns>Rectangle with zero offset.</returns>
+        public static RectangleF ToRectangleF(this SizeF size)
+        {
+            return new RectangleF(PointF.Empty, size);
         }
     }
 }

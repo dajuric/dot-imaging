@@ -518,8 +518,7 @@ namespace DotImaging.Primitives2D
         /// <returns>A string in (x,y,w,h) notation</returns>
         public override string ToString()
         {
-            return String.Format("{{X={0},Y={1},Width={2},Height={3}}}",
-                         x, y, width, height);
+            return String.Format("{{X={0}, Y={1}, Width={2}, Height={3}}}", x, y, width, height);
         }
     }
 }

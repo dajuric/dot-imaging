@@ -20,6 +20,8 @@
 #endregion
 
 using DotImaging;
+using DotImaging.Linq;
+using System.Linq;
 using System;
 using System.Threading;
 
@@ -30,15 +32,20 @@ namespace UIDemo
         [STAThread]
         static void Main(string[] args)
         {
-            UI.OpenImage();
-
+            //select color
             Bgr<byte>[,] image = new Bgr<byte>[480, 640];
             Hsv<byte> color = UI.PickColor(Bgr<byte>.Red).ToHsv();
 
+            //select mask
+            Gray<byte>[,] mask = image.GetMask();
+            if (mask.AsEnumerable().Sum(x => x.Intensity) == 0) //if the mask is empty
+                mask.SetValue<Gray<byte>>(Byte.MaxValue);
+
+            //increase saturation incrementally
             for (int s = 0; s <= Byte.MaxValue; s++)
             {
                 color.S = (byte)s;
-                image.SetValue<Bgr<byte>>(color.ToBgr());
+                image.SetValue<Bgr<byte>>(color.ToBgr(), mask);
 
                 image.Show(scaleForm: true);
                 ((double)s / Byte.MaxValue).Progress(message: "Changing saturation");

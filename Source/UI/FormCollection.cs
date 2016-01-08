@@ -38,7 +38,7 @@ namespace DotImaging
         /// <summary>
         /// Timeout for application initialization
         /// </summary>
-        const int ApplicationTimeout = 10000;
+        const int ApplicationTimeout = 5 * 1000; //ms
 
         /// <summary>
         /// Initializes the UI application.
@@ -85,7 +85,58 @@ namespace DotImaging
             }
         }
 
-        static TForm createAndShow<TForm>(Func<TForm> creator)
+        /// <summary>
+        /// Creates and show a new dialog form.
+        /// </summary>
+        /// <typeparam name="TForm">Form type.</typeparam>
+        /// <typeparam name="TResult">Result type.</typeparam>
+        /// <param name="creator">Form creator function.</param>
+        /// <param name="getResult">Result getter function.</param>
+        /// <returns>Result, available after the form is closed.</returns>
+        public static TResult CreateAndShowDialog<TForm, TResult>(Func<TForm> creator, Func<TForm, TResult> getResult)
+           where TForm : Form
+        {
+            var ev = new ManualResetEvent(false);
+            var application = Application.Instance;
+            Exception exception = null;
+
+            TForm form = null;
+            TResult result = default(TResult);
+
+            Action run = () =>
+            {
+                try
+                {
+                    if (!Platform.Instance.Supports<Form>())
+                        throw new NotSupportedException("This platform does not support IForm");
+
+                    form = creator();
+                    form.Show();
+
+                    form.Closed += (s, e) =>
+                    {
+                        result = getResult(form);
+                        ev.Set();
+                    };
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                    ev.Set();
+                }
+            };
+
+            application.Invoke(run);
+
+            if (exception != null)
+                ExceptionDispatchInfo.Capture(exception).Throw();
+
+            ev.WaitOne(); //sync
+
+            return result;
+        }
+
+        private static TForm createAndShow<TForm>(Func<TForm> creator)
             where TForm : Form
         {
             var ev = new ManualResetEvent(false);
@@ -119,6 +170,7 @@ namespace DotImaging
             return form;
         }
 
+
         /// <summary>
         /// Creates a new form or updates the existing one based on window title used as ID.
         /// </summary>
@@ -133,16 +185,15 @@ namespace DotImaging
             {
                 var form = Application.Instance.Windows.Where(x => x.Title == windowTitle).FirstOrDefault();
 
-                if (form == null)
-                    form = createAndShow(creator);
-
                 if (form != null)
                 {
                     if (form is TForm == false)
                         return;
-
-                    update(form as TForm);
                 }
+                else
+                    form = createAndShow(creator);
+
+                update(form as TForm);
             });
         }
 

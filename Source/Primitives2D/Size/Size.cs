@@ -288,7 +288,7 @@ namespace DotImaging.Primitives2D
         /// <returns>Structure represented as a string.</returns>
         public override string ToString()
         {
-            return String.Format("{Width={0}, Height={1}}", width, height);
+            return String.Format("{{Width={0}, Height={1}}}", width, height);
         }
     }
 }

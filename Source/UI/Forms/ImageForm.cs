@@ -29,7 +29,7 @@ namespace DotImaging
     /// </summary>
     internal class ImageForm : Form
     {
-        ImageView imageView;
+        PictureBox pictureBox = null;
         Bitmap bmp = null;
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace DotImaging
 
             bmpData.Dispose();
 
-            imageView.Image = bmp;
+            pictureBox.Image = bmp;
 
             if (ScaleForm)
                 ClientSize = new Size(image.Width(), image.Height());
@@ -74,12 +74,8 @@ namespace DotImaging
             Title = title;
             ClientSize = new Size(640, 480);
 
-            imageView = new ImageView { Image = bmp };
-
-            Content = new Scrollable
-            {
-                Content = imageView
-            };
+            pictureBox = new PictureBox { Image = bmp, AutoScale = true };
+            Content = pictureBox;
         }
 
         /// <summary>

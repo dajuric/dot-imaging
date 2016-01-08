@@ -83,10 +83,37 @@ namespace DotImaging
         }
 
         /// <summary>
-        /// Loads an Bgra image from the specified Bitmap.
+        /// Converts the specified bitmap into Bgr managed image.
+        /// </summary>
+        /// <param name="bitmap">Bgr, Bgra or Gray type bitmap.</param>
+        /// <returns>Bgr image or null if conversion can not be performed.</returns>
+        public static Bgr<byte>[,] ToBgr(this Bitmap bitmap)
+        {
+            var arr = bitmap.ToArray();
+
+            if (arr is Bgra<byte>[,])
+            {
+                return ((Bgra<byte>[,])arr).ToBgr();
+            }
+            else if (arr is Bgr<byte>[,])
+            {
+                return ((Bgr<byte>[,])arr);
+            }
+            else if (arr is Gray<byte>[,])
+            {
+                return ((Gray<byte>[,])arr).ToBgr();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Converts the specified bitmap into Bgra managed image.
         /// </summary>
         /// <param name="bitmap">Bgra, Bgr or Gray type bitmap.</param>
-        /// <returns>Bgra image.</returns>
+        /// <returns>Bgra image or null if conversion can not be performed.</returns>
         public static Bgra<byte>[,] ToBgra(this Bitmap bitmap)
         {
             var arr = bitmap.ToArray();
@@ -97,14 +124,11 @@ namespace DotImaging
             }
             else if (arr is Bgr<byte>[,])
             {
-                var bgra = ((Bgr<byte>[,])arr).ToBgra();
-                return bgra;
+                return ((Bgr<byte>[,])arr).ToBgra();
             }
             else if (arr is Gray<byte>[,])
             {
-                var bgr = ((Gray<byte>[,])arr).ToBgr();
-                var bgra = bgr.ToBgra();
-                return bgra;
+                return ((Gray<byte>[,])arr).ToBgra();
             }
             else
             {

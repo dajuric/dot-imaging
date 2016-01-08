@@ -307,8 +307,7 @@ namespace DotImaging.Primitives2D
         /// <returns>Structure represented as a string.</returns>
         public override string ToString()
         {
-            return string.Format("{X={0},Y={1}}", x.ToString(CultureInfo.InvariantCulture),
-                y.ToString(CultureInfo.InvariantCulture));
+            return string.Format("{{X={0}, Y={1}}}", x, y);
         }
     }
 }

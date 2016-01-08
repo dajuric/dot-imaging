@@ -265,7 +265,7 @@ namespace DotImaging.Primitives2D
         public override string ToString()
         {
             return string.Format("{{Width={0}, Height={1}}}", width.ToString(CultureInfo.CurrentCulture),
-                height.ToString(CultureInfo.CurrentCulture));
+                                                              height.ToString(CultureInfo.CurrentCulture));
         }
     }
 }

@@ -32,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Eto, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -46,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\GenericImage\GenericImage.csproj">
@@ -56,6 +56,10 @@
     <ProjectReference Include="..\..\Source\IO\IO.csproj">
       <Project>{ed70a44e-9443-4a28-9b95-31299f8b2d08}</Project>
       <Name>IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\LINQ\Linq.csproj">
+      <Project>{8f4adf98-76e1-4893-a458-486542eed521}</Project>
+      <Name>Linq</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Source\Primitives2D\Primitives2D.csproj">
       <Project>{d5767a78-e50a-4b5d-94f5-44a59b87f944}</Project>
@@ -68,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

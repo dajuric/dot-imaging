@@ -39,7 +39,7 @@ namespace Capture
             //reader = new FileCapture(Path.Combine(getResourceDir(), "Welcome.mp4")); //capture from video
             //reader = new ImageDirectoryCapture(Path.Combine(getResourceDir(), "Sequence"), "*.jpg");
             reader.Open();
-
+    
             Bgr<byte>[,] frame = null;
             do
             {

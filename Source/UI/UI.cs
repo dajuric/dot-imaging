@@ -21,6 +21,7 @@
 
 using Eto.Forms;
 using System;
+using System.Threading;
 
 namespace DotImaging
 {
@@ -35,7 +36,7 @@ namespace DotImaging
         }
 
         /// <summary>
-        /// Displays the specified image in the specified window.
+        /// Displays the specified image in a window.
         /// </summary>
         /// <param name="image">Image to show.</param>
         /// <param name="windowTitle">Window title (ID).</param>
@@ -175,6 +176,27 @@ namespace DotImaging
             }
 
             return folderPath;
+        }
+
+        /// <summary>
+        /// Displays the specified image in a window and waits the user to create a mask by drawing.
+        /// </summary>
+        /// <param name="image">Image to display.</param>
+        /// <param name="windowTitle">Window title (ID).</param>
+        /// <param name="scaleForm">True to adjust form to the image size, false otherwise.</param>
+        /// <returns>Drawn mask.</returns>
+        public static Gray<byte>[,] GetMask(this Bgr<byte>[,] image, string windowTitle = "Draw image mask (close when finished)", bool scaleForm = false)
+        {
+            var mask = FormCollection.CreateAndShowDialog(() =>
+                        {
+                            var f = new MaskImageForm(windowTitle, image);
+                            f.Title = windowTitle;
+                            f.ScaleForm = scaleForm;
+                            return f;
+                        },
+                        f => f.Mask);
+
+            return mask;        
         }
 
         /// <summary>

@@ -20,11 +20,12 @@
 #endregion
 
 using System;
-using System.Drawing;
+//using System.Drawing;
 using System.IO;
 using System.Linq;
 using DotImaging;
 using DotImaging.Linq;
+using DotImaging.Primitives2D;
 using System.Runtime.InteropServices;
 
 namespace Test
