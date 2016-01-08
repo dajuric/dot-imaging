@@ -54,6 +54,15 @@ namespace DotImaging
             return RectangleF.FromSides(upperLeft.X, upperLeft.Y, bottomRight.X, bottomRight.Y);
         }
 
+        public float ZoomFactor
+        {
+            get
+            {
+                if (Image == null) return 0;
+                return (float)imageBounds.Width / image.Width; //or height
+            }
+        }
+
         #endregion
 
         private Bitmap image;
