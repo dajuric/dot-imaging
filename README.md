@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v4.0.1-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
+    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v4.1.2-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
 </p>
 
 **DotImaging** - .NET array as imaging object  
@@ -36,13 +36,12 @@ Gray<byte>[,] grayIm = image.ToGray()
   > **Tutorial:** <a href="http://www.codeproject.com/Articles/828012/Introducing-Portable-Video-IO-Library-for-Csharp" target="_blank">Portable Imaging IO</a>
 
  ``` csharp
-//create camera (file or image-directory) capture
-var reader = new CameraCapture();
+var reader = new CameraCapture(); //create camera/file/image-directory capture
 reader.Open();
 var frame = reader.ReadAs<Bgr<byte>>(); //read single frame
 reader.Close();
 
-frame.Save("out.png");
+frame.Clone().Save("out.png"); //save image
  ``` 
 
 + <a href="https://www.nuget.org/packages/DotImaging.Drawing">DotImaging.Drawing</a>  
