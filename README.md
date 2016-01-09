@@ -13,7 +13,7 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 
 + leverages existing .NET structures
 + portable 
-+ lightweight (no 3rd party dependencies)
++ lightweight
 + **so simple**, you don't need a help file
 
 ## Libraries / NuGet packages
