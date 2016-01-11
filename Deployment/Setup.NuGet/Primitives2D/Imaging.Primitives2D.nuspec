@@ -24,5 +24,6 @@
   
   <files>
     <file src="..\..\..\bin\Release\DotImaging.Primitives2D.dll" target="lib\net45\DotImaging.Primitives2D.dll" />
+    <file src="..\..\..\bin\Release\DotImaging.Primitives2D.xml" target="lib\net45\DotImaging.Primitives2D.xml" />
   </files>
 </package>

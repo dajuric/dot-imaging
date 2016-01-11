@@ -29,8 +29,8 @@ namespace CaptureAndRecording
     {
         static void Main()
         {
-           var reader = new CameraCapture(0); //capture from camera
-           //reader = new FileCapture(Path.Combine(getResourceDir(), "Welcome.mp4"));
+           //var reader = new CameraCapture(0); //capture from camera
+           var reader = new FileCapture(Path.Combine(getResourceDir(), "Welcome.mp4"));
            reader.Open();
 
            var writer = new VideoWriter(@"output.avi", reader.FrameSize, /*reader.FrameRate does not work Cameras*/ 30); //TODO: bug: FPS does not work for cameras
@@ -52,6 +52,8 @@ namespace CaptureAndRecording
 
             reader.Dispose();
             writer.Dispose();
+
+            UI.CloseAll();
         }
 
         private static string getResourceDir()

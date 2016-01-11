@@ -36,6 +36,9 @@
     <None Include="Core\Platform.nuspec">
       <SubType>Designer</SubType>
     </None>
+    <None Include="IO.Web\IO.Web.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Linq\Linq.nuspec">
       <SubType>Designer</SubType>
     </None>
@@ -66,6 +69,7 @@
     <Content Include="Core\readmePlatform.txt" />
     <Content Include="Drawing\readmeDrawing.txt" />
     <Content Include="GenericImage\readmeGenericImage.txt" />
+    <Content Include="IO.Web\readmeIO.Web.txt" />
     <Content Include="IO\readmeIO.txt" />
     <Content Include="Linq\readmeLinq.txt" />
     <Content Include="UI\readmeUI.txt" />

@@ -25,7 +25,7 @@ using System.IO;
 namespace DotImaging
 {
     /// <summary>
-    /// Represents video file streamable source and provides functions and properties to access data in a streamable way.
+    /// Provides functions and properties to access video file in a streamable way.
     /// </summary>
     public class FileCapture: VideoCaptureBase
     {
@@ -34,15 +34,25 @@ namespace DotImaging
         /// <summary>
         /// Creates capture from video file.
         /// </summary>
-        /// <param name="fileName">Video file name.</param>
-        public FileCapture(string fileName)
+        /// <param name="sourceName">
+        /// Video file name or a named pipe.
+        /// <para>In case of named pipe use: String.Format(@"\\.\pipe\{0}", pipeName) where pipeName is the name of the pipe.</para>
+        /// </param>
+        public FileCapture(string sourceName)
         {
-            this.CanSeek = true;
-        
-            if (System.IO.File.Exists(fileName) == false)
-                throw new System.IO.FileNotFoundException();
+            if (sourceName.Contains(@"\\.\pipe\"))
+            {
+                this.CanSeek = false;
+            }
+            else
+            {
+                if (!File.Exists(sourceName))
+                    throw new FileNotFoundException(String.Format("The file {0} can not be found.", sourceName));
 
-            this.fileName = fileName;
+                this.CanSeek = true;
+            }
+        
+            this.fileName = sourceName;
             this.Open(); //to enable property change
         }
 

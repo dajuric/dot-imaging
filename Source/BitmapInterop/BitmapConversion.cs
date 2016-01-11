@@ -90,23 +90,7 @@ namespace DotImaging
         public static Bgr<byte>[,] ToBgr(this Bitmap bitmap)
         {
             var arr = bitmap.ToArray();
-
-            if (arr is Bgra<byte>[,])
-            {
-                return ((Bgra<byte>[,])arr).ToBgr();
-            }
-            else if (arr is Bgr<byte>[,])
-            {
-                return ((Bgr<byte>[,])arr);
-            }
-            else if (arr is Gray<byte>[,])
-            {
-                return ((Gray<byte>[,])arr).ToBgr();
-            }
-            else
-            {
-                return null;
-            }
+            return arr.ToBgr();
         }
 
         /// <summary>
@@ -117,23 +101,7 @@ namespace DotImaging
         public static Bgra<byte>[,] ToBgra(this Bitmap bitmap)
         {
             var arr = bitmap.ToArray();
-
-            if (arr is Bgra<byte>[,])
-            {
-                return (Bgra<byte>[,])arr;
-            }
-            else if (arr is Bgr<byte>[,])
-            {
-                return ((Bgr<byte>[,])arr).ToBgra();
-            }
-            else if (arr is Gray<byte>[,])
-            {
-                return ((Gray<byte>[,])arr).ToBgra();
-            }
-            else
-            {
-                return null;
-            }
+            return arr.ToBgra();
         }
 
         #endregion

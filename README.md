@@ -12,9 +12,11 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 ## So why DotImaging ?
 
 + leverages existing .NET structures
-+ portable 
-+ lightweight (no 3rd party dependencies)
++ portable* 
++ lightweight
 + **so simple**, you don't need a help file
+
+*IO and Drawing assemlies depend on OpenCV
 
 ## Libraries / NuGet packages
 
@@ -36,12 +38,37 @@ Gray<byte>[,] grayIm = image.ToGray()
   > **Tutorial:** <a href="http://www.codeproject.com/Articles/828012/Introducing-Portable-Video-IO-Library-for-Csharp" target="_blank">Portable Imaging IO</a>
 
  ``` csharp
-var reader = new CameraCapture(); //create camera/file/image-directory capture
+var reader = new FileCapture(fileName);
 reader.Open();
-var frame = reader.ReadAs<Bgr<byte>>(); //read single frame
-reader.Close();
 
-frame.Clone().Save("out.png"); //save image
+reader.SaveFrames(outputDir, "{0}.jpg", (percentage) =>
+{
+	Console.Write("\r Extracting video: {0} %", percentage * 100);
+});
+
+reader.Close();
+ ``` 
+ 
++ <a href="https://www.nuget.org/packages/DotImaging.IO.Web">DotImaging.IO.Web</a>  
+  Internet video streaming (direct video link or Youtube links).
+
+ ``` csharp
+ var pipeName = new Uri("https://www.youtube.com/watch?v=Vpg9yizPP_g").NamedPipeFromYoutubeUri(); //Youtube
+ var reader = new FileCapture(String.Format(@"\\.\pipe\{0}", pipeName)); //IO package
+ reader.Open();
+
+ Bgr<byte>[,] frame = null;
+ do
+ {
+	reader.ReadTo(ref frame);
+	if (frame == null)
+		break;
+
+	frame.Show(scaleForm: true); //show the frame (UI package)
+ }
+ while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
+
+reader.Close();
  ``` 
 
 + <a href="https://www.nuget.org/packages/DotImaging.Drawing">DotImaging.Drawing</a>  
@@ -83,7 +110,7 @@ var imageFromBitmap = colorImg.ToBitmapSource(); //from bitmap
 Bgr<byte>[,] image = new Bgr<byte>[480, 640];
 image.Show(); //show image (non-blocking)
 
-(0.4d).Progress(); //progress bar -40% (non-blocking)
+(0.4d).Progress(); //progress bar - 40% (non-blocking)
 
 string fileName = UI.OpenFile(); //open-file dialog
 

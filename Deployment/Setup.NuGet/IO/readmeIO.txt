@@ -21,14 +21,7 @@ Image loading/saving (file or in-memory).
    reader.Open();
 
    //read single frame
-   var frame = reader.ReadAs<Bgr<byte>>();
-
-   //read the rest of images (do not do that with the CameraCapture :) )
-   foreach(var image in reader)
-   {
-	  //do something with the image
-   }
-
+   var frame = reader.Read().ToBgr();
    reader.Close();
    
 
@@ -41,6 +34,17 @@ Image loading/saving (file or in-memory).
 
    videoWriter.Close();
 
+5) frame extraction:
+
+	var reader = new FileCapture(fileName);
+    reader.Open();
+
+    reader.SaveFrames(outputDir, "{0}.jpg", (percentage) =>
+    {
+        ((double)percentage).Progress(message: "Extracting video...");
+    });
+
+	reader.Close();
 
 Discover more types as you type :)
 

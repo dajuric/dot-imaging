@@ -20,6 +20,7 @@
 #endregion
 
 using DotImaging.Primitives2D;
+using System;
 
 namespace DotImaging
 {
@@ -471,7 +472,6 @@ namespace DotImaging
         #endregion
 
 
-
         #region Hsv channel depth conversion
 
         /// <summary>
@@ -557,6 +557,165 @@ namespace DotImaging
         public static Bgr<byte>[,] ToGray(this Hsv<byte>[,] image, Rectangle area)
         {
             return image.Convert<Hsv<byte>, Bgr<byte>>(Hsv<byte>.Convert, area);
+        }
+
+        #endregion
+
+
+
+        #region Unmanaged image and array cloning (ToBgr(), ToBgra(), ToGray())
+
+        /// <summary>
+        /// Converts the specified image into Bgr managed image.
+        /// </summary>
+        /// <param name="image">Bgr, Bgra or Gray type image.</param>
+        /// <returns>Bgr image or null if conversion can not be performed.</returns>
+        public static Bgr<byte>[,] ToBgr(this IImage image)
+        {
+            if (image is Image<Bgra<byte>>)
+            {
+                return (image as Image<Bgra<byte>>).Clone().ToBgr();
+            }
+            else if (image is Image<Bgr<byte>>)
+            {
+                return (image as Image<Bgr<byte>>).Clone();
+            }
+            else if (image is Image<Gray<byte>>)
+            {
+                return (image as Image<Gray<byte>>).Clone().ToBgr();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Converts the specified image into Bgra managed image.
+        /// </summary>
+        /// <param name="image">Bgr, Bgra or Gray type image.</param>
+        /// <returns>Bgra image or null if conversion can not be performed.</returns>
+        public static Bgra<byte>[,] ToBgra(this IImage image)
+        {
+            if (image is Image<Bgra<byte>>)
+            {
+                return (image as Image<Bgra<byte>>).Clone();
+            }
+            else if (image is Image<Bgr<byte>>)
+            {
+                return (image as Image<Bgr<byte>>).Clone().ToBgra();
+            }
+            else if (image is Image<Gray<byte>>)
+            {
+                return (image as Image<Gray<byte>>).Clone().ToBgra();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Converts the specified image into gray managed image.
+        /// </summary>
+        /// <param name="image">Bgr, Bgra or Gray type image.</param>
+        /// <returns>Gray image or null if conversion can not be performed.</returns>
+        public static Gray<byte>[,] ToGray(this IImage image)
+        {
+            if (image is Image<Bgra<byte>>)
+            {
+                return (image as Image<Bgra<byte>>).ToGray();
+            }
+            else if (image is Image<Bgr<byte>>)
+            {
+                return (image as Image<Bgr<byte>>).Clone().ToGray();
+            }
+            else if (image is Image<Gray<byte>>)
+            {
+                return (image as Image<Gray<byte>>).Clone();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Converts the specified 2D array into Bgr managed image.
+        /// <para>If the specified array is the Bgr managed image, the source is returned.</para>
+        /// </summary>
+        /// <param name="array2D">Bgr, Bgra or Gray type bitmap.</param>
+        /// <returns>Bgr image or null if conversion can not be performed.</returns>
+        public static Bgr<byte>[,] ToBgr(this Array array2D)
+        {
+            if (array2D is Bgra<byte>[,])
+            {
+                return ((Bgra<byte>[,])array2D).ToBgr();
+            }
+            else if (array2D is Bgr<byte>[,])
+            {
+                return ((Bgr<byte>[,])array2D);
+            }
+            else if (array2D is Gray<byte>[,])
+            {
+                return ((Gray<byte>[,])array2D).ToBgr();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Converts the specified 2D array into Bgra managed image.
+        /// <para>If the specified array is the Bgra managed image, the source is returned.</para>
+        /// </summary>
+        /// <param name="array2D">Bgra, Bgr or Gray type bitmap.</param>
+        /// <returns>Bgra image or null if conversion can not be performed.</returns>
+        public static Bgra<byte>[,] ToBgra(this Array array2D)
+        {
+            if (array2D is Bgra<byte>[,])
+            {
+                return (Bgra<byte>[,])array2D;
+            }
+            else if (array2D is Bgr<byte>[,])
+            {
+                return ((Bgr<byte>[,])array2D).ToBgra();
+            }
+            else if (array2D is Gray<byte>[,])
+            {
+                return ((Gray<byte>[,])array2D).ToBgra();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Converts the specified 2D array into gray managed image.
+        /// <para>If the specified array is the gray managed image, the source is returned.</para>
+        /// </summary>
+        /// <param name="array2D">Bgra, Bgr or Gray type bitmap.</param>
+        /// <returns>Gray image or null if conversion can not be performed.</returns>
+        public static Gray<byte>[,] ToGray(this Array array2D)
+        {
+            if (array2D is Bgra<byte>[,])
+            {
+                return ((Bgra<byte>[,])array2D).ToGray();
+            }
+            else if (array2D is Bgr<byte>[,])
+            {
+                return ((Bgr<byte>[,])array2D).ToGray();
+            }
+            else if (array2D is Gray<byte>[,])
+            {
+                return (Gray<byte>[,])array2D;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         #endregion
