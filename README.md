@@ -43,7 +43,7 @@ reader.Open();
 
 reader.SaveFrames(outputDir, "{0}.jpg", (percentage) =>
 {
-	Console.Write("\r Extracting video: {0} %", percentage * 100);
+       Console.Write("\r Extracting video: {0} %", percentage * 100);
 });
 
 reader.Close();
@@ -60,11 +60,11 @@ reader.Close();
  Bgr<byte>[,] frame = null;
  do
  {
-	reader.ReadTo(ref frame);
-	if (frame == null)
-		break;
+     reader.ReadTo(ref frame);
+     if (frame == null)
+             break;
 
-	frame.Show(scaleForm: true); //show the frame (UI package)
+     frame.Show(scaleForm: true); //show the frame (UI package)
  }
  while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
 
