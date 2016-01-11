@@ -68,12 +68,11 @@ reader.Open();
 Bgr<byte>[,] frame = null;
 while(true)
 {
-	reader.ReadTo(ref frame);
-	if (frame == null)
-		break;
+       reader.ReadTo(ref frame);
+       if (frame == null)
+          break;
 
-	frame.Show(scaleForm: true);
-	((double)reader.Position / reader.Length).Progress(); //show progress (UI package)
+       frame.Show(scaleForm: true); //UI package
 }
 	 
 reader.Close();
