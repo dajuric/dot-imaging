@@ -55,9 +55,7 @@ reader.Close();
  ``` csharp
 //------get an image from the Web
 new Uri("http://vignette3.wikia.nocookie.net/disney/images/5/5d/Lena_headey_.jpg")
-     .GetBytes()
-     .DecodeAsColorImage()
-	 .Show(); //(UI package)
+     .GetBytes().DecodeAsColorImage().Show(); //(Show - UI package)
  
 //------stream a video from Youtube
 var pipeName = new Uri("https://www.youtube.com/watch?v=Vpg9yizPP_g").NamedPipeFromYoutubeUri(); //Youtube
