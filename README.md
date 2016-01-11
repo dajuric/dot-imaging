@@ -38,13 +38,18 @@ Gray<byte>[,] grayIm = image.ToGray()
   > **Tutorial:** <a href="http://www.codeproject.com/Articles/828012/Introducing-Portable-Video-IO-Library-for-Csharp" target="_blank">Portable Imaging IO</a>
 
  ``` csharp
-var reader = new FileCapture(fileName);
+var reader = new FileCapture("sample.mp4");
 reader.Open();
 
-reader.SaveFrames(outputDir, "{0}.jpg", (percentage) =>
+Bgr<byte>[,] frame = null;
+while(true)
 {
-       Console.Write("\r Extracting video: {0} %", percentage * 100);
-});
+       reader.ReadTo(ref frame);
+       if (frame == null)
+          break;
+
+       frame.Show(scaleForm: true); //UI package
+}
 
 reader.Close();
  ``` 
@@ -61,19 +66,7 @@ new Uri("http://vignette3.wikia.nocookie.net/disney/images/5/5d/Lena_headey_.jpg
 var pipeName = new Uri("https://www.youtube.com/watch?v=Vpg9yizPP_g").NamedPipeFromYoutubeUri(); //Youtube
 var reader = new FileCapture(String.Format(@"\\.\pipe\{0}", pipeName)) //IO package
  
-reader.Open();
-	 
-Bgr<byte>[,] frame = null;
-while(true)
-{
-       reader.ReadTo(ref frame);
-       if (frame == null)
-          break;
-
-       frame.Show(scaleForm: true); //UI package
-}
-	 
-reader.Close();
+//... (regular stream reading - see IO package sample)
  ``` 
 
 + <a href="https://www.nuget.org/packages/DotImaging.Drawing">DotImaging.Drawing</a>  
