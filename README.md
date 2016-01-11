@@ -135,7 +135,6 @@ var modifiedImage = image.AsEnumerable()
  
 ## Getting started
 + Just pick what you need. An appropriate readme file will be shown upon selected NuGet package installation. 
-+ Each project in "Source" has a short readme
 + Samples
 
 ## Want image processing algorithms ?
