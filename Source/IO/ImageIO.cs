@@ -47,7 +47,7 @@ namespace DotImaging
         /// </summary>
         /// <param name="fileName">Image file name.</param>
         /// <returns>Image.</returns>
-        public unsafe static IImage LoadUnchanged(string fileName)
+        public unsafe static IImage LoadUnchanged(this string fileName)
         {
             return load(fileName, ImageLoadType.Unchanged);
         }
@@ -57,7 +57,7 @@ namespace DotImaging
         /// </summary>
         /// <param name="fileName">Image filename.</param>
         /// <returns>Image.</returns>
-        public unsafe static Image<Bgr<byte>> LoadColor(string fileName)
+        public unsafe static Image<Bgr<byte>> LoadColor(this string fileName)
         {
             return load(fileName, ImageLoadType.Color) as Image<Bgr<byte>>;
         }
@@ -67,7 +67,7 @@ namespace DotImaging
         /// </summary>
         /// <param name="fileName">Image filename.</param>
         /// <returns>Image.</returns>
-        public unsafe static Image<Gray<byte>> LoadGray(string fileName)
+        public unsafe static Image<Gray<byte>> LoadGray(this string fileName)
         {
             return load(fileName, ImageLoadType.Grayscale) as Image<Gray<byte>>;
         }

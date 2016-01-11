@@ -46,6 +46,7 @@ Image loading/saving (file or in-memory).
 
 	reader.Close();
 
+
 Discover more types as you type :)
 
 

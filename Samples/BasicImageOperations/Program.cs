@@ -1,5 +1,6 @@
 ﻿using DotImaging;
 using DotImaging.Primitives2D;
+using System;
 
 namespace BasicImageOperations
 {
@@ -7,8 +8,15 @@ namespace BasicImageOperations
     {
         static void Main()
         {
-            //create a managed image
-            var image = new Bgr<byte>[480, 640];
+            //load from the Web
+            var image = new Uri("http://vignette3.wikia.nocookie.net/disney/images/5/5d/Lena_headey_.jpg")
+                            .GetBytes()
+                            .DecodeAsColorImage();
+
+            //show image
+            image.Show("New Lena"); //to zoom or translate: press and hold Shift and scroll or move your mouse
+
+            image = new Bgr<byte>[480, 640];
 
             //draw something
             image.Draw(new Rectangle(50, 50, 200, 100), Bgr<byte>.Red, -1);
@@ -18,7 +26,7 @@ namespace BasicImageOperations
 
             //save and load
             image.Save("out.png");
-            ImageIO.LoadColor("out.png").Clone().Show(scaleForm: true);
+            ImageIO.LoadColor("out.png").Clone().Show("Saved image", scaleForm: true);
         }
     }
 }

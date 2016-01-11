@@ -71,7 +71,7 @@ namespace DotImaging
             get { return image; }
             set
             {
-                this.image = value;
+                this.image = value; 
 
                 if (image != null)
                 {

@@ -1,4 +1,11 @@
-﻿ Provides support for Internet video streaming (direct video link or Youtube links).
+﻿ Provides support for image or video download/streaming (direct video link or Youtube links).
+
+1) image loading:
+  
+   new Uri("http://vignette3.wikia.nocookie.net/disney/images/5/5d/Lena_headey_.jpg")
+        .GetBytes()
+        .DecodeAsColorImage()
+		.Show(); //requires UI package
 
 1) video streaming:
 
@@ -26,3 +33,6 @@
    string fileExtension;
    pipeName = new Uri("https://www.youtube.com/watch?v=Vpg9yizPP_g").NamedPipeFromYoutubeUri(out fileExtension); //Youtube
    pipeName.SaveNamedPipeStream("out" + fileExtension);
+
+
+Discover more types as you type :)

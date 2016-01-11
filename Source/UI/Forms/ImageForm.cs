@@ -43,21 +43,11 @@ namespace DotImaging
                 bmp = new Bitmap(image.Width(), image.Height(), PixelFormat.Format24bppRgb);
             }
 
-            BitmapData bmpData = bmp.Lock();
-            if (bmpData.BytesPerPixel != image.ColorInfo().Size)
-            {
-                bmpData.Dispose();
-                bmpData = null;
-                bmp = new Bitmap(image.Width(), image.Height(), PixelFormat.Format24bppRgb);
-            }
-
-            bmpData = bmpData ?? bmp.Lock();
+            using (BitmapData bmpData = bmp.Lock())
             using (var uIm = image.Lock())
             {
                 Copy.UnsafeCopy2D(uIm.ImageData, bmpData.Data, uIm.Stride, bmpData.ScanWidth, uIm.Height);
             }
-
-            bmpData.Dispose();
 
             pictureBox.Image = bmp;
 

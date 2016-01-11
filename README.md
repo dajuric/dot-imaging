@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v4.5.0-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
+    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v4.6.0-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
 </p>
 
 **DotImaging** - .NET array as imaging object  
@@ -50,24 +50,32 @@ reader.Close();
  ``` 
  
 + <a href="https://www.nuget.org/packages/DotImaging.IO.Web">DotImaging.IO.Web</a>  
-  Internet video streaming (direct video link or Youtube links).
+  Image or video download/streaming (direct video link or Youtube links).
 
  ``` csharp
- var pipeName = new Uri("https://www.youtube.com/watch?v=Vpg9yizPP_g").NamedPipeFromYoutubeUri(); //Youtube
- var reader = new FileCapture(String.Format(@"\\.\pipe\{0}", pipeName)); //IO package
- reader.Open();
+//------get an image from the Web
+new Uri("http://vignette3.wikia.nocookie.net/disney/images/5/5d/Lena_headey_.jpg")
+     .GetBytes()
+     .DecodeAsColorImage()
+	 .Show(); //(UI package)
+ 
+//------stream a video from Youtube
+var pipeName = new Uri("https://www.youtube.com/watch?v=Vpg9yizPP_g").NamedPipeFromYoutubeUri(); //Youtube
+var reader = new FileCapture(String.Format(@"\\.\pipe\{0}", pipeName)) //IO package
+ 
+reader.Open();
+	 
+Bgr<byte>[,] frame = null;
+while(true)
+{
+	reader.ReadTo(ref frame);
+	if (frame == null)
+		break;
 
- Bgr<byte>[,] frame = null;
- do
- {
-     reader.ReadTo(ref frame);
-     if (frame == null)
-             break;
-
-     frame.Show(scaleForm: true); //show the frame (UI package)
- }
- while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
-
+	frame.Show(scaleForm: true);
+	((double)reader.Position / reader.Length).Progress(); //show progress (UI package)
+}
+	 
 reader.Close();
  ``` 
 
