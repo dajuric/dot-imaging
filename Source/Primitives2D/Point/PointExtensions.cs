@@ -21,49 +21,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DotImaging.Primitives2D
 {
     /// <summary>
-    /// <para>Defined functions can be used as object extensions.</para>
     /// Provides point extension methods.
     /// </summary>
     public static class Point32iExtensions
     {
-        /// <summary>
-        /// Selects points which satisfy minimal specified distance.
-        /// </summary>
-        /// <param name="candidates">Points sorted by importance. Points are tested by sequentially.</param>
-        /// <param name="minimalDistance">Minimal enforced distance.</param>
-        /// <returns>Filtered points which are spread by minimal <paramref name="minimalDistance"/>.</returns>
-        public static List<Point> EnforceMinimalDistance(this IEnumerable<Point> candidates, float minimalDistance)
-        {
-            var minDistSqr = minimalDistance * minimalDistance;
-            List<Point> filteredPoints = new List<Point>();
-
-            foreach (var candidate in candidates)
-            {
-                bool isEnoughFar = true;
-                foreach (var filteredPt in filteredPoints)
-                {
-                    int dx = candidate.X - filteredPt.X;
-                    int dy = candidate.Y - filteredPt.Y;
-                    int featureDistanceSqr = dx * dx + dy * dy;
-
-                    if (featureDistanceSqr < minDistSqr)
-                    {
-                        isEnoughFar = false;
-                        break;
-                    }
-                }
-
-                if (isEnoughFar)
-                    filteredPoints.Add(candidate);
-            }
-
-            return filteredPoints;
-        }
-
         /// <summary>
         /// Clamps point coordinate according to the specified size (0,0, size.Width, size.Height).
         /// </summary>
@@ -122,7 +88,6 @@ namespace DotImaging.Primitives2D
     }
 
     /// <summary>
-    /// <para>Defined functions can be used as object extensions.</para>
     /// Provides point extension methods.
     /// </summary>
     public static class Point32fExtensions
@@ -311,6 +276,367 @@ namespace DotImaging.Primitives2D
         public static Point Round(this PointF point)
         {
             return Point.Round(point);
+        }
+    }
+
+
+    /// <summary>
+    /// Provides point collection extensions.
+    /// </summary>
+    public static class Point32fCollectionExtensions
+    {
+        //taken from:http://stackoverflow.com/questions/4243042/c-sharp-point-in-polygon and modified
+        /// <summary>
+        /// Checks whether the specified location is in the polygon.
+        /// </summary>
+        /// <param name="poly">Polygon.</param>
+        /// <param name="x">Horizontal coordinate.</param>
+        /// <param name="y">VErtical coordinate.</param>
+        /// <returns>True if the point resides inside the polygon, false otherwise.</returns>
+        public static bool IsInPolygon(this IList<PointF> poly, float x, float y)
+        {
+            PointF p1, p2;
+
+            bool inside = false;
+
+            if (poly.Count < 3)
+            {
+                return inside;
+            }
+
+            var oldPoint = new PointF(poly[poly.Count - 1].X, poly[poly.Count - 1].Y);
+
+            for (int i = 0; i < poly.Count; i++)
+            {
+                var newPoint = new PointF(poly[i].X, poly[i].Y);
+
+                if (newPoint.X > oldPoint.X)
+                {
+                    p1 = oldPoint;
+                    p2 = newPoint;
+                }
+
+                else
+                {
+                    p1 = newPoint;
+                    p2 = oldPoint;
+                }
+
+
+                if ((newPoint.X < x) == (x <= oldPoint.X) && 
+                    (y - (long)p1.Y) * (p2.X - p1.X) < (p2.Y - (long)p1.Y) * (x - p1.X))
+                {
+                    inside = !inside;
+                }
+
+
+                oldPoint = newPoint;
+            }
+
+            return inside;
+        }
+
+        /// <summary>
+        /// Gets the minimum bounding rectangle around the points.
+        /// </summary>
+        /// <param name="points">Contour points.</param>
+        /// <returns>Bounding rectangle.</returns>
+        public static RectangleF BoundingRect(this IEnumerable<PointF> points)
+        {
+            if (points.Any() == false) return RectangleF.Empty;
+
+            float minX = Single.MaxValue, maxX = Single.MinValue,
+                  minY = Single.MaxValue, maxY = Single.MinValue;
+
+            foreach (var pt in points)
+            {
+                if (pt.X < minX)
+                    minX = pt.X;
+                if (pt.X > maxX)
+                    maxX = pt.X;
+
+                if (pt.Y < minY)
+                    minY = pt.Y;
+                if (pt.Y > maxY)
+                    maxY = pt.Y;
+            }
+
+            return new RectangleF(minX, minY, maxX - minX, maxY - minY);
+        }
+
+        /// <summary>
+        /// Gets the center of the mass of the contour.
+        /// </summary>
+        /// <param name="points">Contour points.</param>
+        /// <returns>The center of the mass of the contour.</returns>
+        public static PointF Center(this IEnumerable<PointF> points)
+        {
+            PointF average = new PointF();
+            int nSamples = 0;
+
+            foreach (var pt in points)
+            {
+                average.X += pt.X;
+                average.Y += pt.Y;
+                nSamples++;
+            }
+
+            average.X /= nSamples;
+            average.Y /= nSamples;
+
+            return average;
+        }
+
+        /// <summary>
+        /// Determines whether the polygon forms rectangle.
+        /// </summary>
+        /// <param name="points">Polygon.</param>
+        /// <returns>True if the polygon forms rectangle, false otherwise.</returns>
+        public static bool IsRectangle(this IEnumerable<PointF> points)
+        {
+            if (points.Count() != 4)
+                return false;
+
+            var rect = points.BoundingRect();
+
+            bool hasTopLeft = false, hasTopRight = false, hasBottomLeft = false, hasBottomRight = false;
+
+            foreach (var pt in points)
+            {
+                if (rect.Top == pt.Y)
+                {
+                    if (rect.X == pt.X)
+                        hasTopLeft = true;
+
+                    if (rect.Right == pt.X)
+                        hasTopRight = true;
+                }
+
+                if (rect.Bottom == pt.Y)
+                {
+                    if (rect.X == pt.X)
+                        hasBottomLeft = true;
+
+                    if (rect.Right == pt.X)
+                        hasBottomRight = true;
+                }
+            }
+
+            return hasTopLeft && hasTopRight && hasBottomLeft && hasBottomRight;
+        }
+
+        /// <summary>
+        /// Selects points which satisfy minimal specified distance.
+        /// </summary>
+        /// <param name="candidates">Points sorted by importance. Points are tested by sequentially.</param>
+        /// <param name="minimalDistance">Minimal enforced distance.</param>
+        /// <returns>Filtered points which are spread by minimal <paramref name="minimalDistance"/>.</returns>
+        public static List<PointF> EnforceMinimalDistance(this IEnumerable<PointF> candidates, float minimalDistance)
+        {
+            var minDistSqr = minimalDistance * minimalDistance;
+            var filteredPoints = new List<PointF>();
+
+            foreach (var candidate in candidates)
+            {
+                bool isEnoughFar = true;
+                foreach (var filteredPt in filteredPoints)
+                {
+                    var dx = candidate.X - filteredPt.X;
+                    var dy = candidate.Y - filteredPt.Y;
+                    var featureDistanceSqr = dx * dx + dy * dy;
+
+                    if (featureDistanceSqr < minDistSqr)
+                    {
+                        isEnoughFar = false;
+                        break;
+                    }
+                }
+
+                if (isEnoughFar)
+                    filteredPoints.Add(candidate);
+            }
+
+            return filteredPoints;
+        }
+    }
+
+    /// <summary>
+    /// Provides point collection extensions.
+    /// </summary>
+    public static class Point32iCollectionExtensions
+    {
+        //taken from:http://stackoverflow.com/questions/4243042/c-sharp-point-in-polygon and modified
+        /// <summary>
+        /// Checks whether the specified location is in the polygon.
+        /// </summary>
+        /// <param name="poly">Polygon.</param>
+        /// <param name="x">Horizontal coordinate.</param>
+        /// <param name="y">VErtical coordinate.</param>
+        /// <returns>True if the point resides inside the polygon, false otherwise.</returns>
+        public static bool IsInPolygon(this IList<Point> poly, float x, float y)
+        {
+            Point p1, p2;
+
+            bool inside = false;
+
+            if (poly.Count < 3)
+            {
+                return inside;
+            }
+
+            var oldPoint = new Point(poly[poly.Count - 1].X, poly[poly.Count - 1].Y);
+
+            for (int i = 0; i < poly.Count; i++)
+            {
+                var newPoint = new Point(poly[i].X, poly[i].Y);
+
+                if (newPoint.X > oldPoint.X)
+                {
+                    p1 = oldPoint;
+                    p2 = newPoint;
+                }
+
+                else
+                {
+                    p1 = newPoint;
+                    p2 = oldPoint;
+                }
+
+
+                if ((newPoint.X < x) == (x <= oldPoint.X) &&
+                    (y - (long)p1.Y) * (p2.X - p1.X) < (p2.Y - (long)p1.Y) * (x - p1.X))
+                {
+                    inside = !inside;
+                }
+
+
+                oldPoint = newPoint;
+            }
+
+            return inside;
+        }
+
+        /// <summary>
+        /// Gets the minimum bounding rectangle around the points.
+        /// </summary>
+        /// <param name="points">Contour points.</param>
+        /// <returns>Bounding rectangle.</returns>
+        public static Rectangle BoundingRect(this IEnumerable<Point> points)
+        {
+            if (points.Any() == false) return Rectangle.Empty;
+
+            int minX = Int32.MaxValue, maxX = Int32.MinValue,
+                minY = Int32.MaxValue, maxY = Int32.MinValue;
+
+            foreach (var pt in points)
+            {
+                if (pt.X < minX)
+                    minX = pt.X;
+                if (pt.X > maxX)
+                    maxX = pt.X;
+
+                if (pt.Y < minY)
+                    minY = pt.Y;
+                if (pt.Y > maxY)
+                    maxY = pt.Y;
+            }
+
+            return new Rectangle(minX, minY, maxX - minX, maxY - minY);
+        }
+
+        /// <summary>
+        /// Gets the center of the mass of the contour.
+        /// </summary>
+        /// <param name="points">Contour points.</param>
+        /// <returns>The center of the mass of the contour.</returns>
+        public static PointF Center(this IEnumerable<Point> points)
+        {
+            PointF average = new PointF();
+            int nSamples = 0;
+
+            foreach (var pt in points)
+            {
+                average.X += pt.X;
+                average.Y += pt.Y;
+                nSamples++;
+            }
+
+            average.X /= nSamples;
+            average.Y /= nSamples;
+
+            return average;
+        }
+
+        /// <summary>
+        /// Determines whether the polygon forms rectangle.
+        /// </summary>
+        /// <param name="points">Polygon.</param>
+        /// <returns>True if the polygon forms rectangle, false otherwise.</returns>
+        public static bool IsRectangle(this IEnumerable<Point> points)
+        {
+            if (points.Count() != 4)
+                return false;
+
+            var rect = points.BoundingRect();
+
+            bool hasTopLeft = false, hasTopRight = false, hasBottomLeft = false, hasBottomRight = false;
+
+            foreach (var pt in points)
+            {
+                if (rect.Top == pt.Y)
+                {
+                    if (rect.X == pt.X)
+                        hasTopLeft = true;
+
+                    if (rect.Right == pt.X)
+                        hasTopRight = true;
+                }
+
+                if (rect.Bottom == pt.Y)
+                {
+                    if (rect.X == pt.X)
+                        hasBottomLeft = true;
+
+                    if (rect.Right == pt.X)
+                        hasBottomRight = true;
+                }
+            }
+
+            return hasTopLeft && hasTopRight && hasBottomLeft && hasBottomRight;
+        }
+
+        /// <summary>
+        /// Selects points which satisfy minimal specified distance.
+        /// </summary>
+        /// <param name="candidates">Points sorted by importance. Points are tested by sequentially.</param>
+        /// <param name="minimalDistance">Minimal enforced distance.</param>
+        /// <returns>Filtered points which are spread by minimal <paramref name="minimalDistance"/>.</returns>
+        public static List<Point> EnforceMinimalDistance(this IEnumerable<Point> candidates, float minimalDistance)
+        {
+            var minDistSqr = minimalDistance * minimalDistance;
+            var filteredPoints = new List<Point>();
+
+            foreach (var candidate in candidates)
+            {
+                bool isEnoughFar = true;
+                foreach (var filteredPt in filteredPoints)
+                {
+                    var dx = candidate.X - filteredPt.X;
+                    var dy = candidate.Y - filteredPt.Y;
+                    var featureDistanceSqr = dx * dx + dy * dy;
+
+                    if (featureDistanceSqr < minDistSqr)
+                    {
+                        isEnoughFar = false;
+                        break;
+                    }
+                }
+
+                if (isEnoughFar)
+                    filteredPoints.Add(candidate);
+            }
+
+            return filteredPoints;
         }
     }
 }
