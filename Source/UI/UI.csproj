@@ -47,9 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\DrawingPenAdorner.cs" />
+    <Compile Include="Components\DrawingRectangleAdorner.cs" />
     <Compile Include="Components\PictureBox.cs" />
     <Compile Include="FormCollection.cs" />
-    <Compile Include="Forms\MaskImageForm.cs" />
+    <Compile Include="Forms\DrawingRectangleForm.cs" />
+    <Compile Include="Forms\DrawingPenForm.cs" />
     <Compile Include="Forms\ImageForm.cs" />
     <Compile Include="Forms\ProgressForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,6 +65,10 @@
     <ProjectReference Include="..\GenericImage\GenericImage.csproj">
       <Project>{3cf8f155-3da1-4529-9b28-d409e86ed4e2}</Project>
       <Name>GenericImage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Primitives2D\Primitives2D.csproj">
+      <Project>{d5767a78-e50a-4b5d-94f5-44a59b87f944}</Project>
+      <Name>Primitives2D</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

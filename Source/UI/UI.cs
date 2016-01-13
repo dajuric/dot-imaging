@@ -20,8 +20,7 @@
 #endregion
 
 using Eto.Forms;
-using System;
-using System.Threading;
+using DotImaging.Primitives2D;
 
 namespace DotImaging
 {
@@ -189,7 +188,7 @@ namespace DotImaging
         {
             var mask = FormCollection.CreateAndShowDialog(() =>
                         {
-                            var f = new MaskImageForm(windowTitle, image);
+                            var f = new DrawingPenForm(windowTitle, image);
                             f.Title = windowTitle;
                             f.ScaleForm = scaleForm;
                             return f;
@@ -197,6 +196,27 @@ namespace DotImaging
                         f => f.Mask);
 
             return mask;        
+        }
+
+        /// <summary>
+        /// Displays the specified image in a window and waits the user to create a rectangle by drawing.
+        /// </summary>
+        /// <param name="image">Image to display.</param>
+        /// <param name="windowTitle">Window title (ID).</param>
+        /// <param name="scaleForm">True to adjust form to the image size, false otherwise.</param>
+        /// <returns>Drawn mask.</returns>
+        public static RectangleF GetRectangle(this Bgr<byte>[,] image, string windowTitle = "Draw rectangle (close when finished)", bool scaleForm = false)
+        {
+            var rect = FormCollection.CreateAndShowDialog(() =>
+                        {
+                            var f = new DrawingRectangleForm(windowTitle, image);
+                            f.Title = windowTitle;
+                            f.ScaleForm = scaleForm;
+                            return f;
+                        },
+                        f => f.Rectangle);
+
+            return new RectangleF(rect.X, rect.Y, rect.Width, rect.Height);
         }
 
         /// <summary>

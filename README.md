@@ -115,6 +115,8 @@ string fileName = UI.OpenFile(); //open-file dialog
 Bgr<byte> color = UI.PickColor(); //color picker dialog
 
 Gray<byte>[,] mask = image.GetMask(); //get user-defined mask dialog 
+
+RectangleF rect = image.GetRectangle(); //get user-defined rectangle dialog
  ```
  
 + <a href="https://www.nuget.org/packages/DotImaging.Linq">DotImaging.Linq</a>  

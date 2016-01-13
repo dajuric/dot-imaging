@@ -1,4 +1,4 @@
-﻿Portable standalone UI elements invokable as extensions (image display, progress bar, open-save file dialogs, folder-selection dialog, color-picker, mask-drawing dialog).
+﻿Portable standalone UI elements invokable as extensions (image display, progress bar, open-save file dialogs, folder-selection dialog, color-picker, mask-drawing dialog, rectangle-drawing dialog).
 
 1) image show
    Bgr<byte>[,] image = new Bgr<byte>[480, 640];
@@ -23,6 +23,12 @@
    Bgr<byte>[,] image = new Bgr<byte>[480, 640];
    image.SetValue<Bgr<byte>>(Bgr<byte>.Red);
    Gray<byte>[,] mask = image.GetMask(); //get user-defined mask dialog 
+
+6) rectangle drawing dialog
+   Bgr<byte>[,] image = new Bgr<byte>[480, 640];
+   image.SetValue<Bgr<byte>>(Bgr<byte>.Red);
+   RectangleF rect = image.GetRectangle(); //get user-defined rectangle dialog
+
 
 ---------------------------------------------------------------------------
 In order to support other OS platforms (except Windows) install one (or more) of the following packages:

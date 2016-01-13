@@ -29,7 +29,7 @@ namespace DotImaging
     /// <summary>
     ///  Image display form supporting mask creation.
     /// </summary>
-    internal class MaskImageForm : Form
+    internal class DrawingPenForm : Form
     {
         PictureBox pictureBox = null;
         DrawingPenAdorner adorner = null;
@@ -57,7 +57,7 @@ namespace DotImaging
         /// </summary>
         /// <param name="title">Window title.</param>
         /// <param name="image">Image to display.</param>
-        public MaskImageForm(string title = "", Bgr<byte>[,] image = null)
+        public DrawingPenForm(string title = "", Bgr<byte>[,] image = null)
         {
             Title = title;
             ClientSize = new Size(640, 480);
