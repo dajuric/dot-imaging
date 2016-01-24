@@ -52,6 +52,7 @@
     <Compile Include="FormCollection.cs" />
     <Compile Include="Forms\DrawingRectangleForm.cs" />
     <Compile Include="Forms\DrawingPenForm.cs" />
+    <Compile Include="Forms\MenuForm.cs" />
     <Compile Include="Forms\ImageForm.cs" />
     <Compile Include="Forms\ProgressForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

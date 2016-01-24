@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v4.6.5-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
+    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v4.7-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
 </p>
 
 **DotImaging** - .NET array as imaging object  
@@ -112,11 +112,15 @@ image.Show(); //show image (non-blocking)
 
 string fileName = UI.OpenFile(); //open-file dialog
 
-Bgr<byte> color = UI.PickColor(); //color picker dialog
+Bgr<byte> color = UI.PickColor(); //color-picker dialog
 
-Gray<byte>[,] mask = image.GetMask(); //get user-defined mask dialog 
+Gray<byte>[,] mask = image.GetMask(); //draw-mask dialog 
 
-RectangleF rect = image.GetRectangle(); //get user-defined rectangle dialog
+RectangleF rect = image.GetRectangle(); //draw-rectangle dialog
+
+var num = -1;
+UI.ShowMenu(itemNames: new string[] { "2", "3" },
+            actions: new Action[] { () => num = 2, () => num = 3 }); //menu-dialog
  ```
  
 + <a href="https://www.nuget.org/packages/DotImaging.Linq">DotImaging.Linq</a>  

@@ -21,6 +21,7 @@
 
 using Eto.Forms;
 using DotImaging.Primitives2D;
+using System;
 
 namespace DotImaging
 {
@@ -217,6 +218,27 @@ namespace DotImaging
                         f => f.Rectangle);
 
             return new RectangleF(rect.X, rect.Y, rect.Width, rect.Height);
+        }
+
+        /// <summary>
+        /// Displays a menu dialog specified by user defined menu items. 
+        /// <para>If no items are specified, or in case of a error, the dialog will not be shown.</para>
+        /// </summary>
+        /// <param name="windowTitle">Window title (ID).</param>
+        /// <param name="itemNames">Names of the menu items.</param>
+        /// <param name="actions">Item actions.</param>
+        /// <returns>Selected menu index or -1 in case the form is closed.</returns>
+        public static int ShowMenu(string windowTitle = "Menu (close when finished)", string[] itemNames = null, Action[] actions = null)
+        {
+            var idx = FormCollection.CreateAndShowDialog(() =>
+                        {
+                            var f = new MenuForm(windowTitle, itemNames, actions);
+                            f.Title = windowTitle;
+                            return f;
+                        },
+                        f => f.SelectedIndex);
+
+            return idx;
         }
 
         /// <summary>
