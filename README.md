@@ -120,7 +120,7 @@ RectangleF rect = image.GetRectangle(); //draw-rectangle dialog
 
 var num = -1;
 UI.ShowMenu(itemNames: new string[] { "2", "3" },
-            actions: new Action[] { () => num = 2, () => num = 3 }); //menu-dialog
+                actions: new Action[] { () => num = 2, () => num = 3 }); //menu-dialog
  ```
  
 + <a href="https://www.nuget.org/packages/DotImaging.Linq">DotImaging.Linq</a>  
