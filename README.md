@@ -25,7 +25,7 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 
 + <a href="https://www.nuget.org/packages/DotImaging.GenericImage"> 
     <img src="https://img.shields.io/badge/DotImaging-GenericImage-red.svg?style=flat-square" alt="DotImaging.GenericImage"/>  
-  </a>  
+  </a> 
   .NET image array extensions. Color and depth conversions. Slim unmanaged structure for fast pixel manipulation.
 
   > **Tutorial:** <a href="http://www.codeproject.com/Articles/829349/Introducing-Portable-Generic-Image-Library-for-Csh" target="_blank">Portable Generic Image</a>
@@ -140,7 +140,9 @@ UI.ShowMenu(itemNames: new string[] { "2", "3" },
                 actions: new Action[] { () => num = 2, () => num = 3 }); //menu-dialog
  ```
 
-+ <a href="https://www.nuget.org/packages/DotImaging.Drawing">DotImaging.Drawing</a>  
++ <a href="https://www.nuget.org/packages/DotImaging.Drawing"> 
+    <img src="https://img.shields.io/badge/DotImaging-Drawing-red.svg?style=flat-square" alt="DotImaging.Drawing"/>  
+  </a> 
   .NET image drawing array extensions.
 
  ``` csharp
@@ -174,7 +176,8 @@ var modifiedImage = image.AsEnumerable()
 
 ``` csharp
 Console.WriteLine(Platform.RunningPlatform); //Windows, Linux, MacOS
-Platform.AddDllSearchPath(); //add the "UnmanagedLibraries/<your platform>/<version>/" to the path (e.g. UnmanagedLibraries/Windows/x64)
+//add the "UnmanagedLibraries/<your platform>/<version>/" to the path (e.g. UnmanagedLibraries/Windows/x64)
+Platform.AddDllSearchPath(); 
  ``` 
   
  
