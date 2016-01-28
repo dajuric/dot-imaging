@@ -70,7 +70,7 @@ reader.Close();
  ``` 
  
 + <a href="https://www.nuget.org/packages/DotImaging.IO.Web"> 
-    <img src="https://img.shields.io/badge/DotImaging-Io.Web-red.svg?style=flat-square" alt="DotImaging.IO.Web"/>  
+    <img src="https://img.shields.io/badge/DotImaging-IO.Web-red.svg?style=flat-square" alt="DotImaging.IO.Web"/>  
   </a>
   Image or video download/streaming (direct video link or Youtube links).
 
