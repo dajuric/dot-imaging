@@ -29,7 +29,6 @@ namespace DotImaging
     /// </summary>
     internal class ImageForm : Form
     {
-        PictureBox pictureBox = null;
         Bitmap bmp = null;
 
         /// <summary>
@@ -49,7 +48,7 @@ namespace DotImaging
                 Copy.UnsafeCopy2D(uIm.ImageData, bmpData.Data, uIm.Stride, bmpData.ScanWidth, uIm.Height);
             }
 
-            pictureBox.Image = bmp;
+            PictureBox.Image = bmp;
 
             if (ScaleForm)
                 ClientSize = new Size(image.Width(), image.Height());
@@ -64,8 +63,10 @@ namespace DotImaging
             Title = title;
             ClientSize = new Size(640, 480);
 
-            pictureBox = new PictureBox { Image = bmp, AutoScale = true };
-            Content = pictureBox;
+            PictureBox = new PictureBox { Image = bmp, AutoScale = true };
+            Content = PictureBox;
+
+            this.Shown += (s, e) => PictureBox.Image = bmp;
         }
 
         /// <summary>
@@ -75,5 +76,10 @@ namespace DotImaging
         {
             get; set;
         }
+
+        /// <summary>
+        /// Gets the underlying picture box control.
+        /// </summary>
+        public PictureBox PictureBox { get; private set; }
     }
 }

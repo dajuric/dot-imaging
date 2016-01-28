@@ -38,6 +38,7 @@ namespace Test
         [STAThread]
         unsafe static void Main()
         {
+            //test Menu
             var selectedIdx = UI.ShowMenu(itemNames: new string[] { "Option A", "Option B" },
                                           actions: new Action[] { () => Console.WriteLine("Option A"), () => Console.WriteLine("Option B") });
 
@@ -45,9 +46,23 @@ namespace Test
             UI.CloseAll();
             return;
 
+            //test get-rectangle async
             var resourceDir = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Resources");
             var imgColor = ImageIO.LoadColor(Path.Combine(resourceDir, "testColorBig.jpg")).Clone();
 
+            int i = 0;
+            while (true)
+            {
+                var im = imgColor.Clone<Bgr<byte>>();
+                im.Draw(i.ToString(), Font.Big, new Point(45, 45), Bgr<byte>.Red);
+
+                im.GetRectangle(onDrawn: (rect) => Console.WriteLine(rect));
+                i++;
+            }
+            UI.CloseAll();
+            return;
+
+            //test image encoding-decoding
             byte[] arr = imgColor.EncodeAsPng();
             var decodedIm = arr.DecodeAsColorImage();
             decodedIm.Save("out.bmp");

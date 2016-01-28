@@ -116,7 +116,7 @@ namespace DotImaging
                     form.Closed += (s, e) =>
                     {
                         result = getResult(form);
-                        ev.Set();
+                        ev.Set(); 
                     };
                 }
                 catch (Exception ex)

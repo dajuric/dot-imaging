@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v4.7-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
+    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v4.7.5-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
 </p>
 
 **DotImaging** - .NET array as imaging object  
@@ -20,7 +20,12 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 
 ## Libraries / NuGet packages
 
-+ <a href="https://www.nuget.org/packages/DotImaging.GenericImage">DotImaging.GenericImage</a>    
+
+###### Core
+
++ <a href="https://www.nuget.org/packages/DotImaging.GenericImage"> 
+    <img src="https://img.shields.io/badge/DotImaging-GenericImage-red.svg?style=flat-square" alt="DotImaging.GenericImage"/>  
+  </a>  
   .NET image array extensions. Color and depth conversions. Slim unmanaged structure for fast pixel manipulation.
 
   > **Tutorial:** <a href="http://www.codeproject.com/Articles/829349/Introducing-Portable-Generic-Image-Library-for-Csh" target="_blank">Portable Generic Image</a>
@@ -32,7 +37,17 @@ Gray<byte>[,] grayIm = image.ToGray()
                                 .Flip(FlipDirection.Horizontal);
  ```
 
-+ <a href="https://www.nuget.org/packages/DotImaging.IO">DotImaging.IO</a>  
++ <a href="https://www.nuget.org/packages/DotImaging.Primitives2D"> 
+    <img src="https://img.shields.io/badge/DotImaging-Primitives2D-red.svg?style=flat-square" alt="DotImaging.Primitives2D"/>  
+  </a> 
+  Portable 2D drawing primitives (Point, Size, Rectangle, ...)
+
+
+###### IO
+
++ <a href="https://www.nuget.org/packages/DotImaging.IO"> 
+    <img src="https://img.shields.io/badge/DotImaging-IO-red.svg?style=flat-square" alt="DotImaging.IO"/>  
+  </a>
   A unified API for IO image access (camera, file, image directory). Portable image loading/saving.
 
   > **Tutorial:** <a href="http://www.codeproject.com/Articles/828012/Introducing-Portable-Video-IO-Library-for-Csharp" target="_blank">Portable Imaging IO</a>
@@ -54,7 +69,9 @@ while(true)
 reader.Close();
  ``` 
  
-+ <a href="https://www.nuget.org/packages/DotImaging.IO.Web">DotImaging.IO.Web</a>  
++ <a href="https://www.nuget.org/packages/DotImaging.IO.Web"> 
+    <img src="https://img.shields.io/badge/DotImaging-Io.Web-red.svg?style=flat-square" alt="DotImaging.IO.Web"/>  
+  </a>
   Image or video download/streaming (direct video link or Youtube links).
 
  ``` csharp
@@ -69,19 +86,12 @@ var reader = new FileCapture(String.Format(@"\\.\pipe\{0}", pipeName)) //IO pack
 //... (regular stream reading - see IO package sample)
  ``` 
 
-+ <a href="https://www.nuget.org/packages/DotImaging.Drawing">DotImaging.Drawing</a>  
-  .NET image drawing array extensions.
+ 
+###### Interoperability
 
- ``` csharp
-//create a managed image
-var image = new Bgr<byte>[480, 640];
-
-//draw something
-image.Draw(new Rectangle(50, 50, 200, 100), Bgr<byte>.Red, -1);
-image.Draw(new Circle(50, 50, 25), Bgr<byte>.Blue, 5);
- ``` 
-
-+ <a href="https://www.nuget.org/packages/DotImaging.BitmapInterop">DotImaging.BitmapInterop</a>  
++ <a href="https://www.nuget.org/packages/DotImaging.BitmapInterop"> 
+    <img src="https://img.shields.io/badge/DotImaging-BitmapInterop-red.svg?style=flat-square" alt="DotImaging.BitmapInterop"/>  
+  </a>
   Interoperability extensions between .NET array and Bitmap (WinForms).
 
  ``` csharp
@@ -91,7 +101,9 @@ var bmp = image.ToBitmap(); //to Bitmap
 var imageFromBmp = bmp.ToArray() as Bgr<byte>[,]; //from Bitmap
  ``` 
  
-+ <a href="https://www.nuget.org/packages/DotImaging.BitmapSourceInterop">DotImaging.BitmapSourceInterop</a>  
++ <a href="https://www.nuget.org/packages/DotImaging.BitmapSourceInterop"> 
+    <img src="https://img.shields.io/badge/DotImaging-BitmapSourceInterop-red.svg?style=flat-square" alt="DotImaging.BitmapSourceInterop"/>  
+  </a>
   Interoperability extensions between .NET array and BitmapSource (WPF).
 
  ``` csharp
@@ -101,8 +113,13 @@ Bgra<byte>[,] colorImg = bmp.ToArray<Bgra<byte>>(); //to bitmap
 var imageFromBitmap = colorImg.ToBitmapSource(); //from bitmap
  ```
 
-+ <a href="https://www.nuget.org/packages/DotImaging.UI">DotImaging.UI</a>  
-  Portable UI elements (image display, progress bar, open-save file dialogs, folder-selection dialog, color-picker).
+ 
+###### Extensions
+
++ <a href="https://www.nuget.org/packages/DotImaging.UI"> 
+    <img src="https://img.shields.io/badge/DotImaging-UI-red.svg?style=flat-square" alt="DotImaging.UI"/>  
+  </a> 
+  Portable UI elements (image display, progress bar, file/folder dialogs, color-picker, image annotation input).
 
  ``` csharp
 Bgr<byte>[,] image = new Bgr<byte>[480, 640];
@@ -116,14 +133,28 @@ Bgr<byte> color = UI.PickColor(); //color-picker dialog
 
 Gray<byte>[,] mask = image.GetMask(); //draw-mask dialog 
 
-RectangleF rect = image.GetRectangle(); //draw-rectangle dialog
+RectangleF rect = image.GetRectangle(); //draw-rectangle dialog (blocking and non-blocking)
 
 var num = -1;
 UI.ShowMenu(itemNames: new string[] { "2", "3" },
-            actions: new Action[] { () => num = 2, () => num = 3 }); //menu-dialog
+                actions: new Action[] { () => num = 2, () => num = 3 }); //menu-dialog
  ```
- 
-+ <a href="https://www.nuget.org/packages/DotImaging.Linq">DotImaging.Linq</a>  
+
++ <a href="https://www.nuget.org/packages/DotImaging.Drawing">DotImaging.Drawing</a>  
+  .NET image drawing array extensions.
+
+ ``` csharp
+//create a managed image
+var image = new Bgr<byte>[480, 640];
+
+//draw something
+image.Draw(new Rectangle(50, 50, 200, 100), Bgr<byte>.Red, -1);
+image.Draw(new Circle(50, 50, 25), Bgr<byte>.Blue, 5);
+ ``` 
+
++ <a href="https://www.nuget.org/packages/DotImaging.Linq"> 
+    <img src="https://img.shields.io/badge/DotImaging-Linq-red.svg?style=flat-square" alt="DotImaging.Linq"/>  
+  </a> 
   2D array Linq extensions
 
  ``` csharp
@@ -136,8 +167,16 @@ var modifiedImage = image.AsEnumerable()
 							 .ToArray2D(image.Size());
  ``` 
  
-+ <a href="https://www.nuget.org/packages/DotImaging.Primitives2D">DotImaging.Primitives2D</a>  
-  Portable 2D drawing primitives (Point, Size, Rectangle, ...)
++ <a href="https://www.nuget.org/packages/DotImaging.Core.Platform"> 
+    <img src="https://img.shields.io/badge/DotImaging-Core.Platform-red.svg?style=flat-square" alt="DotImaging.Core.Platform"/>  
+  </a> 
+  Provides the portable way to determine the execution platform + interoperability functions.
+
+``` csharp
+Console.WriteLine(Platform.RunningPlatform); //Windows, Linux, MacOS
+Platform.AddDllSearchPath(); //add the "UnmanagedLibraries/<your platform>/<version>/" to the path (e.g. UnmanagedLibraries/Windows/x64)
+ ``` 
+  
  
 ## Getting started
 + Just pick what you need. An appropriate readme file will be shown upon selected NuGet package installation. 

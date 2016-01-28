@@ -213,6 +213,26 @@ namespace DotImaging.Primitives2D
 
             return true;
         }
+
+        /// <summary>
+        /// Gets the bounding rectangle of the rectangle collection.
+        /// </summary>
+        /// <param name="rectangles">Rectangle collection.</param>
+        /// <returns>Bounding rectangle.</returns>
+        public static Rectangle BoundingRectangle(this IEnumerable<Rectangle> rectangles)
+        {
+            int minX = Int16.MaxValue, minY = Int16.MaxValue, maxX = Int16.MinValue, maxY = Int16.MinValue;
+
+            foreach (var r in rectangles)
+            {
+                if (r.Left < minX) minX = r.Left;
+                if (r.Top < minY) minY = r.Top;
+                if (r.Right > maxX) maxX = r.Right;
+                if (r.Bottom > maxY) maxY = r.Bottom;
+            }
+
+            return Rectangle.FromLTRB(minX, minY, maxX, maxY);
+        }
     }
 
     /// <summary>
@@ -447,6 +467,26 @@ namespace DotImaging.Primitives2D
 
                 return new RectangleF(rect.X, rect.Y + yOffset, rect.Width, newHeightCandidate);
             }
+        }
+
+        /// <summary>
+        /// Gets the bounding rectangle of the rectangle collection.
+        /// </summary>
+        /// <param name="rectangles">Rectangle collection.</param>
+        /// <returns>Bounding rectangle.</returns>
+        public static Rectangle BoundingRectangle(this IEnumerable<Rectangle> rectangles)
+        {
+            int minX = Int16.MaxValue, minY = Int16.MaxValue, maxX = Int16.MinValue, maxY = Int16.MinValue;
+
+            foreach (var r in rectangles)
+            {
+                if (r.Left < minX) minX = r.Left;
+                if (r.Top < minY) minY = r.Top;
+                if (r.Right > maxX) maxX = r.Right;
+                if (r.Bottom > maxY) maxY = r.Bottom;
+            }
+
+            return Rectangle.FromLTRB(minX, minY, maxX, maxY);
         }
     }
 }

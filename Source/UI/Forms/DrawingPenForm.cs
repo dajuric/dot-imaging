@@ -19,51 +19,25 @@
 //
 #endregion
 
-using System;
-using Eto.Drawing;
 using Eto.Forms;
-using System.Globalization;
 
 namespace DotImaging
 {
     /// <summary>
     ///  Image display form supporting mask creation.
     /// </summary>
-    internal class DrawingPenForm : Form
+    internal class DrawingPenForm : ImageForm
     {
-        PictureBox pictureBox = null;
         DrawingPenAdorner adorner = null;
-
-        public void setImage(Bgr<byte>[,] image)
-        {
-            if (image == null) return;
-
-            var bmp = new Bitmap(image.Width(), image.Height(), PixelFormat.Format24bppRgb);
-
-            using (var bmpData = bmp.Lock())
-            using (var uImg = image.Lock())
-            {
-                Copy.UnsafeCopy2D(uImg.ImageData, bmpData.Data, uImg.Stride, bmpData.ScanWidth, uImg.Height);
-            }
-
-            if (ScaleForm)
-                ClientSize = new Size(image.Width(), image.Height());
-
-            pictureBox.Image = bmp;
-        }
 
         /// <summary>
         /// Creates new image display form supporting mask creation.
         /// </summary>
         /// <param name="title">Window title.</param>
-        /// <param name="image">Image to display.</param>
-        public DrawingPenForm(string title = "", Bgr<byte>[,] image = null)
+        public DrawingPenForm(string title = "")
+            :base(title)
         {
-            Title = title;
-            ClientSize = new Size(640, 480);
-           
-            pictureBox = new PictureBox();
-            pictureBox.ContextMenu = new ContextMenu
+            PictureBox.ContextMenu = new ContextMenu
             {
                 Items =
                 {
@@ -73,14 +47,14 @@ namespace DotImaging
                 }
             };
 
-            pictureBox.ContextMenu.Opening += (s, e) => 
+            PictureBox.ContextMenu.Opening += (s, e) => 
             {
-                pictureBox.ContextMenu.Items[2].Enabled = adorner.CanUndo;
+                PictureBox.ContextMenu.Items[2].Enabled = adorner.CanUndo;
             };
 
-            pictureBox.KeyDown += (s, e) => 
+            PictureBox.KeyDown += (s, e) => 
             {
-                foreach (var item in pictureBox.ContextMenu.Items)
+                foreach (var item in PictureBox.ContextMenu.Items)
                 {
                     if (item.Shortcut == (e.Modifiers | e.Key))
                     {
@@ -92,12 +66,7 @@ namespace DotImaging
                 }
             };
 
-            Content = pictureBox;
-            this.Shown += (s, e) => setImage(image);
-            adorner = new DrawingPenAdorner(pictureBox);
-
-            pictureBox.CanFocus = true;
-            pictureBox.Focus();
+            adorner = new DrawingPenAdorner(PictureBox);
         }
 
         private void changePenSize(bool increase)
@@ -106,14 +75,6 @@ namespace DotImaging
             var newSize = adorner.Pen.Thickness + 5 * direction;
             newSize = System.Math.Min(25, System.Math.Max(1, newSize));
             adorner.Pen.Thickness = newSize;
-        }
-
-        /// <summary>
-        /// Gets or sets whether to rescale the form to the image size.
-        /// </summary>
-        public bool ScaleForm
-        {
-            get; set;
         }
 
         /// <summary>

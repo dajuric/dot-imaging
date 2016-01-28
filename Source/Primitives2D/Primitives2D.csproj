@@ -36,6 +36,7 @@
     <Compile Include="Circle\Circle.cs" />
     <Compile Include="Circle\CircleF.cs" />
     <Compile Include="Ellipse\Ellipse.cs" />
+    <Compile Include="Point\Point%271.cs" />
     <Compile Include="Point\PointExtensions.cs" />
     <Compile Include="Rectangle\RectangleExtensions.cs" />
     <Compile Include="Size\SizeExtensions.cs" />

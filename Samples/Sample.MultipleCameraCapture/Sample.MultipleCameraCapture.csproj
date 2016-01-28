@@ -4,74 +4,75 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8FF4684E-0AA5-4169-A6B1-C54969F8FCB8}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{C30A145E-02FB-49B4-8F3E-6673AF9D121A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DotImaging</RootNamespace>
-    <AssemblyName>DotImaging.UI</AssemblyName>
+    <RootNamespace>MultipleCameraCapture</RootNamespace>
+    <AssemblyName>MultipleCameraCapture</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\Debug\DotImaging.UI.xml</DocumentationFile>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\Release\DotImaging.UI.xml</DocumentationFile>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Eto, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Eto.Forms.2.2.0\lib\net45\Eto.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Eto.WinForms, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Eto.Platform.Windows.2.2.0\lib\net45\Eto.WinForms.dll</HintPath>
+    <Reference Include="Eto.Wpf, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Eto.Platform.Wpf.2.2.0\lib\net45\Eto.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\DrawingPenAdorner.cs" />
-    <Compile Include="Components\DrawingRectangleAdorner.cs" />
-    <Compile Include="Components\IDrawingAdorner.cs" />
-    <Compile Include="Components\PictureBox.cs" />
-    <Compile Include="FormCollection.cs" />
-    <Compile Include="Forms\DrawingRectangleForm.cs" />
-    <Compile Include="Forms\DrawingPenForm.cs" />
-    <Compile Include="Forms\MenuForm.cs" />
-    <Compile Include="Forms\ImageForm.cs" />
-    <Compile Include="Forms\ProgressForm.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI.cs" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="Program.cs" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\GenericImage\GenericImage.csproj">
+    <ProjectReference Include="..\..\Source\GenericImage\GenericImage.csproj">
       <Project>{3cf8f155-3da1-4529-9b28-d409e86ed4e2}</Project>
       <Name>GenericImage</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Primitives2D\Primitives2D.csproj">
+    <ProjectReference Include="..\..\Source\IO\IO.csproj">
+      <Project>{ed70a44e-9443-4a28-9b95-31299f8b2d08}</Project>
+      <Name>IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Primitives2D\Primitives2D.csproj">
       <Project>{d5767a78-e50a-4b5d-94f5-44a59b87f944}</Project>
       <Name>Primitives2D</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Source\UI\UI.csproj">
+      <Project>{8ff4684e-0aa5-4169-a6b1-c54969f8fcb8}</Project>
+      <Name>UI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

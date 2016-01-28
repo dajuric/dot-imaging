@@ -46,6 +46,18 @@ namespace DotImaging.Primitives2D
         {
             return new Rectangle(Point.Empty, size);
         }
+
+        /// <summary>
+        /// Scales (multiplies) the provided size with the specified scale factor.
+        /// </summary>
+        /// <param name="size">Size.</param>
+        /// <param name="scale">Scale factor.</param>
+        /// <returns>Scaled size.</returns>
+        public static Size Scale(this Size size, float scale)
+        {
+            return new Size((int)(size.Width * scale),
+                            (int)(size.Height * scale));
+        }
     }
 
     /// <summary>
@@ -72,6 +84,18 @@ namespace DotImaging.Primitives2D
         public static RectangleF ToRectangleF(this SizeF size)
         {
             return new RectangleF(PointF.Empty, size);
+        }
+
+        /// <summary>
+        /// Scales (multiplies) the provided size with the specified scale factor.
+        /// </summary>
+        /// <param name="size">Size.</param>
+        /// <param name="scale">Scale factor.</param>
+        /// <returns>Scaled size.</returns>
+        public static Size Scale(this Size size, float scale)
+        {
+            return new Size((int)(size.Width * scale),
+                            (int)(size.Height * scale));
         }
     }
 }

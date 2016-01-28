@@ -22,6 +22,7 @@
 using Eto.Forms;
 using DotImaging.Primitives2D;
 using System;
+using System.Threading;
 
 namespace DotImaging
 {
@@ -36,21 +37,14 @@ namespace DotImaging
         }
 
         /// <summary>
-        /// Displays the specified image in a window.
+        /// Closes all UI controls if displayed.
         /// </summary>
-        /// <param name="image">Image to show.</param>
-        /// <param name="windowTitle">Window title (ID).</param>
-        /// <param name="scaleForm">True to adjust form to the image size, false otherwise.</param>
-        public static void Show(this Bgr<byte>[,] image, string windowTitle = "Image", bool scaleForm = false)
+        public static void CloseAll()
         {
-            FormCollection.CreateOrUpdate(() => new ImageForm(windowTitle),
-                           form =>
-                           {
-                               form.ScaleForm = scaleForm;
-                               form.SetImage(image);
-                           },
-                           windowTitle);
+            FormCollection.CloseAll();
         }
+
+        #region Simple widgets
 
         /// <summary>
         /// Shows the progress bar in the specified window.
@@ -89,6 +83,31 @@ namespace DotImaging
 
             return color;
         }
+
+        /// <summary>
+        /// Displays a menu dialog specified by user defined menu items. 
+        /// <para>If no items are specified, or in case of a error, the dialog will not be shown.</para>
+        /// </summary>
+        /// <param name="windowTitle">Window title (ID).</param>
+        /// <param name="itemNames">Names of the menu items.</param>
+        /// <param name="actions">Item actions.</param>
+        /// <returns>Selected menu index or -1 in case the form is closed.</returns>
+        public static int ShowMenu(string windowTitle = "Menu", string[] itemNames = null, Action[] actions = null)
+        {
+            var idx = FormCollection.CreateAndShowDialog(() =>
+            {
+                var f = new MenuForm(windowTitle, itemNames, actions);
+                f.Title = windowTitle;
+                return f;
+            },
+                        f => f.SelectedIndex);
+
+            return idx;
+        }
+
+        #endregion
+
+        #region File/folder dialogs
 
         /// <summary>
         /// Display an open file dialog and returns the selected file name, null otherwise.
@@ -178,8 +197,31 @@ namespace DotImaging
             return folderPath;
         }
 
+        #endregion
+
+        #region Image related widgets
+
+        /// <summary>
+        /// Displays the specified image in a window.
+        /// <para>Press and hold shift + mouse (track-pad) to translate and zoom an image.</para>
+        /// </summary>
+        /// <param name="image">Image to show.</param>
+        /// <param name="windowTitle">Window title (ID).</param>
+        /// <param name="scaleForm">True to adjust form to the image size, false otherwise.</param>
+        public static void Show(this Bgr<byte>[,] image, string windowTitle = "Image", bool scaleForm = false)
+        {
+            FormCollection.CreateOrUpdate(() => new ImageForm(windowTitle),
+                           form =>
+                           {
+                               form.ScaleForm = scaleForm;
+                               form.SetImage(image);
+                           },
+                           windowTitle);
+        }
+
         /// <summary>
         /// Displays the specified image in a window and waits the user to create a mask by drawing.
+        /// <para>Press and hold shift + mouse (track-pad) to translate and zoom an image.</para>
         /// </summary>
         /// <param name="image">Image to display.</param>
         /// <param name="windowTitle">Window title (ID).</param>
@@ -189,9 +231,10 @@ namespace DotImaging
         {
             var mask = FormCollection.CreateAndShowDialog(() =>
                         {
-                            var f = new DrawingPenForm(windowTitle, image);
-                            f.Title = windowTitle;
+                            var f = new DrawingPenForm(windowTitle);
                             f.ScaleForm = scaleForm;
+                            f.SetImage(image);
+
                             return f;
                         },
                         f => f.Mask);
@@ -201,53 +244,56 @@ namespace DotImaging
 
         /// <summary>
         /// Displays the specified image in a window and waits the user to create a rectangle by drawing.
+        /// <para>Press and hold shift + mouse (track-pad) to translate and zoom an image.</para>
         /// </summary>
         /// <param name="image">Image to display.</param>
         /// <param name="windowTitle">Window title (ID).</param>
         /// <param name="scaleForm">True to adjust form to the image size, false otherwise.</param>
-        /// <returns>Drawn mask.</returns>
+        /// <returns>Drawn rectangle.</returns>
         public static RectangleF GetRectangle(this Bgr<byte>[,] image, string windowTitle = "Draw rectangle (close when finished)", bool scaleForm = false)
         {
             var rect = FormCollection.CreateAndShowDialog(() =>
                         {
-                            var f = new DrawingRectangleForm(windowTitle, image);
-                            f.Title = windowTitle;
+                            var f = new DrawingRectangleForm(windowTitle);
                             f.ScaleForm = scaleForm;
+                            f.SetImage(image);
+
                             return f;
                         },
                         f => f.Rectangle);
 
-            return new RectangleF(rect.X, rect.Y, rect.Width, rect.Height);
+            return rect;
         }
 
         /// <summary>
-        /// Displays a menu dialog specified by user defined menu items. 
-        /// <para>If no items are specified, or in case of a error, the dialog will not be shown.</para>
+        /// Displays the image and enables the user selects an area.
+        /// <para>Press and hold any key to temporary block the calling thread (useful when used with video sequence stream).</para>
         /// </summary>
+        /// <param name="image">Image to display.</param>
         /// <param name="windowTitle">Window title (ID).</param>
-        /// <param name="itemNames">Names of the menu items.</param>
-        /// <param name="actions">Item actions.</param>
-        /// <returns>Selected menu index or -1 in case the form is closed.</returns>
-        public static int ShowMenu(string windowTitle = "Menu (close when finished)", string[] itemNames = null, Action[] actions = null)
+        /// <param name="onDrawn">Action executed when a rectangle is drawn (when mouse is released).</param>
+        /// <param name="scaleForm">True to adjust form to the image size, false otherwise.</param>
+        /// <param name="startBlocking">
+        /// Used only when a form is first initialized. True to start as a dialog, false to show the form in non-blocking way.
+        /// <para>When form is the blocking state (dialog) user is required to press and release a key to enable non-blocking mode.</para>
+        /// </param>
+        public static void GetRectangle(this Bgr<byte>[,] image, string windowTitle = "Draw rectangle", Action<RectangleF> onDrawn = null, bool scaleForm = false, bool startBlocking = false)
         {
-            var idx = FormCollection.CreateAndShowDialog(() =>
-                        {
-                            var f = new MenuForm(windowTitle, itemNames, actions);
-                            f.Title = windowTitle;
-                            return f;
-                        },
-                        f => f.SelectedIndex);
+            ManualResetEvent resetEvent = null;
 
-            return idx;
+            FormCollection.CreateOrUpdate(
+                          () => new DrawingRectangleForm(windowTitle, !startBlocking),                     
+                          form =>
+                          {
+                              form.ScaleForm = scaleForm;
+                              form.SetImage(image);
+                              resetEvent = form.ResetEvent;
+                          },
+                          windowTitle);
+
+            resetEvent.WaitOne();
         }
 
-        /// <summary>
-        /// Closes all UI controls if displayed.
-        /// </summary>
-        public static void CloseAll()
-        {
-            FormCollection.CloseAll();
-        }
+        #endregion
     }
-
 }

@@ -24,10 +24,16 @@
    image.SetValue<Bgr<byte>>(Bgr<byte>.Red);
    Gray<byte>[,] mask = image.GetMask(); //get user-defined mask dialog 
 
-6) rectangle drawing dialog
+6) rectangle drawing 
+   //blocking (dialog)
    Bgr<byte>[,] image = new Bgr<byte>[480, 640];
    image.SetValue<Bgr<byte>>(Bgr<byte>.Red);
    RectangleF rect = image.GetRectangle(); //get user-defined rectangle dialog
+
+   //non-blocking (e.g. for camera-feed)
+   Bgr<byte>[,] image = new Bgr<byte>[480, 640];
+   image.SetValue<Bgr<byte>>(Bgr<byte>.Red);
+   image.GetRectangle(onDrawn: (rect) => Console.WriteLine(rect)); //press any key to temporary block
 
 7) menu dialog
    var selectedNumber = -1;

@@ -33,6 +33,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logo", "Logo", "{817B040E-5
 		Deployment\Logo\logo-small.png = Deployment\Logo\logo-small.png
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5A662697-DDEF-4D51-B914-80A297923EAA}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitmapInterop", "Source\BitmapInterop\BitmapInterop.csproj", "{CE222A84-B03B-4053-8BA4-F237063382F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drawing", "Source\Drawing\Drawing.csproj", "{00A17086-903D-4047-BFB2-C7B4AA110B97}"
@@ -41,41 +48,36 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericImage", "Source\Gene
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IO", "Source\IO\IO.csproj", "{ED70A44E-9443-4A28-9B95-31299F8B2D08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicImageOperations", "Samples\BasicImageOperations\BasicImageOperations.csproj", "{5F5FE08B-37C1-4C62-BB1A-DFFF61B3516A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericImageInteropDemo", "Samples\GenericImageInteropDemo\GenericImageInteropDemo.csproj", "{E4ED626D-359B-493C-A72E-3738A5353D1B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capture", "Samples\Capture\Capture.csproj", "{D0C18418-5282-4BA8-ABF7-CC2A9A179517}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptureAndRecording", "Samples\CaptureAndRecording\CaptureAndRecording.csproj", "{867ED0BD-FBFB-4C0C-A34B-D71361874AA0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageExtractor", "Samples\ImageExtractor\ImageExtractor.csproj", "{55FF1668-9501-4007-84D8-26EF860F0D0D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linq", "Source\LINQ\Linq.csproj", "{8F4ADF98-76E1-4893-A458-486542EED521}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primitives2D", "Source\Primitives2D\Primitives2D.csproj", "{D5767A78-E50A-4B5D-94F5-44A59B87F944}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Source\Core\Core.csproj", "{F46115E9-C4FC-4355-93AE-BE8E96B236C9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5A662697-DDEF-4D51-B914-80A297923EAA}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleCameraCapture", "Samples\MultipleCameraCapture\MultipleCameraCapture.csproj", "{C30A145E-02FB-49B4-8F3E-6673AF9D121A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitmapSourceInterop", "Source\BitmapSourceInterop\BitmapSourceInterop.csproj", "{DF710A32-937E-4609-B803-1D3D67F2BE6E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "Source\UI\UI.csproj", "{8FF4684E-0AA5-4169-A6B1-C54969F8FCB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "Samples\UI\UI.csproj", "{4DA857A9-0CE3-43DF-A455-D38A2FA64B07}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IO.Web", "Source\IO.Web\IO.Web.csproj", "{B8404D66-B64E-43E0-9653-35FC6782072F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubeStreaming", "Samples\YoutubeStreaming\YoutubeStreaming.csproj", "{CB088D8A-3438-4DB9-87C2-99425FE27F07}"
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "Samples\Sample.UI\Sample.UI.csproj", "{4DA857A9-0CE3-43DF-A455-D38A2FA64B07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoutubeStreaming", "Samples\Sample.YoutubeStreaming\Sample.YoutubeStreaming.csproj", "{CB088D8A-3438-4DB9-87C2-99425FE27F07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicImageOperations", "Samples\Sample.Basic\Sample.Basic.csproj", "{5F5FE08B-37C1-4C62-BB1A-DFFF61B3516A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericImageInteropDemo", "Samples\Sample.Interop\Sample.Interop.csproj", "{E4ED626D-359B-493C-A72E-3738A5353D1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Capture", "Samples\Sample.Capture\Sample.Capture.csproj", "{D0C18418-5282-4BA8-ABF7-CC2A9A179517}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptureAndRecording", "Samples\Sample.CaptureAndRecord\Sample.CaptureAndRecord.csproj", "{867ED0BD-FBFB-4C0C-A34B-D71361874AA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageExtractor", "Samples\Sample.ImageExtractor\Sample.ImageExtractor.csproj", "{55FF1668-9501-4007-84D8-26EF860F0D0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleCameraCapture", "Samples\Sample.MultipleCameraCapture\Sample.MultipleCameraCapture.csproj", "{C30A145E-02FB-49B4-8F3E-6673AF9D121A}"
+EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

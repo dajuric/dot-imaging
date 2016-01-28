@@ -108,4 +108,29 @@ namespace DotImaging
             return base.GetHashCode();
         }
     }
+
+    /// <summary>
+    /// Provides extensions for <see cref="Slice2D{T}"/>.
+    /// </summary>
+    public static class Slice2DExtensions
+    {
+        /// <summary>
+        /// Clones the portion of the array defined by the provided slice.
+        /// </summary>
+        /// <typeparam name="T">Value, blittable type.</typeparam>
+        /// <param name="slice">Slice.</param>
+        /// <returns>Cloned portion of the array.</returns>
+        public static unsafe T[,] Clone<T>(this Slice2D<T> slice)
+            where T : struct
+        {
+            T[,] patch = null;
+
+            using (var uSrc = slice.Array.Lock(slice.Area))
+            {
+                patch = uSrc.Clone();
+            }
+
+            return patch;
+        }
+    }
 }
