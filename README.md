@@ -172,10 +172,11 @@ var modifiedImage = image.AsEnumerable()
 + <a href="https://www.nuget.org/packages/DotImaging.Core.Platform"> 
     <img src="https://img.shields.io/badge/DotImaging-Core.Platform-red.svg?style=flat-square" alt="DotImaging.Core.Platform"/>  
   </a> 
-  Provides the portable way to determine the execution platform + interoperability functions.
+  Provides a portable way to determine the execution platform + interoperability functions.
 
 ``` csharp
 Console.WriteLine(Platform.RunningPlatform); //Windows, Linux, MacOS
+
 //add the "UnmanagedLibraries/<your platform>/<version>/" to the path (e.g. UnmanagedLibraries/Windows/x64)
 Platform.AddDllSearchPath(); 
  ``` 
