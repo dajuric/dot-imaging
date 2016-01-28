@@ -177,7 +177,7 @@ var modifiedImage = image.AsEnumerable()
 ``` csharp
 Console.WriteLine(Platform.RunningPlatform); //Windows, Linux, MacOS
 
-//add the "UnmanagedLibraries/<your platform>/<version>/" to the path (e.g. UnmanagedLibraries/Windows/x64)
+//add the "UnmanagedLibraries/<OS>/<platform>/" to the path
 Platform.AddDllSearchPath(); 
  ``` 
   
