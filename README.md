@@ -25,7 +25,7 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 
 + <a href="https://www.nuget.org/packages/DotImaging.GenericImage"> 
     <img src="https://img.shields.io/badge/DotImaging-GenericImage-red.svg?style=flat-square" alt="DotImaging.GenericImage"/>  
-  </a>  
+  </a> 
   .NET image array extensions. Color and depth conversions. Slim unmanaged structure for fast pixel manipulation.
 
   > **Tutorial:** <a href="http://www.codeproject.com/Articles/829349/Introducing-Portable-Generic-Image-Library-for-Csh" target="_blank">Portable Generic Image</a>
@@ -70,7 +70,7 @@ reader.Close();
  ``` 
  
 + <a href="https://www.nuget.org/packages/DotImaging.IO.Web"> 
-    <img src="https://img.shields.io/badge/DotImaging-Io.Web-red.svg?style=flat-square" alt="DotImaging.IO.Web"/>  
+    <img src="https://img.shields.io/badge/DotImaging-IO.Web-red.svg?style=flat-square" alt="DotImaging.IO.Web"/>  
   </a>
   Image or video download/streaming (direct video link or Youtube links).
 
@@ -140,7 +140,9 @@ UI.ShowMenu(itemNames: new string[] { "2", "3" },
                 actions: new Action[] { () => num = 2, () => num = 3 }); //menu-dialog
  ```
 
-+ <a href="https://www.nuget.org/packages/DotImaging.Drawing">DotImaging.Drawing</a>  
++ <a href="https://www.nuget.org/packages/DotImaging.Drawing"> 
+    <img src="https://img.shields.io/badge/DotImaging-Drawing-red.svg?style=flat-square" alt="DotImaging.Drawing"/>  
+  </a> 
   .NET image drawing array extensions.
 
  ``` csharp
@@ -170,11 +172,13 @@ var modifiedImage = image.AsEnumerable()
 + <a href="https://www.nuget.org/packages/DotImaging.Core.Platform"> 
     <img src="https://img.shields.io/badge/DotImaging-Core.Platform-red.svg?style=flat-square" alt="DotImaging.Core.Platform"/>  
   </a> 
-  Provides the portable way to determine the execution platform + interoperability functions.
+  Provides a portable way to determine the execution platform + interoperability functions.
 
 ``` csharp
 Console.WriteLine(Platform.RunningPlatform); //Windows, Linux, MacOS
-Platform.AddDllSearchPath(); //add the "UnmanagedLibraries/<your platform>/<version>/" to the path (e.g. UnmanagedLibraries/Windows/x64)
+
+//add the "UnmanagedLibraries/<OS>/<platform>/" to the path
+Platform.AddDllSearchPath(); 
  ``` 
   
  
