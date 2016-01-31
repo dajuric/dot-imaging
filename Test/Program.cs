@@ -38,14 +38,6 @@ namespace Test
         [STAThread]
         unsafe static void Main()
         {
-            //test Menu
-            var selectedIdx = UI.ShowMenu(itemNames: new string[] { "Option A", "Option B" },
-                                          actions: new Action[] { () => Console.WriteLine("Option A"), () => Console.WriteLine("Option B") });
-
-            Console.WriteLine("Selected option: {0}", selectedIdx);
-            UI.CloseAll();
-            return;
-
             //test get-rectangle async
             var resourceDir = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Resources");
             var imgColor = ImageIO.LoadColor(Path.Combine(resourceDir, "testColorBig.jpg")).Clone();
@@ -59,6 +51,14 @@ namespace Test
                 im.GetRectangle(onDrawn: (rect) => Console.WriteLine(rect));
                 i++;
             }
+            UI.CloseAll();
+            return;
+
+            //test Menu
+            var selectedIdx = UI.ShowMenu(itemNames: new string[] { "Option A", "Option B" },
+                                          actions: new Action[] { () => Console.WriteLine("Option A"), () => Console.WriteLine("Option B") });
+
+            Console.WriteLine("Selected option: {0}", selectedIdx);
             UI.CloseAll();
             return;
 

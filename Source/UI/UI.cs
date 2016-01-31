@@ -273,21 +273,22 @@ namespace DotImaging
         /// <param name="windowTitle">Window title (ID).</param>
         /// <param name="onDrawn">Action executed when a rectangle is drawn (when mouse is released).</param>
         /// <param name="scaleForm">True to adjust form to the image size, false otherwise.</param>
-        /// <param name="startBlocking">
+        /// <param name="startBlocked">
         /// Used only when a form is first initialized. True to start as a dialog, false to show the form in non-blocking way.
         /// <para>When form is the blocking state (dialog) user is required to press and release a key to enable non-blocking mode.</para>
         /// </param>
-        public static void GetRectangle(this Bgr<byte>[,] image, string windowTitle = "Draw rectangle", Action<RectangleF> onDrawn = null, bool scaleForm = false, bool startBlocking = false)
+        public static void GetRectangle(this Bgr<byte>[,] image, string windowTitle = "Draw rectangle", Action<RectangleF> onDrawn = null, bool scaleForm = false, bool startBlocked = false)
         {
             ManualResetEvent resetEvent = null;
 
             FormCollection.CreateOrUpdate(
-                          () => new DrawingRectangleForm(windowTitle, !startBlocking),                     
+                          () => new DrawingRectangleForm(windowTitle, !startBlocked),                     
                           form =>
                           {
                               form.ScaleForm = scaleForm;
                               form.SetImage(image);
                               resetEvent = form.ResetEvent;
+                              form.OnDrawn = onDrawn;
                           },
                           windowTitle);
 
