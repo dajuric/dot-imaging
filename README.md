@@ -11,6 +11,8 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 
 ## So why DotImaging ?
 
+[![Join the chat at https://gitter.im/dajuric/dot-imaging](https://badges.gitter.im/dajuric/dot-imaging.svg)](https://gitter.im/dajuric/dot-imaging?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 + leverages existing .NET structures
 + portable* 
 + lightweight
