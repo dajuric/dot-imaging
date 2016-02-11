@@ -4,6 +4,7 @@
 
 <p align="center">
     <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v4.7.6-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
+    <a href="https://gitter.im/dajuric/dot-imaging?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&content=body_link"> <img src="https://img.shields.io/badge/chat-on_gitter-brightgreen.svg?style=flat-square" alt="NuGet packages version"/>  </a>
 </p>
 
 **DotImaging** - .NET array as imaging object  
