@@ -28,10 +28,10 @@
 
     <!--Unmanaged Libraries-->
     <!--x86-->
-    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x86\opencv_core248.dll" target="native\UnmanagedLibraries\Windows\x86\opencv_core248.dll" />
+    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x86\opencv_core2412.dll" target="native\UnmanagedLibraries\Windows\x86\opencv_core2412.dll" />
 
     <!--x64-->
-    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x64\opencv_core248.dll" target="native\UnmanagedLibraries\Windows\x64\opencv_core248.dll" />
+    <file src="..\..\..\bin\Release\UnmanagedLibraries\Windows\x64\opencv_core2412.dll" target="native\UnmanagedLibraries\Windows\x64\opencv_core2412.dll" />
     
     <!--PostBuild tasks-->
     <file src="Drawing.targets" target="build\DotImaging.Drawing.targets" />

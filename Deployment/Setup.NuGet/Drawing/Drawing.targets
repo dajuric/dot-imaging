@@ -3,12 +3,12 @@
   <Target Name="CopyNativeReferences_OpenCV">
     
     <!--x86-->
-    <Copy SourceFiles="$(MSBuildThisFileDirectory)..\native\UnmanagedLibraries\Windows\x86\opencv_core248.dll" 
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)..\native\UnmanagedLibraries\Windows\x86\opencv_core2412.dll" 
           DestinationFolder="$(OutDir)\UnmanagedLibraries\Windows\x86\" 
           SkipUnchangedFiles="true" />
 
     <!--x64-->
-    <Copy SourceFiles="$(MSBuildThisFileDirectory)..\native\UnmanagedLibraries\Windows\x64\opencv_core248.dll"
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)..\native\UnmanagedLibraries\Windows\x64\opencv_core2412.dll"
           DestinationFolder="$(OutDir)\UnmanagedLibraries\Windows\x64\"
           SkipUnchangedFiles="true" />
   </Target>

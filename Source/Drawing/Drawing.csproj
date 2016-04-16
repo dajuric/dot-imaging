@@ -57,10 +57,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="UnmanagedLibraries\Windows\x64\opencv_core248.dll">
+    <Content Include="UnmanagedLibraries\Windows\x64\opencv_core2412.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="UnmanagedLibraries\Windows\x86\opencv_core248.dll">
+    <Content Include="UnmanagedLibraries\Windows\x86\opencv_core2412.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

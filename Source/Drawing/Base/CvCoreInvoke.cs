@@ -208,7 +208,7 @@ namespace DotImaging
     internal static class CvCoreInvoke
     {
         public const CallingConvention CvCallingConvention = CallingConvention.Cdecl;
-        public const string OPENCV_CORE_LIBRARY = "opencv_core248";
+        public const string OPENCV_CORE_LIBRARY = "opencv_core2412";
 
         /// <summary>
         /// Draws the line segment between pt1 and pt2 points in the image. The line is clipped by the image or ROI rectangle. For non-antialiased lines with integer coordinates the 8-connected or 4-connected Bresenham algorithm is used. Thick lines are drawn with rounding endings. Antialiased lines are drawn using Gaussian filtering.

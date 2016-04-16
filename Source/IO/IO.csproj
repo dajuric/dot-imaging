@@ -74,28 +74,28 @@
     <Folder Include="UnmanagedLibraries\MacOS\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="UnmanagedLibraries\Windows\x64\opencv_core248.dll">
+    <Content Include="UnmanagedLibraries\Windows\x64\opencv_core2412.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="UnmanagedLibraries\Windows\x64\opencv_ffmpeg248_64.dll">
+    <Content Include="UnmanagedLibraries\Windows\x64\opencv_ffmpeg2412_64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="UnmanagedLibraries\Windows\x64\opencv_highgui248.dll">
+    <Content Include="UnmanagedLibraries\Windows\x64\opencv_highgui2412.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="UnmanagedLibraries\Windows\x64\opencv_video248.dll">
+    <Content Include="UnmanagedLibraries\Windows\x64\opencv_video2412.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="UnmanagedLibraries\Windows\x86\opencv_core248.dll">
+    <Content Include="UnmanagedLibraries\Windows\x86\opencv_core2412.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="UnmanagedLibraries\Windows\x86\opencv_ffmpeg248.dll">
+    <Content Include="UnmanagedLibraries\Windows\x86\opencv_ffmpeg2412.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="UnmanagedLibraries\Windows\x86\opencv_highgui248.dll">
+    <Content Include="UnmanagedLibraries\Windows\x86\opencv_highgui2412.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="UnmanagedLibraries\Windows\x86\opencv_video248.dll">
+    <Content Include="UnmanagedLibraries\Windows\x86\opencv_video2412.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -197,8 +197,8 @@ namespace DotImaging
     internal static class CvInvoke
     {
         public const CallingConvention CvCallingConvention = CallingConvention.Cdecl;
-        public const string OPENCV_CORE_LIBRARY = "opencv_core248";
-        public const string OPENCV_HIGHGUI_LIBRARY = "opencv_highgui248";
+        public const string OPENCV_CORE_LIBRARY = "opencv_core2412";
+        public const string OPENCV_HIGHGUI_LIBRARY = "opencv_highgui2412";
 
         static CvInvoke()
         {
