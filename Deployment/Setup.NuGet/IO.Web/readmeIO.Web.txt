@@ -7,14 +7,24 @@
         .DecodeAsColorImage()
 		.Show(); //requires UI package
 
-1) video streaming:
+2) video streaming:
 
-	//var pipeName = new Uri("http://trailers.divx.com/divx_prod/divx_plus_hd_showcase/BigBuckBunny_DivX_HD720p_ASP.divx").NamedPipeFromVideoUri(); //web-video
-	var pipeName = new Uri("https://www.youtube.com/watch?v=Vpg9yizPP_g").NamedPipeFromYoutubeUri(); //Youtube
+    var sourceName = String.Empty;
 
-	ImageStreamReader reader = new FileCapture(String.Format(@"\\.\pipe\{0}", pipeName));
+    var pipeName = new Uri("https://www.youtube.com/watch?v=Vpg9yizPP_g").NamedPipeFromYoutubeUri(); //Youtube
+    sourceName = String.Format(@"\\.\pipe\{0}", pipeName);
+    
+	//sourceName = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"; //direct http streaming 
+
+	//------------------------------------------------------------------
+	ImageStreamReader reader = new FileCapture(sourceName, pipeName));
 	reader.Open();
 
+	//seek if you can
+    if(reader.CanSeek)
+       reader.Seek((int)(reader.Length * 0.25), System.IO.SeekOrigin.Begin);
+
+    //read video frames
 	Bgr<byte>[,] frame = null;
 	do
 	{
@@ -28,7 +38,7 @@
 	while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
 
 
-2) video download:
+3) video download:
 
    string fileExtension;
    pipeName = new Uri("https://www.youtube.com/watch?v=Vpg9yizPP_g").NamedPipeFromYoutubeUri(out fileExtension); //Youtube

@@ -21,6 +21,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 
 namespace DotImaging
 {
@@ -29,13 +30,16 @@ namespace DotImaging
     /// </summary>
     public class FileCapture: VideoCaptureBase
     {
+        private static readonly string[] supportedRemoteFiles = new string[] { ".mp4", ".webm" };
+        private static readonly string[] supportedLocalFiles = new string[] { ".mp4", ".avi", ".divx", ".webm", ".wmv" };
+
         string fileName = null;
 
         /// <summary>
         /// Creates capture from video file.
         /// </summary>
         /// <param name="sourceName">
-        /// Video file name or a named pipe.
+        /// Local file, http uri, ftp uri or a named pipe.
         /// <para>In case of named pipe use: String.Format(@"\\.\pipe\{0}", pipeName) where pipeName is the name of the pipe.</para>
         /// </param>
         public FileCapture(string sourceName)
@@ -44,14 +48,26 @@ namespace DotImaging
             {
                 this.CanSeek = false;
             }
+            else if (Uri.IsWellFormedUriString(sourceName, UriKind.Absolute))
+            {
+                var fileExt = Path.GetExtension(sourceName);
+                if (supportedRemoteFiles.Any(x => x.Equals(fileExt.ToLower())) == false)
+                    throw new UriFormatException(String.Format("Uri must point to a supported video file ({0}).", String.Join(", ", supportedRemoteFiles)));
+
+                this.CanSeek = true;
+            }
             else
             {
                 if (!File.Exists(sourceName))
                     throw new FileNotFoundException(String.Format("The file {0} can not be found.", sourceName));
 
+                var fileExt = Path.GetExtension(sourceName);
+                if (supportedRemoteFiles.Any(x => x.Equals(fileExt.ToLower())) == false)
+                    throw new UriFormatException(String.Format("File must be a supported video file ({0}).", String.Join(", ", supportedLocalFiles)));
+
                 this.CanSeek = true;
             }
-        
+       
             this.fileName = sourceName;
             this.Open(); //to enable property change
         }
