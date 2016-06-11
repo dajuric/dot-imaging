@@ -25,17 +25,17 @@
        reader.Seek((int)(reader.Length * 0.25), System.IO.SeekOrigin.Begin);
 
     //read video frames
-	Bgr<byte>[,] frame = null;
-	do
-	{
-		reader.ReadTo(ref frame);
-		if (frame == null)
-			break;
+    Bgr<byte>[,] frame = null;
+    do
+    {
+	reader.ReadTo(ref frame);
+	if (frame == null)
+		break;
 
-		frame.Show(scaleForm: true);
-		((double)reader.Position / reader.Length).Progress();
-	}
-	while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
+	frame.Show(scaleForm: true);
+	((double)reader.Position / reader.Length).Progress();
+     }
+     while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
 
 
 3) video download:
