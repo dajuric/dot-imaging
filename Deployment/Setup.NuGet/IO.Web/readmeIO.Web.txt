@@ -17,7 +17,7 @@
     //sourceName = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"; //direct http streaming 
 
     //------------------------------------------------------------------
-    ImageStreamReader reader = new FileCapture(sourceName));
+    ImageStreamReader reader = new FileCapture(sourceName);
     reader.Open();
 
     //seek if you can
