@@ -16,7 +16,7 @@ namespace YoutubeStreaming
             sourceName = String.Format(@"\\.\pipe\{0}", pipeName);
 
             //video http link (Supports seek)
-            sourceName = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
+            //sourceName = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
 
             //---------------------------------------------
             ImageStreamReader reader = new FileCapture(sourceName);
@@ -45,9 +45,9 @@ namespace YoutubeStreaming
             Console.WriteLine("Downloading video...");
 
             string fileExtension;
-            pipeName = new Uri("https://www.youtube.com/watch?v=Vpg9yizPP_g").NamedPipeFromYoutubeUri(out fileExtension); //Youtube
+            var downloadPipeName = new Uri("https://www.youtube.com/watch?v=Vpg9yizPP_g").NamedPipeFromYoutubeUri(out fileExtension); //Youtube
 
-            pipeName.SaveNamedPipeStream("out" + fileExtension);
+            downloadPipeName.SaveNamedPipeStream("out" + fileExtension);
             Console.WriteLine("Video saved.");
             Process.Start("out" + fileExtension); //open local file
         }
