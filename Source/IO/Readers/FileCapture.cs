@@ -62,7 +62,7 @@ namespace DotImaging
                     throw new FileNotFoundException(String.Format("The file {0} can not be found.", sourceName));
 
                 var fileExt = Path.GetExtension(sourceName);
-                if (supportedRemoteFiles.Any(x => x.Equals(fileExt.ToLower())) == false)
+                if (supportedLocalFiles.Any(x => x.Equals(fileExt.ToLower())) == false)
                     throw new UriFormatException(String.Format("File must be a supported video file ({0}).", String.Join(", ", supportedLocalFiles)));
 
                 this.CanSeek = true;

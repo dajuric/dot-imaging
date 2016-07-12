@@ -22,7 +22,7 @@
 using DotImaging;
 using DotImaging.Primitives2D;
 using System;
-
+using System.IO;
 
 namespace Capture
 {
@@ -33,11 +33,11 @@ namespace Capture
         {
             Console.WriteLine("Press ESC to stop playing");
 
-            var reader = new CameraCapture(0); //capture from camera
-            (reader as CameraCapture).FrameSize = new Size(640, 480);
+            //var reader = new CameraCapture(0); //capture from camera
+            //(reader as CameraCapture).FrameSize = new Size(640, 480);
 
-            //reader = new FileCapture(Path.Combine(getResourceDir(), "Welcome.mp4")); //capture from video
-            //reader = new ImageDirectoryCapture(Path.Combine(getResourceDir(), "Sequence"), "*.jpg");
+            var reader = new FileCapture(Path.Combine(getResourceDir(), "Welcome.mp4")); //capture from video
+            //var reader = new ImageDirectoryCapture(Path.Combine(getResourceDir(), "Sequence"), "*.jpg");
             reader.Open();
     
             Bgr<byte>[,] frame = null;
@@ -52,6 +52,15 @@ namespace Capture
             while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
 
             reader.Dispose();
+        }
+
+        private static string getResourceDir()
+        {
+            var directoryInfo = new DirectoryInfo(Environment.CurrentDirectory).Parent;
+            if (directoryInfo != null)
+                return Path.Combine(directoryInfo.FullName, "Resources");
+
+            return null;
         }
     }
 }
