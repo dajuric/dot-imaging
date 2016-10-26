@@ -48,7 +48,7 @@ namespace DotImaging
         /// </summary>
         public Type ChannelType { get; private set; }
         /// <summary>
-        /// Color size. Number of channels multiplied by channel size.
+        /// Color size in bytes. Number of channels multiplied by channel size.
         /// </summary>
         public int Size { get { return this.ChannelSize * this.ChannelCount; } }
 

@@ -167,7 +167,7 @@ namespace DotImaging
         /// </summary>
         public static void AddDllSearchPath()
         {
-            var dllSearchPathPath = GetDefaultDllSearchPath(Directory.GetCurrentDirectory());
+            var dllSearchPathPath = GetDefaultDllSearchPath(AppDomain.CurrentDomain.BaseDirectory);
             AddDllSearchPath(dllSearchPathPath);
         }
 

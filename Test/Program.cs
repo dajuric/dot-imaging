@@ -32,12 +32,31 @@ namespace Test
 {
     class Program
     {
+        static void TestDrawingFunctions()
+        {
+            var resourceDir = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Resources");
+            var imgColor = ImageIO.LoadColor(Path.Combine(resourceDir, "testColorBig.jpg")).Clone();
+
+            //imgColor.DrawAnnotation(new Rectangle(10, 10, 500, 500), "Some text.", Font.Big);
+            //imgColor.Draw("Some text.", new Font(FontTypes.HERSHEY_PLAIN, 10, 10, 10), new Point(50, 50), Bgr<byte>.Red, 85);
+            //imgColor.Draw(new Rectangle(10, 10, 500, 500), Bgr<byte>.Red, -1, 85);
+            //imgColor.Draw(new Circle(500, 500, 250), Bgr<byte>.Blue, -1, 128);
+            //imgColor.Draw(new Ellipse(new PointF(500, 500), new SizeF(200, 500), 45), Bgr<byte>.Green, 10, 25);
+            //imgColor.Draw(new Box2D(new PointF(500, 500), new SizeF(200, 500), 45), Bgr<byte>.Green, 10, 255);
+            imgColor.Draw(new Point[] { new Point(10, 10), new Point(500, 10), new Point(500, 600), new Point(25, 10) }, Bgr<byte>.Red, 10, 128);
+
+            imgColor.Show();
+        }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         unsafe static void Main()
         {
+            TestDrawingFunctions();
+            return;
+
             //test get-rectangle async
             var resourceDir = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Resources");
             var imgColor = ImageIO.LoadColor(Path.Combine(resourceDir, "testColorBig.jpg")).Clone();

@@ -209,7 +209,7 @@ namespace DotImaging
             this.MaskROI = IntPtr.Zero;
             this.ImageId = IntPtr.Zero;
             this.TileInfo = IntPtr.Zero;
-            this.ImageDataOrigin = IntPtr.Zero;
+            this.ImageDataOrigin = IntPtr.Zero; //set to zero to avoid deallocation (should be equal to ImageData)
             /************************ default values initialization *********************************/
 
             var colorInfo = image.ColorInfo;
@@ -223,7 +223,7 @@ namespace DotImaging
             this.Width = image.Width;
             this.Height = image.Height;
             this.WidthStep = image.Stride;
-            this.ImageSize = colorInfo.Size * image.Stride * image.Height;
+            this.ImageSize = image.Stride * image.Height;
 
             this.ImageData = image.ImageData;
 

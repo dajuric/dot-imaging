@@ -31,6 +31,19 @@ namespace DotImaging.Primitives2D
     public struct Ellipse
     {
         /// <summary>
+        /// Creates a new ellipse.
+        /// </summary>
+        /// <param name="center">Ellipse center.</param>
+        /// <param name="size">Ellipse size.</param>
+        /// <param name="angle">Angle in degrees.</param>
+        public Ellipse(PointF center, SizeF size, float angle = 0)
+        {
+            this.Center = center;
+            this.Size = size;
+            this.Angle = angle;
+        }
+
+        /// <summary>
         /// Area center.
         /// </summary>
         public PointF Center;

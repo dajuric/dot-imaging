@@ -31,9 +31,9 @@ namespace DotImaging
     /// </summary>
     internal static class ColorCvScalarConversionExtensions
     {
-        public static CvScalar ToCvScalar(this Bgr<byte> color, byte opacity = Byte.MaxValue)
+        public static CvScalar ToCvScalar(this Bgr<byte> color)
         {
-            return new CvScalar{ V0 = color.B, V1 = color.G, V2 = color.R, V3 = opacity };
+            return new CvScalar{ V0 = color.B, V1 = color.G, V2 = color.R, V3 = Byte.MaxValue };
         }
 
         public static CvScalar ToCvScalar(this Bgra<byte> color)
@@ -47,6 +47,20 @@ namespace DotImaging
     /// </summary>
     public static class Drawing
     {
+        private unsafe static void draw(Bgr<byte>[,] image, byte opacity, Action<IplImage> drawingAction)
+        {
+            using (var uImg = image.Lock())
+            {
+                var cvImg = uImg.AsCvIplImage();
+                var cvOverlayImPtr = CvCoreInvoke.cvCloneImage(&cvImg);
+
+                drawingAction(*cvOverlayImPtr);
+                CvCoreInvoke.cvAddWeighted(cvOverlayImPtr, (float)opacity / Byte.MaxValue, &cvImg, 1 - (float)opacity / Byte.MaxValue, 0, &cvImg);
+
+                CvCoreInvoke.cvReleaseImage(&cvOverlayImPtr);
+            }
+        }
+
         #region Rectangle
 
         /// <summary>
@@ -55,18 +69,17 @@ namespace DotImaging
         /// <param name="image">Input image.</param>
         /// <param name="rect">Rectangle.</param>
         /// <param name="color">Object's color.</param>
-        /// <param name="thickness">Border thickness. If less than zero structure will be filled.</param>
+        /// <param name="thickness">Border thickness (-1 to fill the object).</param>
         /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
         public unsafe static void Draw(this Bgr<byte>[,] image, Rectangle rect, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
         {
             if (float.IsNaN(rect.X) || float.IsNaN(rect.Y))
                 return;
 
-            using(var img = image.Lock())
+            draw(image, opacity, cvImg => 
             {
-                var iplImage = img.AsCvIplImage();
-                CvCoreInvoke.cvRectangleR(&iplImage, rect, color.ToCvScalar(opacity), thickness, LineTypes.EightConnected, 0);
-            }
+                CvCoreInvoke.cvRectangleR(&cvImg, rect, color.ToCvScalar(), thickness, LineTypes.EightConnected, 0);
+            });
         }
 
         #endregion
@@ -84,11 +97,10 @@ namespace DotImaging
         /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
         public unsafe static void Draw(this Bgr<byte>[,] image, string text, Font font, Point botomLeftPoint, Bgr<byte> color, byte opacity = Byte.MaxValue)
         {
-            using(var img = image.Lock())
+            draw(image, opacity, cvImg => 
             {
-                var iplImage = img.AsCvIplImage();
-                CvCoreInvoke.cvPutText(&iplImage, text, botomLeftPoint, ref font, color.ToCvScalar());
-            }
+                CvCoreInvoke.cvPutText(&cvImg, text, botomLeftPoint, ref font, color.ToCvScalar());
+            });
         }
 
         #endregion
@@ -101,7 +113,7 @@ namespace DotImaging
         /// <param name="image">Input image.</param>
         /// <param name="box">Box 2D.</param>
         /// <param name="color">Object's color.</param>
-        /// <param name="thickness">Border thickness.</param>
+        /// <param name="thickness">Border thickness (-1 to fill the object).</param>
         /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
         public unsafe static void Draw(this Bgr<byte>[,] image, Box2D box, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
         {
@@ -110,19 +122,17 @@ namespace DotImaging
 
             var vertices = box.GetVertices();
 
-            using(var img = image.Lock())
+            draw(image, opacity, cvImg => 
             {
-                var iplImage = img.AsCvIplImage();
-
                 for (int i = 0; i < vertices.Length; i++)
                 {
                     int idx2 = (i + 1) % vertices.Length;
 
-                    CvCoreInvoke.cvLine(&iplImage, vertices[i].Round(), vertices[idx2].Round(), 
-                                           color.ToCvScalar(opacity), thickness, 
+                    CvCoreInvoke.cvLine(&cvImg, vertices[i].Round(), vertices[idx2].Round(),
+                                           color.ToCvScalar(), thickness,
                                            LineTypes.EightConnected, 0);
                 }
-            }
+            });
         }
 
         /// <summary>
@@ -131,15 +141,15 @@ namespace DotImaging
         /// <param name="image">Input image.</param>
         /// <param name="ellipse">Ellipse.</param>
         /// <param name="color">Object's color.</param>
-        /// <param name="thickness">Border thickness.</param>
-        public unsafe static void Draw(this Bgr<byte>[,] image, Ellipse ellipse, Bgr<byte> color, int thickness)
+        /// <param name="thickness">Border thickness (-1 to fill the object).</param>
+        /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
+        public unsafe static void Draw(this Bgr<byte>[,] image, Ellipse ellipse, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
         {
-            using(var img = image.Lock())
+            draw(image, opacity, cvImg =>
             {
-                var iplImage = img.AsCvIplImage();
-                CvCoreInvoke.cvEllipse(&iplImage, ellipse.Center.Round(), Size.Round(ellipse.Size), ellipse.Angle, 
-                                          0, 2*System.Math.PI, color.ToCvScalar(), thickness, LineTypes.EightConnected, 0);
-            }
+                CvCoreInvoke.cvEllipse(&cvImg, ellipse.Center.Round(), Size.Round(ellipse.Size), ellipse.Angle,
+                                       0, 360, color.ToCvScalar(), thickness, LineTypes.EightConnected, 0);
+            });
         }
 
         #endregion
@@ -152,20 +162,18 @@ namespace DotImaging
         /// <param name="image">Input image.</param>
         /// <param name="contour">Contour points.</param>
         /// <param name="color">Contour color.</param>
-        /// <param name="thickness">Contours thickness.</param>
+        /// <param name="thickness">Contours thickness (it does not support values smaller than 1).</param>
         /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
         public unsafe static void Draw(this Bgr<byte>[,] image, Point[] contour, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
         {
             var contourHandle = GCHandle.Alloc(contour, GCHandleType.Pinned);
 
-            using(var img = image.Lock())
+            draw(image, opacity, cvImg =>
             {
-                var iplImage = img.AsCvIplImage();
-
                 //TODO - noncritical: implement with cvContour
-                CvCoreInvoke.cvPolyLine(&iplImage, new IntPtr[]{contourHandle.AddrOfPinnedObject()}, new int[]{ contour.Length}, 1, 
+                CvCoreInvoke.cvPolyLine(&cvImg, new IntPtr[] { contourHandle.AddrOfPinnedObject() }, new int[] { contour.Length }, 1,
                                            true, color.ToCvScalar(), thickness, LineTypes.EightConnected, 0);
-            }
+            });
 
             contourHandle.Free();
         }
@@ -181,16 +189,16 @@ namespace DotImaging
         /// <param name="circle">Circle</param>
         /// <param name="color">Circle color.</param>
         /// <param name="thickness">Contours thickness.</param>
-        public unsafe static void Draw(this Bgr<byte>[,] image, Circle circle, Bgr<byte> color, int thickness)
+        /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
+        public unsafe static void Draw(this Bgr<byte>[,] image, Circle circle, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
         {
-            using(var img = image.Lock())
+            draw(image, opacity, cvImg =>
             {
-                var iplImage = img.AsCvIplImage();
                 var center = new Point(circle.X, circle.Y);
 
-                CvCoreInvoke.cvCircle(&iplImage, center, circle.Radius, color.ToCvScalar(), 
-                                         thickness, LineTypes.EightConnected, 0);
-            }
+                CvCoreInvoke.cvCircle(&cvImg, center, circle.Radius, color.ToCvScalar(),
+                                      thickness, LineTypes.EightConnected, 0);
+            });
         }
 
         /// <summary>
@@ -200,20 +208,19 @@ namespace DotImaging
         /// <param name="circles">Circles</param>
         /// <param name="color">Circle color.</param>
         /// <param name="thickness">Contours thickness.</param>
-        public unsafe static void Draw(this Bgr<byte>[,] image, IEnumerable<Circle> circles, Bgr<byte> color, int thickness)
+        /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
+        public unsafe static void Draw(this Bgr<byte>[,] image, IEnumerable<Circle> circles, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
         {
-            using(var img = image.Lock())
+            draw(image, opacity, cvImg =>
             {
-                var iplImage = img.AsCvIplImage();
-
                 foreach (var circle in circles)
-	            {
-		            var center = new Point(circle.X, circle.Y);
+                {
+                    var center = new Point(circle.X, circle.Y);
 
-                    CvCoreInvoke.cvCircle(&iplImage, center, circle.Radius, color.ToCvScalar(), 
-                                             thickness, LineTypes.EightConnected, 0);
-	            }
-            }
+                    CvCoreInvoke.cvCircle(&cvImg, center, circle.Radius, color.ToCvScalar(),
+                                          thickness, LineTypes.EightConnected, 0);
+                }
+            });
         }
 
         #endregion

@@ -97,40 +97,41 @@ namespace DotImaging
         /// </summary>
         private IntPtr cyrillic;
         /// <summary>
-        /// hscale
+        /// Horizontal scale. If equal to 1.0f, the characters have the original width depending on the font type. If equal to 0.5f, the characters are of half the original width.
         /// </summary>
         public float HorizontalScale;
         /// <summary>
-        /// vscale
+        /// Vertical scale. If equal to 1.0f, the characters have the original height depending on the font type. If equal to 0.5f, the characters are of half the original height.
         /// </summary>
         public float VerticalScale;
         ///<summary>
-        /// slope coefficient: 0 - normal, >0 - italic 
+        /// Approximate tangent of the character slope relative to the vertical line. Zero value means a non-italic font, 1.0f means 45 slope, etc. thickness Thickness of lines composing letters outlines. The function cvLine is used for drawing letters.
         ///</summary>
         public float Shear;
         ///<summary>
-        /// letters thickness 
+        /// Thickness of the text strokes.
         ///</summary>
         public int Thickness;
         ///<summary>
-        /// horizontal interval between letters 
+        /// Horizontal interval between letters.
         ///</summary>
         private float dx;
         /// <summary>
-        /// type of line
+        /// Type of the strokes.
         /// </summary>
         private LineTypes LineType;
 
         /// <summary>
         /// Create a Font of the specific type, horizontal scale and vertical scale
         /// </summary>
-        /// <param name="type">The type of the font</param>
-        /// <param name="hscale">The horizontal scale of the font</param>
-        /// <param name="vscale">the vertical scale of the fonr</param>
-        public Font(FontTypes type, double hscale, double vscale)
+        /// <param name="type">The type of the font.</param>
+        /// <param name="hscale">The horizontal scale of the font.</param>
+        /// <param name="vscale">The vertical scale of the font.</param>
+        /// <param name="thickness">Font thickness.</param>
+        public Font(FontTypes type, double hscale, double vscale, int thickness = 1)
             : this()
         {
-            CvCoreInvoke.cvInitFont(ref this, type, hscale, vscale, 0, 1, LineTypes.EightConnected);
+            CvCoreInvoke.cvInitFont(ref this, type, hscale, vscale, 0, thickness, LineTypes.EightConnected);
         }
 
         /// <summary>
@@ -209,6 +210,37 @@ namespace DotImaging
     {
         public const CallingConvention CvCallingConvention = CallingConvention.Cdecl;
         public const string OPENCV_CORE_LIBRARY = "opencv_core2412";
+
+        #region Base
+
+        /// <summary>
+        /// Clones the provided image.
+        /// </summary>
+        /// <param name="image">Image to clone.</param>
+        /// <returns>Cloned image.</returns>
+        [DllImport(OPENCV_CORE_LIBRARY, CallingConvention = CvCallingConvention)]
+        public unsafe static extern IplImage* cvCloneImage(IplImage* image);
+
+        /// <summary>
+        /// Releases the provided image.
+        /// </summary>
+        /// <param name="image">Image to release.</param>
+        [DllImport(OPENCV_CORE_LIBRARY, CallingConvention = CvCallingConvention)]
+        public unsafe static extern void cvReleaseImage(IplImage** image);
+
+        /// <summary>
+        /// Calculates the weighted sum of two arrays.
+        /// </summary>
+        /// <param name="src1">First input image.</param>
+        /// <param name="alpha">Weight for the first array elements.</param>
+        /// <param name="src2">Second input array of the same size and channel number as src1.</param>
+        /// <param name="beta">Weight of the second array elements.</param>
+        /// <param name="gamma">Scalar added to each sum.</param>
+        /// <param name="dst">Destination array.</param>
+        [DllImport(OPENCV_CORE_LIBRARY, CallingConvention = CvCallingConvention)]
+        public unsafe static extern void cvAddWeighted(IplImage* src1, double alpha, IplImage* src2, double beta, double gamma, IplImage* dst);
+
+        #endregion
 
         /// <summary>
         /// Draws the line segment between pt1 and pt2 points in the image. The line is clipped by the image or ROI rectangle. For non-antialiased lines with integer coordinates the 8-connected or 4-connected Bresenham algorithm is used. Thick lines are drawn with rounding endings. Antialiased lines are drawn using Gaussian filtering.
