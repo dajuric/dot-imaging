@@ -10,6 +10,9 @@
 **DotImaging** - .NET array as imaging object  
 The framework sets focus on .NET native array as primary imaging object, offers extensibility support via extensions, and provides unified platform-abstract imaging IO API. 
 
+## News
++ Image enchacement library for DotImaging: <a href="https://github.com/dajuric/dot-devignetting">DotDevignetting</a>!
+
 ## So why DotImaging ?
 
 + leverages existing .NET structures
