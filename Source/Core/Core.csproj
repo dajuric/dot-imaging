@@ -1,6 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
     <TargetFrameworks>net47;netcoreapp2.0</TargetFrameworks>
+    <OutputPath>bin\</OutputPath>
+    <AssemblyName>DotImaging.Core</AssemblyName>
+    <RootNamespace>DotImaging</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>

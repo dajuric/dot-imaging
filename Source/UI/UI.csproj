@@ -1,6 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
     <TargetFrameworks>net47</TargetFrameworks>
+    <OutputPath>bin\</OutputPath>
+    <AssemblyName>DotImaging.UI</AssemblyName>
+    <RootNamespace>DotImaging</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,12 +15,7 @@
     <ProjectReference Include="..\Image\Image.csproj" />
     <ProjectReference Include="..\Primitives2D\Primitives2D.csproj" />
   </ItemGroup>
-  
-  <PropertyGroup>
-    <RootNamespace>DotImaging</RootNamespace>
-    <OutputPath>bin\</OutputPath>
-  </PropertyGroup>
-	
+  	
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DocumentationFile>bin\$(TargetFramework)\DotImaging.UI.xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

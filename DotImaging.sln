@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{80FC5E
 		Deploy\Licence.txt = Deploy\Licence.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Test\Playground.csproj", "{F34AE966-F8EB-46EC-A1A9-E7D8B1CA3DAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playground", "Test\Playground.csproj", "{F34AE966-F8EB-46EC-A1A9-E7D8B1CA3DAB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logo", "Logo", "{817B040E-5F27-4ACD-B1E4-F46452668A0E}"
 	ProjectSection(SolutionItems) = preProject
@@ -43,26 +43,32 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "Source\UI\UI.csproj",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IO.Web", "Source\IO.Web\IO.Web.csproj", "{B8404D66-B64E-43E0-9653-35FC6782072F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.UI", "Samples\Sample.UI\Sample.UI.csproj", "{4DA857A9-0CE3-43DF-A455-D38A2FA64B07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.UI", "Samples\Sample.UI\Sample.UI.csproj", "{4DA857A9-0CE3-43DF-A455-D38A2FA64B07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.VideoStreaming", "Samples\Sample.VideoStreaming\Sample.VideoStreaming.csproj", "{CB088D8A-3438-4DB9-87C2-99425FE27F07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.VideoStreaming", "Samples\Sample.VideoStreaming\Sample.VideoStreaming.csproj", "{CB088D8A-3438-4DB9-87C2-99425FE27F07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Basic", "Samples\Sample.Basic\Sample.Basic.csproj", "{5F5FE08B-37C1-4C62-BB1A-DFFF61B3516A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Basic", "Samples\Sample.Basic\Sample.Basic.csproj", "{5F5FE08B-37C1-4C62-BB1A-DFFF61B3516A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Interop", "Samples\Sample.Interop\Sample.Interop.csproj", "{E4ED626D-359B-493C-A72E-3738A5353D1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Interop", "Samples\Sample.Interop\Sample.Interop.csproj", "{E4ED626D-359B-493C-A72E-3738A5353D1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Capture", "Samples\Sample.Capture\Sample.Capture.csproj", "{D0C18418-5282-4BA8-ABF7-CC2A9A179517}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Capture", "Samples\Sample.Capture\Sample.Capture.csproj", "{D0C18418-5282-4BA8-ABF7-CC2A9A179517}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.CaptureAndRecord", "Samples\Sample.CaptureAndRecord\Sample.CaptureAndRecord.csproj", "{867ED0BD-FBFB-4C0C-A34B-D71361874AA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.CaptureAndRecord", "Samples\Sample.CaptureAndRecord\Sample.CaptureAndRecord.csproj", "{867ED0BD-FBFB-4C0C-A34B-D71361874AA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.ImageExtractor", "Samples\Sample.ImageExtractor\Sample.ImageExtractor.csproj", "{55FF1668-9501-4007-84D8-26EF860F0D0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.ImageExtractor", "Samples\Sample.ImageExtractor\Sample.ImageExtractor.csproj", "{55FF1668-9501-4007-84D8-26EF860F0D0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.MultipleCameraCapture", "Samples\Sample.MultipleCameraCapture\Sample.MultipleCameraCapture.csproj", "{C30A145E-02FB-49B4-8F3E-6673AF9D121A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.MultipleCameraCapture", "Samples\Sample.MultipleCameraCapture\Sample.MultipleCameraCapture.csproj", "{C30A145E-02FB-49B4-8F3E-6673AF9D121A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{44744CCA-2769-4607-AC90-78B6A11A2E77}"
 	ProjectSection(SolutionItems) = preProject
 		Deploy\Nuget\Push.cmd = Deploy\Nuget\Push.cmd
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaseOperations", "Source\BaseOperations\BaseOperations.csproj", "{E8F6A81C-6806-41D5-B795-0E214B308D5C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageDebuggerVisualizer", "Tools\ImageDebuggerVisualizer\ImageDebuggerVisualizer.csproj", "{0EBA2590-3F39-4F8E-81A2-1F20CB934398}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{99AC6620-13B1-4543-91E7-08CD049B13B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -146,6 +152,14 @@ Global
 		{C30A145E-02FB-49B4-8F3E-6673AF9D121A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C30A145E-02FB-49B4-8F3E-6673AF9D121A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C30A145E-02FB-49B4-8F3E-6673AF9D121A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8F6A81C-6806-41D5-B795-0E214B308D5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8F6A81C-6806-41D5-B795-0E214B308D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8F6A81C-6806-41D5-B795-0E214B308D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8F6A81C-6806-41D5-B795-0E214B308D5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EBA2590-3F39-4F8E-81A2-1F20CB934398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EBA2590-3F39-4F8E-81A2-1F20CB934398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EBA2590-3F39-4F8E-81A2-1F20CB934398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EBA2590-3F39-4F8E-81A2-1F20CB934398}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -172,6 +186,8 @@ Global
 		{55FF1668-9501-4007-84D8-26EF860F0D0D} = {05BDC895-7F7B-4B6F-8D69-E7916837092D}
 		{C30A145E-02FB-49B4-8F3E-6673AF9D121A} = {05BDC895-7F7B-4B6F-8D69-E7916837092D}
 		{44744CCA-2769-4607-AC90-78B6A11A2E77} = {80FC5EA1-3478-4E7F-8B05-190DF6750EA4}
+		{E8F6A81C-6806-41D5-B795-0E214B308D5C} = {80058A54-6223-480C-AA19-F99E7AE593F3}
+		{0EBA2590-3F39-4F8E-81A2-1F20CB934398} = {99AC6620-13B1-4543-91E7-08CD049B13B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DEAC2BC6-C697-4361-9909-CF7055FE9B05}

@@ -88,12 +88,12 @@ namespace DotImaging
 
         private Bitmap image;
         public Bitmap Image
-        {
+        { 
             get { return image; }
             set
             {
                 this.image = value; 
-
+                
                 if (image != null)
                 {
                     if (this.AutoScale || this.imageBounds == default(RectangleF))

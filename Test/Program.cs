@@ -27,6 +27,8 @@ using DotImaging;
 using DotImaging.Linq;
 using DotImaging.Primitives2D;
 using System.Runtime.InteropServices;
+using System.Drawing.Imaging;
+using System.Drawing;
 
 namespace Test
 {
@@ -34,7 +36,7 @@ namespace Test
     {
         static void TestDrawingFunctions()
         {
-            var resourceDir = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Resources");
+            var resourceDir = Path.Combine(Directory.GetCurrentDirectory(), "Resources");
             var imgColor = ImageIO.LoadColor(Path.Combine(resourceDir, "testColorBig.jpg")).Clone();
 
             //imgColor.DrawAnnotation(new Rectangle(10, 10, 500, 500), "Some text.", Font.Big);
@@ -43,9 +45,9 @@ namespace Test
             //imgColor.Draw(new Circle(500, 500, 250), Bgr<byte>.Blue, -1, 128);
             //imgColor.Draw(new Ellipse(new PointF(500, 500), new SizeF(200, 500), 45), Bgr<byte>.Green, 10, 25);
             //imgColor.Draw(new Box2D(new PointF(500, 500), new SizeF(200, 500), 45), Bgr<byte>.Green, 10, 255);
-            imgColor.Draw(new Point[] { new Point(10, 10), new Point(500, 10), new Point(500, 600), new Point(25, 10) }, Bgr<byte>.Red, 10, 128);
+            //imgColor.Draw(new Point[] { new Point(10, 10), new Point(500, 10), new Point(500, 600), new Point(25, 10) }, Bgr<byte>.Red, 10, 128);
 
-            imgColor.Show();
+            //imgColor.Show();
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace Test
             TestDrawingFunctions();
             return;
 
-            //test get-rectangle async
+            /*//test get-rectangle async
             var resourceDir = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Resources");
             var imgColor = ImageIO.LoadColor(Path.Combine(resourceDir, "testColorBig.jpg")).Clone();
 
@@ -86,7 +88,7 @@ namespace Test
             var decodedIm = arr.DecodeAsColorImage();
             decodedIm.Save("out.bmp");
 
-            var rImg = imgColor.AsEnumerable().Select(x => x.G).ToArray2D(imgColor.Width(), imgColor.Height());                    
+            var rImg = imgColor.AsEnumerable().Select(x => x.G).ToArray2D(imgColor.Width(), imgColor.Height());      */              
          }
 
     }

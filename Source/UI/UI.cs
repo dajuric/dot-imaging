@@ -202,7 +202,27 @@ namespace DotImaging
         #region Image related widgets
 
         /// <summary>
-        /// Displays the specified image in a window.
+        /// Displays the specified image in a window and pauses the execution flow.
+        /// <para>Press and hold shift + mouse (track-pad) to translate and zoom an image.</para>
+        /// </summary>
+        /// <param name="image">Image to show.</param>
+        /// <param name="windowTitle">Window title (ID).</param>
+        /// <param name="scaleForm">True to adjust form to the image size, false otherwise.</param>
+        public static void ShowDialog(this Bgr<byte>[,] image, string windowTitle = "Image", bool scaleForm = false)
+        {
+            FormCollection.CreateAndShowDialog(() =>
+            {
+                var f = new ImageForm(windowTitle);
+                f.ScaleForm = scaleForm;
+                f.SetImage(image);
+
+                return f;
+            },
+            f => true);
+        }
+
+        /// <summary>
+        /// Displays the specified image in a window (non blocking mode).
         /// <para>Press and hold shift + mouse (track-pad) to translate and zoom an image.</para>
         /// </summary>
         /// <param name="image">Image to show.</param>

@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
     <TargetFrameworks>net47</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <RootNamespace>DotImaging</RootNamespace>
     <OutputPath>bin\</OutputPath>
+    <AssemblyName>DotImaging.BitmapSourceInterop</AssemblyName>
+    <RootNamespace>DotImaging</RootNamespace>
   </PropertyGroup>
     
   <ItemGroup>

@@ -36,7 +36,7 @@ namespace GenericImageInteropDemo
             var img = new Bgr<byte>[480, 640];
 
             //***********************************************************************************************************************************************************************
-            Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("********* TColor[,] <=> Image<> conversions (built-in) ****************"); Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("********* TColor[,] <=> Image<> conversions (built-in) ****************"); Console.ResetColor();
             //to Image<>
             Image<Bgr<byte>> lockedImg = img.Lock();
             //from Image<>
@@ -44,7 +44,7 @@ namespace GenericImageInteropDemo
 
             //***********************************************************************************************************************************************************************
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("********* Image<,> <=> OpenCV conversions (built-in) ****************"); Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("********* Image<,> <=> OpenCV conversions (built-in) ****************"); Console.ResetColor();
             //to IplImage
             IplImage iplImage;
             using (var uImg = img.Lock())
@@ -56,7 +56,7 @@ namespace GenericImageInteropDemo
 
             //***********************************************************************************************************************************************************************
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("*********** Image<,> <=> Bitmap conversions (BitmapInterop) ****************"); Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("*********** Image<,> <=> Bitmap conversions (BitmapInterop) ****************"); Console.ResetColor();
             //to Bitmap
             var bmp = img.ToBitmap();
             //from Bitmap
@@ -64,7 +64,7 @@ namespace GenericImageInteropDemo
 
             //***********************************************************************************************************************************************************************
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("*********** Image<,> <=> BitmapSource conversions (BitmapSourceInterop) ****************"); Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("*********** Image<,> <=> BitmapSource conversions (BitmapSourceInterop) ****************"); Console.ResetColor();
             //to generic-image
             var colorBitmap = new BitmapImage(new Uri("http://www.online-image-editor.com//styles/2014/images/example_image.png"));
             Bgra<byte>[,] colorImg = colorBitmap.ToArray<Bgra<byte>>();

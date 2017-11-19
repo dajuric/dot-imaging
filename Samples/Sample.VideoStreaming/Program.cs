@@ -28,7 +28,7 @@ namespace YoutubeStreaming
 
             //read video frames
             Bgr<byte>[,] frame = null;
-            do
+            while(true)
             {
                 reader.ReadTo(ref frame);
                 if (frame == null)
@@ -37,11 +37,10 @@ namespace YoutubeStreaming
                 frame.Show(scaleForm: true);
                 ((double)reader.Position / reader.Length).Progress();
             }
-            while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
-
             Console.WriteLine("The end.");
 
             //---------------------------------------------------------------------------
+            UI.CloseAll();
             Console.WriteLine("Downloading video...");
 
             string fileExtension;

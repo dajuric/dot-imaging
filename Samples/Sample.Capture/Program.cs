@@ -52,6 +52,7 @@ namespace Capture
             while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
 
             reader.Dispose();
+            UI.CloseAll();
         }
 
         private static string getResourceDir()
