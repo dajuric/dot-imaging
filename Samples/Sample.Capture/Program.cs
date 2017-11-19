@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2016
+// Copyright © Darko Jurić, 2014-2018
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -56,11 +56,7 @@ namespace Capture
 
         private static string getResourceDir()
         {
-            var directoryInfo = new DirectoryInfo(Environment.CurrentDirectory).Parent;
-            if (directoryInfo != null)
-                return Path.Combine(directoryInfo.FullName, "Resources");
-
-            return null;
+            return Path.Combine(new DirectoryInfo(Environment.CurrentDirectory).FullName, "Resources");
         }
     }
 }

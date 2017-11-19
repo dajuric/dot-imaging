@@ -24,8 +24,8 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 
 ###### Core
 
-+ <a href="https://www.nuget.org/packages/DotImaging.GenericImage"> 
-    <img src="https://img.shields.io/badge/DotImaging-GenericImage-red.svg?style=flat-square" alt="DotImaging.GenericImage"/>  
++ <a href="https://www.nuget.org/packages/DotImaging.Image"> 
+    <img src="https://img.shields.io/badge/DotImaging-GenericImage-red.svg?style=flat-square" alt="DotImaging.Image"/>  
   </a> 
   .NET image array extensions. Color and depth conversions. Slim unmanaged structure for fast pixel manipulation.
 

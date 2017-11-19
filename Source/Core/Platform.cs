@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2016
+// Copyright © Darko Jurić, 2014-2018
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,12 +19,9 @@
 //
 #endregion
 
-#if DNXCORE50
-using System.Runtime.InteropServices;
-#endif
-
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace DotImaging
 {
@@ -61,17 +58,7 @@ namespace DotImaging
         /// Gets operating system name.
         /// </summary>
         private static OperatingSystem getRunningPlatform()
-        {
-#if DNXCORE50
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return OperatingSystem.Windows;
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                return OperatingSystem.Linux;
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                return OperatingSystem.MacOS;
-            else
-                throw new PlatformNotSupportedException();
-#else 
+        { 
             //Taken from: <a href="http://stackoverflow.com/questions/10138040/how-to-detect-properly-windows-linux-mac-operating-systems"/> and modified.
             switch (Environment.OSVersion.Platform)
             {
@@ -92,7 +79,6 @@ namespace DotImaging
                 default:
                     return OperatingSystem.Windows;
             }
-#endif
         }
 
         /// <summary>
@@ -149,10 +135,10 @@ namespace DotImaging
         /// <returns>Default unmanaged library search directory.</returns>
         public static string GetDefaultDllSearchPath(string rootDirectory)
         {
-            var baseDirectory = Path.Combine(rootDirectory, "UnmanagedLibraries");
+            var baseDirectory = Path.Combine(rootDirectory, "References");
             var loadDirectory = Path.Combine(baseDirectory, Platform.RunningPlatform.ToString());
 
-            if (Platform.RunningPlatform == Platform.OperatingSystem.Windows)
+            if (RunningPlatform == OperatingSystem.Windows)
                 loadDirectory = Path.Combine(loadDirectory, Is64BitProcess ? "x64" : "x86");
 
             return loadDirectory;
@@ -220,6 +206,15 @@ namespace DotImaging
                        .Replace(@"\", normalizedDelimiter)
                        .Replace(@"\\", normalizedDelimiter)
                        .Replace(@"/", normalizedDelimiter);
+        }
+
+        /// <summary>
+        /// Sets the executing assembly directory as the current directory.
+        /// </summary>
+        public static void SetAppDirectoryAsWorking()
+        {
+            var dir = new FileInfo(Assembly.GetExecutingAssembly().Location).FullName;
+            Directory.SetCurrentDirectory(dir);
         }
     }
 }

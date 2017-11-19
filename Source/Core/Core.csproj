@@ -1,55 +1,48 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F46115E9-C4FC-4355-93AE-BE8E96B236C9}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworks>net47;netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <RootNamespace>DotImaging</RootNamespace>
-    <AssemblyName>DotImaging.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\Debug\DotImaging.Core.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\Release\DotImaging.Core.xml</DocumentationFile>
-  </PropertyGroup>
+    
   <ItemGroup>
-    <Compile Include="Extensions\PathExtensions.cs" />
-    <Compile Include="Caching\MethodCache.cs" />
-    <Compile Include="NaturalSortComparer.cs" />
-    <Compile Include="Platform.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
+  </ItemGroup> 
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DocumentationFile>bin\$(TargetFramework)\DotImaging.Core.xml</DocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+  
+
+  <!-- NuGet -->
+  <PropertyGroup>
+    <Version>5.0.0</Version>
+
+    <PackageId>DotImaging.Core</PackageId>
+    <Description>Provides the portable way to determine the execution platform + interoperability functions.</Description>
+    <PackageTags>execution-platform, OS, portable</PackageTags>
+
+    <Authors>Darko Jurić</Authors>
+    <Copyright>Darko Jurić</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deploy/Licence.txt</PackageLicenseUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deploy/Logo/logo-small.png</PackageIconUrl>
+    <PackageProjectUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/</PackageProjectUrl>
+    <RepositoryUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/</RepositoryUrl>
+
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageOutputPath>../../Deploy/NuGet/bin/</PackageOutputPath>
+
+    <!--symbols-->
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
+    <Content Include=".nuSpec/readmeCore.txt">
+      <PackagePath>Readme.txt</PackagePath>
+    </Content>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

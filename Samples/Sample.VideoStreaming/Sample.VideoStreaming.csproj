@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">  
+  <PropertyGroup>
+    <TargetFrameworks>net47</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RootNamespace>DotImaging</RootNamespace>
+    <OutputPath>bin\</OutputPath>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+    
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Image\Image.csproj" />
+    <ProjectReference Include="..\..\Source\IO.Web\IO.Web.csproj" />
+    <ProjectReference Include="..\..\Source\Primitives2D\Primitives2D.csproj" />
+	<ProjectReference Include="..\..\Source\IO\IO.csproj" />
+	<ProjectReference Include="..\..\Source\UI\UI.csproj" />
+  </ItemGroup> 
+</Project>

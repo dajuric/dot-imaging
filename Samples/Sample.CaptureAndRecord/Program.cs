@@ -58,11 +58,7 @@ namespace CaptureAndRecording
 
         private static string getResourceDir()
         {
-            var directoryInfo = new DirectoryInfo(Environment.CurrentDirectory).Parent;
-            if (directoryInfo != null)
-                return Path.Combine(directoryInfo.FullName, "Resources");
-
-            return null;
+            return Path.Combine(new DirectoryInfo(Environment.CurrentDirectory).FullName, "Resources");
         }
     }
 }

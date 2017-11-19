@@ -1,62 +1,57 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DF710A32-937E-4609-B803-1D3D67F2BE6E}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworks>net47</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <RootNamespace>DotImaging</RootNamespace>
-    <AssemblyName>DotImaging.BitmapSourceInterop</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\Debug\DotImaging.BitmapSourceInterop.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\Release\DotImaging.BitmapSourceInterop.XML</DocumentationFile>
-  </PropertyGroup>
+    
   <ItemGroup>
-    <Reference Include="PresentationCore" />
+	<Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
+	
   <ItemGroup>
-    <Compile Include="BitmapSourceConversion.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
+    <ProjectReference Include="..\Image\Image.csproj" />
+    <ProjectReference Include="..\Primitives2D\Primitives2D.csproj" />
+  </ItemGroup> 
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DocumentationFile>bin\$(TargetFramework)\DotImaging.BitmapSourceInterop.xml</DocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+
+  <!-- NuGet -->
+  <PropertyGroup>
+    <Version>5.0.0</Version>
+
+    <PackageId>DotImaging.BitmapSourceInterop</PackageId>
+    <Description>Provides extensions for interoperability with System.Windows.Media.Imaging.BitmapSource.</Description>
+    <PackageTags>WPF, imaging, BitmapSource-conversion</PackageTags>
+
+    <Authors>Darko Jurić</Authors>
+    <Copyright>Darko Jurić</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deploy/Licence.txt</PackageLicenseUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deploy/Logo/logo-small.png</PackageIconUrl>
+    <PackageProjectUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/</PackageProjectUrl>
+    <RepositoryUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/</RepositoryUrl>
+
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageOutputPath>../../Deploy/NuGet/bin/</PackageOutputPath>
+
+    <!--symbols-->
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\GenericImage\GenericImage.csproj">
-      <Project>{3cf8f155-3da1-4529-9b28-d409e86ed4e2}</Project>
-      <Name>GenericImage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Primitives2D\Primitives2D.csproj">
-      <Project>{d5767a78-e50a-4b5d-94f5-44a59b87f944}</Project>
-      <Name>Primitives2D</Name>
-    </ProjectReference>
+    <Content Include=".nuSpec/readmeBitmapSourceInterop.txt">
+      <PackagePath>Readme.txt</PackagePath>
+    </Content>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

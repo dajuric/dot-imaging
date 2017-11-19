@@ -77,7 +77,7 @@ namespace ImageExtractor
 
         private static string getResourceDir()
         {
-            return Path.Combine(new DirectoryInfo(Environment.CurrentDirectory).Parent.FullName, "Resources");
+            return Path.Combine(new DirectoryInfo(Environment.CurrentDirectory).FullName, "Resources");
         }
 
         private static string normalizePathDelimiters(string path, string normalizedDelimiter) //TODO: replace with extension when available

@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2016
+// Copyright © Darko Jurić, 2014-2018
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +29,7 @@ namespace DotImaging.Linq
     /// <summary>
     /// Contains 2D array Linq extensions
     /// </summary>
-    static partial class ImageLinqExtensions
+    public static partial class ImageLinqExtensions
     {
         /// <summary>
         /// Converts the specified collection to a 2D array determined by the specified size.

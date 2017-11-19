@@ -27,6 +27,10 @@ namespace BasicImageOperations
             //save and load
             image.Save("out.png");
             ImageIO.LoadColor("out.png").Clone().Show("Saved image", scaleForm: true);
+
+            Console.WriteLine("Press [Enter] to exit.");
+            Console.ReadLine();
+            UI.CloseAll();
         }
     }
 }
