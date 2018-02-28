@@ -24,6 +24,7 @@ using DotImaging.Linq;
 using System.Linq;
 using System;
 using System.Threading;
+using System.IO;
 
 namespace UIDemo
 {
@@ -32,6 +33,9 @@ namespace UIDemo
         [STAThread]
         static void Main(string[] args)
         {
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";runtime/win10-x64/"); //only needed if projects are directly referenced
+
             //select color
             Bgr<byte>[,] image = new Bgr<byte>[480, 640];
             Hsv<byte> color = UI.PickColor(Bgr<byte>.Red).ToHsv();

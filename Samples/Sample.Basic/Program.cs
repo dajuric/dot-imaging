@@ -1,6 +1,7 @@
 ﻿using DotImaging;
 using DotImaging.Primitives2D;
 using System;
+using System.IO;
 
 namespace BasicImageOperations
 {
@@ -8,6 +9,9 @@ namespace BasicImageOperations
     {
         static void Main()
         {
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";runtime/win10-x64/"); //only needed if projects are directly referenced
+
             //load from the Web
             var image = new Uri("http://vignette3.wikia.nocookie.net/disney/images/5/5d/Lena_headey_.jpg")
                             .GetBytes()
@@ -15,8 +19,6 @@ namespace BasicImageOperations
 
             //show image
             image.Show("New Lena"); //to zoom or translate: press and hold Shift and scroll or move your mouse
-
-            image = new Bgr<byte>[480, 640];
 
             //draw something
             image.Draw(new Rectangle(50, 50, 200, 100), Bgr<byte>.Red, -1);

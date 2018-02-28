@@ -200,11 +200,6 @@ namespace DotImaging
         public const string OPENCV_CORE_LIBRARY = "opencv_core2412";
         public const string OPENCV_HIGHGUI_LIBRARY = "opencv_highgui2412";
 
-        static CvInvoke()
-        {
-            Platform.AddDllSearchPath();
-        }
-
         #region Core
 
         [DllImport(OPENCV_CORE_LIBRARY, CallingConvention = CvCallingConvention)]

@@ -25,6 +25,7 @@ using System;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
+using P = Eto.Platform;
 
 namespace DotImaging
 {
@@ -45,14 +46,14 @@ namespace DotImaging
         /// </summary>
         public static void Initialize()
         {
-            if (Platform.Instance != null)
+            if (P.Instance != null)
                 return; //it is already initialized
 
-            Platform platform = null;
-            try { platform = Platform.Detect; }
+            P platform = null;
+            try { platform = P.Detect; }
             catch (Exception ex) { throw ex; }
 
-            Platform.Initialize(platform);
+            P.Initialize(platform);
 
             if (platform.Supports<Application>())
             {
@@ -107,7 +108,7 @@ namespace DotImaging
             {
                 try
                 {
-                    if (!Platform.Instance.Supports<Form>())
+                    if (!P.Instance.Supports<Form>())
                         throw new NotSupportedException("This platform does not support IForm");
 
                     form = creator();
@@ -149,7 +150,7 @@ namespace DotImaging
             {
                 try
                 {
-                    if (!Platform.Instance.Supports<Form>())
+                    if (!P.Instance.Supports<Form>())
                         throw new NotSupportedException("This platform does not support IForm");
 
                     form = creator();

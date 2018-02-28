@@ -409,11 +409,6 @@ namespace DotImaging
         [DllImport(OPENCV_CORE_LIBRARY, CallingConvention = CvCallingConvention)]
         public static extern void cvGetTextSize([MarshalAs(UnmanagedType.LPStr)] String textString, ref Font font, ref Size textSize, ref int baseline);
         #endregion
-
-        static CvCoreInvoke()
-        {
-            Platform.AddDllSearchPath();
-        }
     }
 
    

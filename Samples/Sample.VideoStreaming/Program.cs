@@ -1,6 +1,7 @@
 ﻿using DotImaging;
 using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace YoutubeStreaming
 {
@@ -8,6 +9,10 @@ namespace YoutubeStreaming
     {
         public static void Main()
         {
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";runtime/win10-x64/"); //only needed if projects are directly referenced
+
+
             var sourceName = String.Empty;
 
             //video over pipe (direct link and Youtube) (do not support seek)
@@ -34,7 +39,7 @@ namespace YoutubeStreaming
                 if (frame == null)
                     break;
 
-                frame.Show(scaleForm: true);
+                frame.Show(scaleForm: false);
                 ((double)reader.Position / reader.Length).Progress();
             }
             Console.WriteLine("The end.");

@@ -7,7 +7,7 @@
     <RootNamespace>DotImaging</RootNamespace>
     <OutputPath>bin\</OutputPath>
     <ApplicationIcon />
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <StartupObject />
   </PropertyGroup>
     
@@ -16,5 +16,11 @@
     <ProjectReference Include="..\..\Source\Primitives2D\Primitives2D.csproj" />
 	<ProjectReference Include="..\..\Source\IO\IO.csproj" />
 	<ProjectReference Include="..\..\Source\UI\UI.csproj" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <None Update="Resources\Welcome.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup> 
 </Project>

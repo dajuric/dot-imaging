@@ -29,8 +29,11 @@ namespace CaptureAndRecording
     {
         static void Main()
         {
-           //var reader = new CameraCapture(0); //capture from camera
-           var reader = new FileCapture(Path.Combine(getResourceDir(), "Welcome.mp4"));
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";runtime/win10-x64/"); //only needed if projects are directly referenced
+
+            //var reader = new CameraCapture(0); //capture from camera
+            var reader = new FileCapture(Path.Combine(getResourceDir(), "Welcome.mp4"));
            reader.Open();
 
            var writer = new VideoWriter(@"output.avi", reader.FrameSize, /*reader.FrameRate does not work Cameras*/ 30); //TODO: bug: FPS does not work for cameras

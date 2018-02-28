@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <TargetFrameworks>net47;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <OutputPath>bin\</OutputPath>
     <AssemblyName>DotImaging.IO</AssemblyName>
     <RootNamespace>DotImaging</RootNamespace>
@@ -8,15 +8,6 @@
   </PropertyGroup>
     
   <ItemGroup>
-     <Compile Include="..\Core\Extensions\PathExtensions.cs">
-      <Link>DotImaging\PathExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\NaturalSortComparer.cs">
-      <Link>DotImaging\NaturalSortComparer.cs</Link>
-    </Compile>
-    <Compile Include="..\Core\Platform.cs">
-      <Link>DotImaging\Platform.cs</Link>
-    </Compile>
     <ProjectReference Include="..\Image\Image.csproj" />
     <ProjectReference Include="..\Primitives2D\Primitives2D.csproj" />
   </ItemGroup>
@@ -25,18 +16,10 @@
     <DocumentationFile>bin\$(TargetFramework)\DotImaging.IO.xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include="References/**/*.*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <PackagePath>native/References/</PackagePath>
-    </Content>
-  </ItemGroup>
-
   
   <!-- NuGet --> 
   <PropertyGroup>
-    <Version>5.0.0</Version>
+    <Version>5.0.0-alpha</Version>
     
     <PackageId>DotImaging.IO</PackageId>
     <Description>Loading and saving images and image streams (file, in-memory, camera, video, directory).</Description>
@@ -58,13 +41,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="runtimes\win10-x64\" />
+    <Folder Include="runtimes\ubuntu.16.04-x64\" />
+
     <Content Include=".nuSpec/readmeIO.txt">
       <PackagePath>Readme.txt</PackagePath>
     </Content>
 
-    <Content Include=".nuSpec/IO.targets">
-      <PackagePath>build/DotImaging.IO.targets</PackagePath>
+    <!-- Windows -->
+    <Content Include="runtimes\win10-x64\*.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <PackagePath>runtimes\native\win-x64\</PackagePath>
+    </Content>
+
+    <!-- Linux -->
+    <Content Include="runtimes\ubuntu.16.04-x64\so\*.so*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <PackagePath>runtimes\native\ubuntu.16.04-x64\</PackagePath>
     </Content>
   </ItemGroup>
-  
+
+  <Import Project="..\Core\Core.projitems" Label="Shared" />
+   
 </Project>

@@ -25,7 +25,7 @@
 
   <!-- NuGet -->
   <PropertyGroup>
-    <Version>5.0.0</Version>
+    <Version>5.0.0-alpha</Version>
 
     <PackageId>DotImaging.BitmapSourceInterop</PackageId>
     <Description>Provides extensions for interoperability with System.Windows.Media.Imaging.BitmapSource.</Description>

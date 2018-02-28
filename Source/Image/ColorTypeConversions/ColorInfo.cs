@@ -70,7 +70,6 @@ namespace DotImaging
         /// <returns>Color info</returns>
         public static ColorInfo GetInfo(Type colorType)
         {
-            //throw new NotImplementedException();
             return MethodCache.Global.Invoke(getInfo, colorType);
         }
 

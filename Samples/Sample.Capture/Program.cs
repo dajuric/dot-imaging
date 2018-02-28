@@ -31,6 +31,9 @@ namespace Capture
         [STAThread]
         static void Main()
         {
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";runtimes/win10-x64/"); //only needed if projects are directly referenced
+
             Console.WriteLine("Press ESC to stop playing");
 
             //var reader = new CameraCapture(0); //capture from camera

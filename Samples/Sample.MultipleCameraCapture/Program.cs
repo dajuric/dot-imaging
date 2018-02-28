@@ -22,6 +22,7 @@
 using System;
 using DotImaging;
 using System.Collections.Generic;
+using System.IO;
 
 namespace MultipleCameraCapture
 {
@@ -29,6 +30,9 @@ namespace MultipleCameraCapture
     {
         static void Main()
         {
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";runtime/win10-x64/"); //only needed if projects are directly referenced
+
             Console.WriteLine("Press ESC to stop playing");
 
             List<CameraCapture> captures = new List<CameraCapture>();

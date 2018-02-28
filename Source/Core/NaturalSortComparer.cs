@@ -28,7 +28,7 @@ namespace DotImaging
     /// <summary>
     /// Provides functions for natural string comparison.
     /// </summary>
-    internal class NaturalSortComparer: IComparer<string>
+    class NaturalSortComparer: IComparer<string>
     {
         private bool isAscending;
 

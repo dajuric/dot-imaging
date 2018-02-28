@@ -8,6 +8,7 @@
 
   <ItemGroup>
 	  <PackageReference Include="Eto.Forms" Version="2.3.0" />
+	  <PackageReference Include="Eto.Platform.Gtk3" Version="2.3.0" />
     <PackageReference Include="Eto.Platform.Windows" Version="2.3.0" />
   </ItemGroup>
 
@@ -23,10 +24,9 @@
 
   <!-- NuGet -->
   <PropertyGroup>
-    <Version>5.0.0</Version>
+    <Version>5.0.0-alpha</Version>
 
     <PackageId>DotImaging.UI</PackageId>
-    <Summary>Portable standalone UI elements invokable as extensions (image display, progress bar, open-save file dialogs, folder-selection dialog, color-picker, mask-drawing dialog, rectangle-drawing dialog, menu dialog).</Summary>
     <Description>
       Portable standalone UI elements invokable as extensions (image display, progress bar, open-save file dialogs, folder-selection dialog, color-picker, mask-drawing dialog, rectangle-drawing dialog, menu dialog).
       In order to support other OS platforms (except Windows) install one (or more) of the following packages:
