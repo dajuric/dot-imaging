@@ -30,7 +30,7 @@ namespace CaptureAndRecording
         static void Main()
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-            Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";runtime/win10-x64/"); //only needed if projects are directly referenced
+            Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";runtimes/win10-x64/"); //only needed if projects are directly referenced
 
             //var reader = new CameraCapture(0); //capture from camera
             var reader = new FileCapture(Path.Combine(getResourceDir(), "Welcome.mp4"));

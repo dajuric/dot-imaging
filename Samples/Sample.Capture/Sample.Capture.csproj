@@ -7,7 +7,7 @@
     <RootNamespace>DotImaging</RootNamespace>
     <OutputPath>bin\</OutputPath>
     <ApplicationIcon />
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <StartupObject />
   </PropertyGroup>
     
