@@ -13,7 +13,7 @@
 
   <!-- NuGet -->
   <PropertyGroup>
-    <Version>5.0.0-alpha</Version>
+    <Version>5.0.1-alpha</Version>
 
     <PackageId>DotImaging.Primitives2D</PackageId>
     <Description>Point, Size, Rectangle (compatible with System.Drawing), Circle, Ellipse, Box2D.</Description>

@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
@@ -32,76 +33,43 @@ namespace DotImaging
     {
         #region Conversion from Bitmap
 
-        private static TColor[,] toArray<TColor>(Bitmap bmp)
-            where TColor: struct, IColor
+        static Dictionary<Type, PixelFormat> mapingTable = new Dictionary<Type, PixelFormat>
         {
-            var bmpData = bmp.LockBits(ImageLockMode.ReadOnly);
-
-            var arr = new TColor[bmp.Height, bmp.Width];
-            using (var img = arr.Lock())
-            {
-                Copy.UnsafeCopy2D(bmpData.Scan0, img.ImageData, bmpData.Stride, img.Stride, bmpData.Height);
-            }
-
-            bmp.UnlockBits(bmpData);
-            return arr;
-        }
+            { typeof(Gray<byte>),  PixelFormat.Format8bppIndexed },
+            { typeof(Gray<short>), PixelFormat.Format16bppGrayScale },
+            { typeof(Bgr<byte>),   PixelFormat.Format24bppRgb },
+            { typeof(Bgra<byte>),  PixelFormat.Format32bppArgb },
+            { typeof(Bgr<short>),  PixelFormat.Format48bppRgb },
+            { typeof(Bgra<short>), PixelFormat.Format64bppArgb },
+        };
 
         /// <summary>
         /// Converts a bitmap to an image (copies data). 
         /// </summary>
         /// <param name="bmp">Input bitmap.</param>
+        /// <typeparam name="TColor">Target color type.</typeparam>
         /// <returns>2D array.</returns>
-        public static Array ToArray(this Bitmap bmp)
+        public static TColor[,] ToImage<TColor>(this Bitmap bmp)
+            where TColor: struct, IColor
         {
-            Array arr = null;
-            switch (bmp.PixelFormat)
+            if (mapingTable.TryGetValue(typeof(TColor), out var targetPixelFmt) == false)
+                throw new NotSupportedException("Target mapping not found.");
+
+            TColor[,] arr = null;
+            using (Bitmap targetBmp = bmp.Clone(new Rectangle(0, 0, bmp.Width, bmp.Height), targetPixelFmt))
             {
-                case PixelFormat.Format8bppIndexed:
-                    arr = toArray<Gray<byte>>(bmp);
-                    break;
-                case PixelFormat.Format16bppGrayScale:
-                     arr = toArray<Gray<short>>(bmp);
-                    break;
-                case PixelFormat.Format24bppRgb:
-                    arr = toArray<Bgr<byte>>(bmp);
-                    break;
-                case PixelFormat.Format32bppArgb:
-                    arr = toArray<Bgra<byte>>(bmp);
-                    break;
-                case PixelFormat.Format48bppRgb:
-                    arr = toArray<Bgr<short>>(bmp);
-                    break;
-                case PixelFormat.Format64bppArgb:
-                    arr = toArray<Bgra<short>>(bmp);
-                    break; 
-                default:
-                    throw new NotSupportedException();
+                var bmpData = targetBmp.LockBits(ImageLockMode.ReadOnly);
+                arr = new TColor[targetBmp.Height, targetBmp.Width];
+
+                using (var img = arr.Lock())
+                {
+                    Copy.UnsafeCopy2D(bmpData.Scan0, img.ImageData, bmpData.Stride, img.Stride, bmpData.Height);
+                }
+
+                targetBmp.UnlockBits(bmpData);
             }
 
             return arr;
-        }
-
-        /// <summary>
-        /// Converts the specified bitmap into Bgr managed image.
-        /// </summary>
-        /// <param name="bitmap">Bgr, Bgra or Gray type bitmap.</param>
-        /// <returns>Bgr image or null if conversion can not be performed.</returns>
-        public static Bgr<byte>[,] ToBgr(this Bitmap bitmap)
-        {
-            var arr = bitmap.ToArray();
-            return arr.ToBgr();
-        }
-
-        /// <summary>
-        /// Converts the specified bitmap into Bgra managed image.
-        /// </summary>
-        /// <param name="bitmap">Bgra, Bgr or Gray type bitmap.</param>
-        /// <returns>Bgra image or null if conversion can not be performed.</returns>
-        public static Bgra<byte>[,] ToBgra(this Bitmap bitmap)
-        {
-            var arr = bitmap.ToArray();
-            return arr.ToBgra();
         }
 
         #endregion

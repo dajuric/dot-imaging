@@ -19,7 +19,7 @@
   
   <!-- NuGet --> 
   <PropertyGroup>
-    <Version>5.0.0-alpha</Version>
+    <Version>5.0.1-alpha</Version>
     
     <PackageId>DotImaging.IO</PackageId>
     <Description>Loading and saving images and image streams (file, in-memory, camera, video, directory).</Description>

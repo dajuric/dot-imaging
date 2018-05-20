@@ -64,7 +64,7 @@ namespace GenericImageInteropDemo
             //to Bitmap
             var bmp = img.ToBitmap();
             //from Bitmap
-            var imgFromBmp = bmp.ToArray();
+            var imgFromBmp = bmp.ToImage<Bgr<byte>>();
 
             //***********************************************************************************************************************************************************************
             Console.WriteLine();

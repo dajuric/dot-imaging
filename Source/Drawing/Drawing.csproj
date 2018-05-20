@@ -19,7 +19,7 @@
 
   <!-- NuGet -->
   <PropertyGroup>
-    <Version>5.0.0-alpha</Version>
+    <Version>5.0.1-alpha</Version>
 
     <PackageId>DotImaging.Drawing</PackageId>
     <Description>Provides platform independent drawing extensions which operate on native .NET arrays.</Description>

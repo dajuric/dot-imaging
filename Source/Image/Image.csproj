@@ -19,7 +19,7 @@
 
   <!-- NuGet -->
   <PropertyGroup>
-    <Version>5.0.0-alpha</Version>
+    <Version>5.0.1-alpha</Version>
 
     <PackageId>DotImaging.Image</PackageId>
     <Description>.NET image array extensions. Color and depth conversions. Slim unmanaged structure for fast pixel manipulation.</Description>

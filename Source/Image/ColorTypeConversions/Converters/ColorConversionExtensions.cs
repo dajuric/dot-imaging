@@ -29,6 +29,8 @@ namespace DotImaging
     /// </summary>
     public static class ColorConversionExtensions
     {
+
+
         #region Gray channel depth conversion
 
         /// <summary>

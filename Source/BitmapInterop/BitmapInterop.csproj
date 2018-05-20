@@ -20,7 +20,7 @@
 
   <!-- NuGet -->
   <PropertyGroup>
-    <Version>5.0.0-alpha</Version>
+    <Version>5.0.1-alpha</Version>
 
     <PackageId>DotImaging.BitmapInterop</PackageId>
     <Description>Extensions for interoperability with System.Drawing.Bitmap, Point, PointF, Color and drawing extensions.</Description>
