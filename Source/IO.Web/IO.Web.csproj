@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <OutputPath>bin\</OutputPath>
     <AssemblyName>DotImaging.IO.Web</AssemblyName>
     <RootNamespace>DotImaging</RootNamespace>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +14,7 @@
   </ItemGroup> 
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DocumentationFile>bin\$(TargetFramework)\DotImaging.IO.Web.xml</DocumentationFile>
+    <DocumentationFile>bin\DotImaging.IO.Web.xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 

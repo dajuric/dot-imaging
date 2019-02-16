@@ -20,6 +20,7 @@
 #endregion
 
 using System;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -31,6 +32,8 @@ namespace DotImaging
     /// </summary>
     public class ColorInfo: IEquatable<ColorInfo>
     {
+        static ConcurrentDictionary<Type, ColorInfo> colorInfos = new ConcurrentDictionary<Type, ColorInfo>();
+
         /// <summary>
         /// Color type (IColor).
         /// </summary>
@@ -70,7 +73,7 @@ namespace DotImaging
         /// <returns>Color info</returns>
         public static ColorInfo GetInfo(Type colorType)
         {
-            return MethodCache.Global.Invoke(getInfo, colorType);
+            return colorInfos.GetOrAdd(colorType, getInfo);
         }
 
         private static ColorInfo getInfo(Type colorType)

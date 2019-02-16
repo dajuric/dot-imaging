@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <OutputPath>bin\</OutputPath>
     <AssemblyName>DotImaging.BitmapInterop</AssemblyName>
     <RootNamespace>DotImaging</RootNamespace>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
     
   <ItemGroup>
@@ -12,7 +11,7 @@
   </ItemGroup> 
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DocumentationFile>bin\$(TargetFramework)\DotImaging.BitmapInterop.xml</DocumentationFile>
+    <DocumentationFile>bin\DotImaging.BitmapInterop.xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -45,6 +44,4 @@
       <PackagePath>Readme.txt</PackagePath>
     </Content>
   </ItemGroup>
-
-  <Import Project="..\Core\Core.projitems" Label="Shared" />
 </Project>

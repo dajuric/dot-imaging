@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <OutputPath>bin\</OutputPath>
+    <Platforms>x64</Platforms>
     <AssemblyName>DotImaging.IO</AssemblyName>
     <RootNamespace>DotImaging</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -12,7 +11,7 @@
   </ItemGroup>
     
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DocumentationFile>bin\$(TargetFramework)\DotImaging.IO.xml</DocumentationFile>
+    <DocumentationFile>bin\DotImaging.IO.xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   
@@ -59,7 +58,4 @@
       <PackagePath>runtimes\native\ubuntu.16.04-x64\</PackagePath>
     </Content>
   </ItemGroup>
-
-  <Import Project="..\Core\Core.projitems" Label="Shared" />
-   
 </Project>

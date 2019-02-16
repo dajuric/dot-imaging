@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>

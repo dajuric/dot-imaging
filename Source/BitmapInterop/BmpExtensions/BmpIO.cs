@@ -19,6 +19,7 @@
 //
 #endregion
 
+using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
 
@@ -29,6 +30,32 @@ namespace DotImaging
     /// </summary>
     public static class BmpIO
     {
+        static Dictionary<string, ImageCodecInfo> codecs = null;
+
+        static BmpIO()
+        {
+            codecs = new Dictionary<string, ImageCodecInfo>();
+
+            codecs.Add(".jpg", getEncoder(ImageFormat.Jpeg));
+            codecs.Add(".jpeg", getEncoder(ImageFormat.Jpeg));
+            codecs.Add(".png", getEncoder(ImageFormat.Png));
+        }
+
+        private static ImageCodecInfo getEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
+
         /// <summary>
         /// Saves the specified image.
         /// <para>
@@ -71,53 +98,18 @@ namespace DotImaging
         /// <param name="quality">Quality parameter [0..100] where 0 means maximum compression.</param>
         public static void Save(this System.Drawing.Image image, string filename, int quality = 90)
         {
-            var encoder = getEncoder(new FileInfo(filename).Extension);
-
-            if (encoder != null)
-            {
-                System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
-                EncoderParameters myEncoderParameters = new EncoderParameters(1);
-                myEncoderParameters.Param[0] = new EncoderParameter(myEncoder, quality);
-
-                image.Save(filename, encoder, myEncoderParameters);
-            }
-            else
+            codecs.TryGetValue(new FileInfo(filename).Extension, out ImageCodecInfo codec);
+            if (codec == null)
             {
                 image.Save(filename);
-            }   
-        }
-
-        private static ImageCodecInfo getEncoder(string extension)
-        {
-            switch (extension)
-            {
-                case ".jpg":
-                case ".jpeg":
-                    return getEncoderCashed(ImageFormat.Jpeg);
-                case ".png":
-                    return getEncoderCashed(ImageFormat.Png);
-                default:
-                    return null;
+                return;
             }
-        }
 
-        private static ImageCodecInfo getEncoderCashed(ImageFormat imageFormat)
-        {
-            return MethodCache.Global.Invoke<ImageFormat, ImageCodecInfo>((format) => getEncoder(format), imageFormat);
-        }
+            System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
+            EncoderParameters myEncoderParameters = new EncoderParameters(1);
+            myEncoderParameters.Param[0] = new EncoderParameter(myEncoder, quality);
 
-        private static ImageCodecInfo getEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
-
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == format.Guid)
-                {
-                    return codec;
-                }
-            }
-            return null;
+            image.Save(filename, codec, myEncoderParameters);
         }
     }
 }

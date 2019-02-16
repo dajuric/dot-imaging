@@ -63,7 +63,7 @@ namespace MultipleCameraCapture
                     if (frames[camIdx] == null)
                         break;
 
-                    frames[camIdx].Show(String.Format("Camera {0}", camIdx), autoSize: false);
+                    frames[camIdx].Show(String.Format("Camera {0}", camIdx), autoSize: true);
                 }
             }
             while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));

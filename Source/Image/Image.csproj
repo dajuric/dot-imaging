@@ -1,14 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <OutputPath>bin\</OutputPath>
     <AssemblyName>DotImaging.Image</AssemblyName>
     <RootNamespace>DotImaging</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup> 
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DocumentationFile>bin\$(TargetFramework)\DotImaging.Image.xml</DocumentationFile>
+    <DocumentationFile>bin\DotImaging.Image.xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -44,6 +43,4 @@
       <PackagePath>Readme.txt</PackagePath>
     </Content>
   </ItemGroup>
-
-  <Import Project="..\Core\Core.projitems" Label="Shared" />
 </Project>

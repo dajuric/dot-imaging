@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
-    <OutputPath>bin\</OutputPath>
+    <Platforms>x64</Platforms>
     <AssemblyName>DotImaging.UI.Image</AssemblyName>
     <RootNamespace>DotImaging</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

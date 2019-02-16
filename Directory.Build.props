@@ -1,0 +1,8 @@
+﻿<Project>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+	<OutputPath>bin\</OutputPath>
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+</Project>

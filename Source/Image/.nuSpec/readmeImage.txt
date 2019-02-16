@@ -35,7 +35,17 @@ To get compatibility for other image types install appropriate extension - NuGet
 	Gray<byte>[,] imFromIpl = iplIm.AsImage().Clone(); //to array
 
 
-5) Misc
+5) LINQ:
+
+	Bgr<byte>[,] image = ImageIO.LoadColor("sample.jpg").Clone();
+
+	//get the modified blue channel 
+	var modifiedImage = image.AsEnumerable()
+	                         .Select(x => x.B / 2)
+							 .ToArray2D(image.Size());
+
+
+6) Misc
 
    Hsv<byte>[,] image = new Hsv<byte>[240, 320];
    image.SetValue(new Hsv<byte>(10, 10, 255)); //set pixels value

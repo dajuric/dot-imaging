@@ -40,7 +40,7 @@ namespace YoutubeStreaming
                     break;
 
                 frame.Show(autoSize: false);
-                Console.Write($"\r{reader.Position * 100 / reader.Length}%");
+                Console.Write($"\r Received: {reader.Position * 100 / reader.Length}%");
             }
             Console.WriteLine("The end.");
 
