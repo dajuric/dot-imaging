@@ -13,11 +13,10 @@
   </PropertyGroup>
     
   <ItemGroup>
-    <ProjectReference Include="..\Source\BitmapInterop\BitmapInterop.csproj" />
+    <ProjectReference Include="..\Source\BitmapInterop\Image.Bitmap.csproj" />
     <ProjectReference Include="..\Source\Drawing\Drawing.csproj" />
     <ProjectReference Include="..\Source\Image\Image.csproj" />
     <ProjectReference Include="..\Source\LINQ\Linq.csproj" />
-    <ProjectReference Include="..\Source\Primitives2D\Primitives2D.csproj" />
 	<ProjectReference Include="..\Source\IO\IO.csproj" />
 	<ProjectReference Include="..\Source\UI\UI.csproj" />
   </ItemGroup> 

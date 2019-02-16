@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2018
+// Copyright © Darko Jurić, 2014-2019
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,9 +57,13 @@ namespace DotImaging
         /// </summary>
         /// <param name="fileName">Image filename.</param>
         /// <returns>Image.</returns>
-        public unsafe static Image<Bgr<byte>> LoadColor(this string fileName)
+        public unsafe static Bgr<byte>[,] LoadColor(this string fileName)
         {
-            return load(fileName, ImageLoadType.Color) as Image<Bgr<byte>>;
+            Bgr<byte>[,] im = null;
+            using (var uIm = load(fileName, ImageLoadType.Color) as Image<Bgr<byte>>)
+                im = uIm.Clone();
+
+            return im;
         }
 
         /// <summary>
@@ -67,9 +71,13 @@ namespace DotImaging
         /// </summary>
         /// <param name="fileName">Image filename.</param>
         /// <returns>Image.</returns>
-        public unsafe static Image<Gray<byte>> LoadGray(this string fileName)
+        public unsafe static Gray<byte>[,] LoadGray(this string fileName)
         {
-            return load(fileName, ImageLoadType.Grayscale) as Image<Gray<byte>>;
+            Gray<byte>[,] im = null;
+            using (var uIm = load(fileName, ImageLoadType.Grayscale) as Image<Gray<byte>>)
+                im = uIm.Clone();
+
+            return im;
         }
 
         #endregion

@@ -39,13 +39,13 @@ namespace YoutubeStreaming
                 if (frame == null)
                     break;
 
-                frame.Show(scaleForm: false);
-                ((double)reader.Position / reader.Length).Progress();
+                frame.Show(autoSize: false);
+                Console.Write($"\r{reader.Position * 100 / reader.Length}%");
             }
             Console.WriteLine("The end.");
 
             //---------------------------------------------------------------------------
-            UI.CloseAll();
+            ImageUI.CloseAll();
             Console.WriteLine("Downloading video...");
 
             string fileExtension;

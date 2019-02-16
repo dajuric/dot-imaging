@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <TargetFrameworks>net47</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -12,17 +12,10 @@
   </PropertyGroup>
     
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\BitmapInterop\BitmapInterop.csproj" />
-    <ProjectReference Include="..\..\Source\BitmapSourceInterop\BitmapSourceInterop.csproj" />
+    <ProjectReference Include="..\..\Source\BitmapInterop\Image.BitmapInterop.csproj" />
     <ProjectReference Include="..\..\Source\Image\Image.csproj" />
-    <ProjectReference Include="..\..\Source\Primitives2D\Primitives2D.csproj" />
 	<ProjectReference Include="..\..\Source\IO\IO.csproj" />
-	<ProjectReference Include="..\..\Source\UI\UI.csproj" />
+	<ProjectReference Include="..\..\Source\UI.Image\UI.Image.csproj" />
   </ItemGroup> 
-  
-  <ItemGroup>
-	 <Reference Include="PresentationCore" />
-	 <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
+ 
 </Project>

@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2018
+// Copyright © Darko Jurić, 2014-2019
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,6 @@
 #endregion
 
 using DotImaging;
-using DotImaging.Primitives2D;
 using System;
 using System.IO;
 
@@ -50,12 +49,12 @@ namespace Capture
                 if (frame == null)
                     break;
 
-                frame.Show(scaleForm: true);
+                frame.Show(autoSize: true);
             }
             while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
 
             reader.Dispose();
-            UI.CloseAll();
+            ImageUI.CloseAll();
         }
 
         private static string getResourceDir()

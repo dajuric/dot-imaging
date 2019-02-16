@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <TargetFrameworks>net47</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -13,8 +13,7 @@
     
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Image\Image.csproj" />
-    <ProjectReference Include="..\..\Source\Primitives2D\Primitives2D.csproj" />
 	<ProjectReference Include="..\..\Source\IO\IO.csproj" />
-	<ProjectReference Include="..\..\Source\UI\UI.csproj" />
+	<ProjectReference Include="..\..\Source\UI.Image\UI.Image.csproj" />
   </ItemGroup> 
 </Project>

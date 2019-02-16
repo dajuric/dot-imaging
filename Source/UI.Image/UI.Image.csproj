@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">  
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
+    <OutputPath>bin\</OutputPath>
+    <AssemblyName>DotImaging.UI.Image</AssemblyName>
+    <RootNamespace>DotImaging</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Image\Image.csproj" />
+  </ItemGroup>
+  	
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DocumentationFile>bin\$(TargetFramework)\DotImaging.UI.Image.xml</DocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <!-- NuGet -->
+  <PropertyGroup>
+    <Version>5.1.0</Version>
+
+    <PackageId>DotImaging.UI</PackageId>
+    <Description>
+      Portable standalone UI elements invokable as extensions (image display).
+    </Description>
+    <PackageTags>UI, portable-UI, UI-extensions, DotImaging-UI</PackageTags>
+
+    <Authors>Darko Jurić</Authors>
+    <Copyright>Darko Jurić</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deploy/Licence.txt</PackageLicenseUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deploy/Logo/logo-small.png</PackageIconUrl>
+    <PackageProjectUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/</PackageProjectUrl>
+    <RepositoryUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/</RepositoryUrl>
+
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageOutputPath>../../Deploy/NuGet/bin/</PackageOutputPath>
+
+    <!--symbols-->
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include=".nuSpec\readmeUI.Image.txt">
+      <PackagePath>Readme.txt</PackagePath>
+    </Content>
+  </ItemGroup>
+</Project>

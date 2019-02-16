@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Eto.Platform.Windows" Version="2.3.0" />
+    <PackageReference Include="Eto.Platform.Windows" Version="2.4.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\BitmapInterop\BitmapInterop.csproj" />
+    <ProjectReference Include="..\..\Source\BitmapInterop\Image.Bitmap.csproj" />
     <ProjectReference Include="..\..\Source\Image\Image.csproj" />
     <ProjectReference Include="..\..\Source\UI\UI.csproj" />
   </ItemGroup>

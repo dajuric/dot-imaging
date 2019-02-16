@@ -21,12 +21,7 @@
 
 using DotImaging;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
 namespace GenericImageInteropDemo
 {
@@ -65,17 +60,6 @@ namespace GenericImageInteropDemo
             var bmp = img.ToBitmap();
             //from Bitmap
             var imgFromBmp = bmp.ToImage<Bgr<byte>>();
-
-            //***********************************************************************************************************************************************************************
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("*********** Image<,> <=> BitmapSource conversions (BitmapSourceInterop) ****************"); Console.ResetColor();
-            //to generic-image
-            var colorBitmap = new BitmapImage(new Uri("http://www.online-image-editor.com//styles/2014/images/example_image.png"));
-            Bgra<byte>[,] colorImg = colorBitmap.ToArray<Bgra<byte>>();
-
-            //to BitmapSource
-            Gray<byte>[,] grayImg = img.ToGray();
-            BitmapSource grayBitmap = grayImg.ToBitmapSource();
         }
     }
 }

@@ -1,25 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <OutputPath>bin\</OutputPath>
     <AssemblyName>DotImaging.Image</AssemblyName>
     <RootNamespace>DotImaging</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-    
-  <ItemGroup>
-    <ProjectReference Include="..\Primitives2D\Primitives2D.csproj" />
-  </ItemGroup> 
+  </PropertyGroup> 
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DocumentationFile>bin\$(TargetFramework)\DotImaging.Image.xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
+  </ItemGroup>
 
   <!-- NuGet -->
   <PropertyGroup>
-    <Version>5.0.1-alpha</Version>
+    <Version>5.1.0</Version>
 
     <PackageId>DotImaging.Image</PackageId>
     <Description>.NET image array extensions. Color and depth conversions. Slim unmanaged structure for fast pixel manipulation.</Description>

@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">  
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <OutputPath>bin\</OutputPath>
+    <AssemblyName>DotImaging.BitmapInterop</AssemblyName>
+    <RootNamespace>DotImaging</RootNamespace>
+  </PropertyGroup>
+    
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+    <ProjectReference Include="..\Image\Image.csproj" />
+  </ItemGroup> 
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DocumentationFile>bin\$(TargetFramework)\DotImaging.BitmapInterop.xml</DocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+
+  <!-- NuGet -->
+  <PropertyGroup>
+    <Version>5.1.0</Version>
+
+    <PackageId>DotImaging.Image.Bitmap</PackageId>
+    <Description>Extensions for interoperability with System.Drawing.Bitmap, Point, PointF, Color and drawing extensions.</Description>
+    <PackageTags>imaging interoperability extensions, GDI</PackageTags>
+
+    <Authors>Darko Jurić</Authors>
+    <Copyright>Darko Jurić</Copyright>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deploy/Licence.txt</PackageLicenseUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deploy/Logo/logo-small.png</PackageIconUrl>
+    <PackageProjectUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/</PackageProjectUrl>
+    <RepositoryUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/</RepositoryUrl>
+
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageOutputPath>../../Deploy/NuGet/bin/</PackageOutputPath>
+
+    <!--symbols-->
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include=".nuSpec\readmeImage.Bitmap.txt">
+      <PackagePath>Readme.txt</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <Import Project="..\Core\Core.projitems" Label="Shared" />
+</Project>

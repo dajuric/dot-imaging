@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <OutputPath>bin\</OutputPath>
     <AssemblyName>DotImaging.IO</AssemblyName>
     <RootNamespace>DotImaging</RootNamespace>
@@ -9,7 +9,6 @@
     
   <ItemGroup>
     <ProjectReference Include="..\Image\Image.csproj" />
-    <ProjectReference Include="..\Primitives2D\Primitives2D.csproj" />
   </ItemGroup>
     
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -19,7 +18,7 @@
   
   <!-- NuGet --> 
   <PropertyGroup>
-    <Version>5.0.1-alpha</Version>
+    <Version>5.1.0</Version>
     
     <PackageId>DotImaging.IO</PackageId>
     <Description>Loading and saving images and image streams (file, in-memory, camera, video, directory).</Description>

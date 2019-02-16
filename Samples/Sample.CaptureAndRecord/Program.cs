@@ -49,14 +49,14 @@ namespace CaptureAndRecording
                 using (var uFrame = frame.Lock())
                 { writer.Write(uFrame); }
 
-                frame.Show(scaleForm: true);
+                frame.Show(autoSize: true);
             }
             while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape));
 
             reader.Dispose();
             writer.Dispose();
 
-            UI.CloseAll();
+            ImageUI.CloseAll();
         }
 
         private static string getResourceDir()

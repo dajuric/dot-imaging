@@ -1,5 +1,5 @@
 ﻿using DotImaging;
-using DotImaging.Primitives2D;
+using System.Drawing;
 using System;
 using System.IO;
 
@@ -18,21 +18,15 @@ namespace BasicImageOperations
                             .DecodeAsColorImage();
 
             //show image
-            image.Show("New Lena"); //to zoom or translate: press and hold Shift and scroll or move your mouse
+            image.Show("New Lena");
 
             //draw something
-            image.Draw(new Rectangle(50, 50, 200, 100), Bgr<byte>.Red, -1);
-            image.Draw(new Circle(50, 50, 25), Bgr<byte>.Blue, 5);
-            image.Draw(new Box2D(new Point(250, 150), new Size(100, 100), 30), Bgr<byte>.Green, 1);
-            image.Draw("Hello world!", Font.Big, new Point(10, 100), Bgr<byte>.White);
+            image.DrawRectangle(new Rectangle(50, 50, 200, 100), Bgr<byte>.Red, -1);
+            image.DrawText("Hello world!", DotImaging.Font.Big, new Point(10, 100), Bgr<byte>.White);
 
             //save and load
             image.Save("out.png");
-            ImageIO.LoadColor("out.png").Clone().Show("Saved image", scaleForm: true);
-
-            Console.WriteLine("Press [Enter] to exit.");
-            Console.ReadLine();
-            UI.CloseAll();
+            ImageIO.LoadColor("out.png").ShowDialog("Saved image", autoSize: true);
         }
     }
 }

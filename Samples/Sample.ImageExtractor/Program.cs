@@ -58,12 +58,8 @@ namespace ImageExtractor
             var reader = new FileCapture(fileName);
             reader.Open();
 
-            reader.SaveFrames(outputDir, "{0}.jpg", (percentage) =>
-            {
-                ((double)percentage).Progress(message: "Extracting " + fileNameNoExt);
-            });
-
-            UI.CloseAll();
+            reader.SaveFrames(outputDir, "{0}.jpg", p => Console.Write($"\rExtracting: {(int)(p * 100)} %"));
+            ImageUI.CloseAll();
         }
 
         private static IEnumerable<string> enumerateFiles(string fileMask)
