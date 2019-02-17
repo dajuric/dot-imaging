@@ -3,22 +3,22 @@
 </p>
 
 <p align="center">
-    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v4.8.3-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
-    <a href="https://gitter.im/dajuric/dot-imaging?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&content=body_link"> <img src="https://img.shields.io/badge/chat-on_gitter-brightgreen.svg?style=flat-square" alt="NuGet packages version"/>  </a>
+    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v5.1.0-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
 </p>
 
 **DotImaging** - .NET array as imaging object  
 The framework sets focus on .NET native array as primary imaging object, offers extensibility support via extensions, and provides unified platform-abstract imaging IO API. 
 
 ## News
++ 5.1.0 version came out (17/02/2019)
 + Image enchacement library for DotImaging: <a href="https://github.com/dajuric/dot-devignetting">DotDevignetting</a>!
 
 ## So why DotImaging ?
 
-+ leverages existing .NET structures
++ Image as native .NET 2D array 
 + portable* 
 + lightweight
-+ **so simple**, you don't need a help file
++ extensions, extensions, extensions....
 
 *IO and Drawing assemlies depend on OpenCV
 
@@ -28,7 +28,7 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 ###### Core
 
 + <a href="https://www.nuget.org/packages/DotImaging.Image"> 
-    <img src="https://img.shields.io/badge/DotImaging-GenericImage-red.svg?style=flat-square" alt="DotImaging.Image"/>  
+    <img src="https://img.shields.io/badge/DotImaging-Image-red.svg?style=flat-square" alt="DotImaging.Image"/>  
   </a> 
   .NET image array extensions. Color and depth conversions. Slim unmanaged structure for fast pixel manipulation.
 
@@ -39,13 +39,12 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 Bgr<byte>[,] image = ImageIO.LoadColor("sample.jpg").Clone(); //IO package
 Gray<byte>[,] grayIm = image.ToGray()
                                 .Flip(FlipDirection.Horizontal);
+
+//get the modified blue channel 
+var modifiedImage = image.AsEnumerable()
+	                      .Select(x => x.B / 2)
+							 .ToArray2D(image.Size());
  ```
-
-+ <a href="https://www.nuget.org/packages/DotImaging.Primitives2D"> 
-    <img src="https://img.shields.io/badge/DotImaging-Primitives2D-red.svg?style=flat-square" alt="DotImaging.Primitives2D"/>  
-  </a> 
-  Portable 2D drawing primitives (Point, Size, Rectangle, ...)
-
 
 ###### IO
 
@@ -105,98 +104,27 @@ var bmp = image.ToBitmap(); //to Bitmap
 var imageFromBmp = bmp.ToArray() as Bgr<byte>[,]; //from Bitmap
  ``` 
  
-+ <a href="https://www.nuget.org/packages/DotImaging.BitmapSourceInterop"> 
-    <img src="https://img.shields.io/badge/DotImaging-BitmapSourceInterop-red.svg?style=flat-square" alt="DotImaging.BitmapSourceInterop"/>  
-  </a>
-  Interoperability extensions between .NET array and BitmapSource (WPF).
-
- ``` csharp
-var bmp = new BitmapImage(new Uri("<path>"));
-Bgra<byte>[,] colorImg = bmp.ToArray<Bgra<byte>>(); //to bitmap
-
-var imageFromBitmap = colorImg.ToBitmapSource(); //from bitmap
- ```
-
  
 ###### Extensions
 
-+ <a href="https://www.nuget.org/packages/DotImaging.UI"> 
-    <img src="https://img.shields.io/badge/DotImaging-UI-red.svg?style=flat-square" alt="DotImaging.UI"/>  
++ <a href="https://www.nuget.org/packages/DotImaging.UI.Image"> 
+    <img src="https://img.shields.io/badge/DotImaging-UIImage-red.svg?style=flat-square" alt="DotImaging.UI"/>  
   </a> 
   Portable UI elements (image display, progress bar, file/folder dialogs, color-picker, image annotation input).
 
  ``` csharp
 Bgr<byte>[,] image = new Bgr<byte>[480, 640];
 image.Show(); //show image (non-blocking)
-
-(0.4d).Progress(); //progress bar - 40% (non-blocking)
-
-string fileName = UI.OpenFile(); //open-file dialog
-
-Bgr<byte> color = UI.PickColor(); //color-picker dialog
-
-Gray<byte>[,] mask = image.GetMask(); //draw-mask dialog 
-
-RectangleF rect = image.GetRectangle(); //draw-rectangle dialog (blocking and non-blocking)
-
-var num = -1;
-UI.ShowMenu(itemNames: new string[] { "2", "3" },
-                actions: new Action[] { () => num = 2, () => num = 3 }); //menu-dialog
- ```
-
-+ <a href="https://www.nuget.org/packages/DotImaging.Drawing"> 
-    <img src="https://img.shields.io/badge/DotImaging-Drawing-red.svg?style=flat-square" alt="DotImaging.Drawing"/>  
-  </a> 
-  .NET image drawing array extensions.
-
- ``` csharp
-//create a managed image
-var image = new Bgr<byte>[480, 640];
+image.ShowDialog(); //show image (blocking)
 
 //draw something
 image.Draw(new Rectangle(50, 50, 200, 100), Bgr<byte>.Red, -1);
 image.Draw(new Circle(50, 50, 25), Bgr<byte>.Blue, 5);
- ``` 
-
-+ <a href="https://www.nuget.org/packages/DotImaging.Linq"> 
-    <img src="https://img.shields.io/badge/DotImaging-Linq-red.svg?style=flat-square" alt="DotImaging.Linq"/>  
-  </a> 
-  2D array Linq extensions
-
- ``` csharp
-//create a managed image
-Bgr<byte>[,] image = ...; 
-
-//get the modified blue channel 
-var modifiedImage = image.AsEnumerable()
-	                         .Select(x => x.B / 2)
-							 .ToArray2D(image.Size());
- ``` 
- 
-+ <a href="https://www.nuget.org/packages/DotImaging.Core.Platform"> 
-    <img src="https://img.shields.io/badge/DotImaging-Core.Platform-red.svg?style=flat-square" alt="DotImaging.Core.Platform"/>  
-  </a> 
-  Provides a portable way to determine the execution platform + interoperability functions.
-
-``` csharp
-Console.WriteLine(Platform.RunningPlatform); //Windows, Linux, MacOS
-
-//add the "UnmanagedLibraries/<OS>/<platform>/" to the path
-Platform.AddDllSearchPath(); 
- ``` 
+ ```
   
- 
 ## Getting started
 + Just pick what you need. An appropriate readme file will be shown upon selected NuGet package installation. 
 + Samples
-
-## Want image processing algorithms ?
-The framework is the foundation of <a href="https://github.com/dajuric/accord-net-extensions">Accord.NET Extensions</a> which exposes a full power of <a href="http://accord-framework.net/"> Accord.NET </a> through extensions!
-
-## How to Engage, Contribute and Provide Feedback  
-Remember: Your opinion is important and will define the future roadmap.
-+ questions, comments - message on Github, or write to: darko.juric2 [at] gmail.com
-+ **spread the word** 
 
 ## Final word
 If you like the project please **star it** in order to help to spread the word. That way you will make the framework more significant and in the same time you will motivate me to improve it, so the benefit is mutual.

@@ -35,10 +35,6 @@
 
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageOutputPath>../../Deploy/NuGet/bin/</PackageOutputPath>
-
-    <!--symbols-->
-    <IncludeSource>True</IncludeSource>
-    <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
 
   <ItemGroup>

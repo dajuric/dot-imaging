@@ -20,8 +20,8 @@
     <Version>5.1.0</Version>
 
     <PackageId>DotImaging.Image</PackageId>
-    <Description>.NET image array extensions. Color and depth conversions. Slim unmanaged structure for fast pixel manipulation.</Description>
-    <PackageTags>image, managed-image, array-image</PackageTags>
+    <Description>.NET image array extensions. Color and depth conversions. Slim unmanaged structure for fast pixel manipulation. LINQ on 2D arrays.</Description>
+    <PackageTags>image, managed-image, array-image, 2D LINQ</PackageTags>
 
     <Authors>Darko Jurić</Authors>
     <Copyright>Darko Jurić</Copyright>
@@ -32,10 +32,6 @@
 
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageOutputPath>../../Deploy/NuGet/bin/</PackageOutputPath>
-
-    <!--symbols-->
-    <IncludeSource>True</IncludeSource>
-    <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
 
   <ItemGroup>

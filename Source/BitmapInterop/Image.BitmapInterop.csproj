@@ -20,8 +20,8 @@
   <PropertyGroup>
     <Version>5.1.0</Version>
 
-    <PackageId>DotImaging.Image.Bitmap</PackageId>
-    <Description>Extensions for interoperability with System.Drawing.Bitmap, Point, PointF, Color and drawing extensions.</Description>
+    <PackageId>DotImaging.BitmapInterop</PackageId>
+    <Description>Extensions for interoperability with System.Drawing.Bitmap.</Description>
     <PackageTags>imaging interoperability extensions, GDI</PackageTags>
 
     <Authors>Darko Jurić</Authors>
@@ -33,10 +33,6 @@
 
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageOutputPath>../../Deploy/NuGet/bin/</PackageOutputPath>
-
-    <!--symbols-->
-    <IncludeSource>True</IncludeSource>
-    <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
 
   <ItemGroup>
