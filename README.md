@@ -3,14 +3,14 @@
 </p>
 
 <p align="center">
-    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v5.1.0-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
+    <a href="https://www.nuget.org/profiles/dajuric"> <img src="https://img.shields.io/badge/NuGet-v5.2.0-blue.svg?style=flat-square" alt="NuGet packages version"/>  </a>
 </p>
 
 **DotImaging** - .NET array as imaging object  
 The framework sets focus on .NET native array as primary imaging object, offers extensibility support via extensions, and provides unified platform-abstract imaging IO API. 
 
 ## News
-+ 5.1.0 version came out (17/02/2019)
++ 5.2.0 version came out (19/02/2019)
 + Image enchacement library for DotImaging: <a href="https://github.com/dajuric/dot-devignetting">DotDevignetting</a>!
 
 ## So why DotImaging ?
@@ -36,15 +36,20 @@ The framework sets focus on .NET native array as primary imaging object, offers 
 
  ``` csharp
 //convert to grayscale and flip
-Bgr<byte>[,] image = ImageIO.LoadColor("sample.jpg").Clone(); //IO package
+Bgr<byte>[,] image = ImageIO.LoadColor("sample.jpg"); //IO package
 Gray<byte>[,] grayIm = image.ToGray()
-                                .Flip(FlipDirection.Horizontal);
+                             .Flip(FlipDirection.Horizontal);
 
 //get the modified blue channel 
 var modifiedImage = image.AsEnumerable()
-	                      .Select(x => x.B / 2)
-							 .ToArray2D(image.Size());
+	                 .Select(x => x.B / 2)
+			 .ToArray2D(image.Size());
  ```
+
++ <a href="https://www.nuget.org/packages/DotImaging.Primitives2D"> 
+    <img src="https://img.shields.io/badge/DotImaging-Primitives2D-red.svg?style=flat-square" alt="DotImaging.Primitives2D"/>  
+  </a> 
+  Portable 2D drawing primitives (Extensions for Point, Size, Rectangle and additional primitives)
 
 ###### IO
 
@@ -95,7 +100,7 @@ var reader = new FileCapture(String.Format(@"\\.\pipe\{0}", pipeName)) //IO pack
 + <a href="https://www.nuget.org/packages/DotImaging.BitmapInterop"> 
     <img src="https://img.shields.io/badge/DotImaging-BitmapInterop-red.svg?style=flat-square" alt="DotImaging.BitmapInterop"/>  
   </a>
-  Interoperability extensions between .NET array and Bitmap (WinForms).
+  Interoperability extensions between .NET array and System.Drawing.Bitmap.
 
  ``` csharp
 var image = new Gray<byte>[240, 320];
@@ -110,7 +115,7 @@ var imageFromBmp = bmp.ToArray() as Bgr<byte>[,]; //from Bitmap
 + <a href="https://www.nuget.org/packages/DotImaging.UI.Image"> 
     <img src="https://img.shields.io/badge/DotImaging-UIImage-red.svg?style=flat-square" alt="DotImaging.UI"/>  
   </a> 
-  Portable UI elements (image display, progress bar, file/folder dialogs, color-picker, image annotation input).
+  Image preview dialog and drawing.
 
  ``` csharp
 Bgr<byte>[,] image = new Bgr<byte>[480, 640];

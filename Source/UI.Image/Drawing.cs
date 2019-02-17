@@ -2,7 +2,7 @@
 // DotImaging Framework
 // https://github.com/dajuric/dot-imaging
 //
-// Copyright © Darko Jurić, 2014-2019
+// Copyright © Darko Jurić, 2014-2018
 // darko.juric2@gmail.com
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,8 +20,10 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using DotImaging.Primitives2D;
 
 namespace DotImaging
 {
@@ -75,7 +77,6 @@ namespace DotImaging
             if (float.IsNaN(rect.X) || float.IsNaN(rect.Y))
                 return;
 
-
             draw(image, opacity, cvImg => 
             {
                 CvCoreInvoke.cvRectangleR(&cvImg, rect, color.ToCvScalar(), thickness, LineTypes.EightConnected, 0);
@@ -105,28 +106,122 @@ namespace DotImaging
 
         #endregion
 
+        #region Box & Ellipse
+
+        /// <summary>
+        /// Draws Box2D.
+        /// </summary>
+        /// <param name="image">Input image.</param>
+        /// <param name="box">Box 2D.</param>
+        /// <param name="color">Object's color.</param>
+        /// <param name="thickness">Border thickness (-1 to fill the object).</param>
+        /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
+        public unsafe static void Draw2DBox(this Bgr<byte>[,] image, Box2D box, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
+        {
+            if (thickness < 1)
+                throw new NotSupportedException("Only positive values are valid!");
+
+            var vertices = box.GetVertices();
+
+            draw(image, opacity, cvImg => 
+            {
+                for (int i = 0; i < vertices.Length; i++)
+                {
+                    int idx2 = (i + 1) % vertices.Length;
+
+                    CvCoreInvoke.cvLine(&cvImg, vertices[i].Round(), vertices[idx2].Round(),
+                                           color.ToCvScalar(), thickness,
+                                           LineTypes.EightConnected, 0);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Draws ellipse.
+        /// </summary>
+        /// <param name="image">Input image.</param>
+        /// <param name="ellipse">Ellipse.</param>
+        /// <param name="color">Object's color.</param>
+        /// <param name="thickness">Border thickness (-1 to fill the object).</param>
+        /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
+        public unsafe static void DrawEllipse(this Bgr<byte>[,] image, Ellipse ellipse, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
+        {
+            draw(image, opacity, cvImg =>
+            {
+                CvCoreInvoke.cvEllipse(&cvImg, ellipse.Center.Round(), Size.Round(ellipse.Size), ellipse.Angle,
+                                       0, 360, color.ToCvScalar(), thickness, LineTypes.EightConnected, 0);
+            });
+        }
+
+        #endregion
+
         #region Contour
 
         /// <summary>
         /// Draws contour.
         /// </summary>
         /// <param name="image">Input image.</param>
-        /// <param name="contour">Contour points.</param>
+        /// <param name="polygon">Contour points.</param>
         /// <param name="color">Contour color.</param>
         /// <param name="thickness">Contours thickness (it does not support values smaller than 1).</param>
         /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
-        public unsafe static void DrawPolygon(this Bgr<byte>[,] image, Point[] contour, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
+        public unsafe static void DrawPolygon(this Bgr<byte>[,] image, Point[] polygon, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
         {
-            var contourHandle = GCHandle.Alloc(contour, GCHandleType.Pinned);
+            var contourHandle = GCHandle.Alloc(polygon, GCHandleType.Pinned);
 
             draw(image, opacity, cvImg =>
             {
                 //TODO - noncritical: implement with cvContour
-                CvCoreInvoke.cvPolyLine(&cvImg, new IntPtr[] { contourHandle.AddrOfPinnedObject() }, new int[] { contour.Length }, 1,
+                CvCoreInvoke.cvPolyLine(&cvImg, new IntPtr[] { contourHandle.AddrOfPinnedObject() }, new int[] { polygon.Length }, 1,
                                            true, color.ToCvScalar(), thickness, LineTypes.EightConnected, 0);
             });
 
             contourHandle.Free();
+        }
+
+        #endregion
+
+        #region Circle
+
+        /// <summary>
+        /// Draws circle.
+        /// </summary>
+        /// <param name="image">Input image.</param>
+        /// <param name="circle">Circle</param>
+        /// <param name="color">Circle color.</param>
+        /// <param name="thickness">Contours thickness.</param>
+        /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
+        public unsafe static void DrawCircle(this Bgr<byte>[,] image, Circle circle, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
+        {
+            draw(image, opacity, cvImg =>
+            {
+                var center = new Point(circle.X, circle.Y);
+
+                CvCoreInvoke.cvCircle(&cvImg, center, circle.Radius, color.ToCvScalar(),
+                                      thickness, LineTypes.EightConnected, 0);
+            });
+        }
+
+        /// <summary>
+        /// Draws circles.
+        /// </summary>
+        /// <param name="image">Input image.</param>
+        /// <param name="circles">Circles</param>
+        /// <param name="color">Circle color.</param>
+        /// <param name="thickness">Contours thickness.</param>
+        /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
+        public unsafe static void DrawCircles(this Bgr<byte>[,] image, IEnumerable<Circle> circles, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
+        {
+            draw(image, opacity, cvImg =>
+            {
+                foreach (var circle in circles)
+                {
+                    var center = new Point(circle.X, circle.Y);
+
+                    CvCoreInvoke.cvCircle(&cvImg, center, circle.Radius, color.ToCvScalar(),
+                                          thickness, LineTypes.EightConnected, 0);
+                }
+            });
         }
 
         #endregion
@@ -149,48 +244,6 @@ namespace DotImaging
             var textSize = font.GetTextSize(text, 0);
             var bottomLeftPt = new Point(rect.X + rect.Width / 2 - textSize.Width / 2, rect.Top - VERTICAL_OFFSET);
             image.DrawText(text, font, bottomLeftPt, Bgr<byte>.Black);
-        }
-
-        #endregion
-
-
-        #region Ellipse
-
-        /// <summary>
-        /// Draws ellipse.
-        /// </summary>
-        /// <param name="image">Input image.</param>
-        /// <param name="ceneter">Center.</param>
-        /// <param name="angle">Rotation angle.</param>
-        /// <param name="size">Axes size.</param>
-        /// <param name="color">Object's color.</param>
-        /// <param name="thickness">Border thickness (-1 to fill the object).</param>
-        /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
-        public unsafe static void DrawEllipse(this Bgr<byte>[,] image, Point ceneter, Size size, float angle, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
-        {
-            draw(image, opacity, cvImg =>
-            {
-                CvCoreInvoke.cvEllipse(&cvImg, ceneter, size, angle,
-                                       0, 360, color.ToCvScalar(), thickness, LineTypes.EightConnected, 0);
-            });
-        }
-
-        /// <summary>
-        /// Draws circle.
-        /// </summary>
-        /// <param name="image">Input image.</param>
-        /// <param name="center">Center.</param>
-        /// <param name="radius">Circle radius.</param>
-        /// <param name="color">Circle color.</param>
-        /// <param name="thickness">Contours thickness.</param>
-        /// <param name="opacity">Sets alpha channel where 0 is transparent and 255 is full opaque.</param>
-        public unsafe static void DrawCircle(this Bgr<byte>[,] image, Point center, int radius, Bgr<byte> color, int thickness, byte opacity = Byte.MaxValue)
-        {
-            draw(image, opacity, cvImg =>
-            {
-                CvCoreInvoke.cvCircle(&cvImg, center, radius, color.ToCvScalar(),
-                                      thickness, LineTypes.EightConnected, 0);
-            });
         }
 
         #endregion

@@ -119,3 +119,4 @@ bld/
 *.[Cc]ache
 # but keep track of directories ending in .cache
 !*.[Cc]ache/
+/Deploy/Nuget/NuGet.exe

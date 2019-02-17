@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Image\Image.csproj" />
+    <ProjectReference Include="..\Primitives2D\Primitives2D.csproj" />
   </ItemGroup>
   	
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -38,11 +39,11 @@
   
   <!-- NuGet -->
   <PropertyGroup>
-    <Version>5.1.0</Version>
+    <Version>5.2.0</Version>
 
     <PackageId>DotImaging.UI.Image</PackageId>
     <Description>
-      Portable standalone UI elements invokable as extensions (image display).
+      Image preview dialog and drawing.
     </Description>
     <PackageTags>UI, portable-UI, UI-extensions, DotImaging-UI</PackageTags>
 
