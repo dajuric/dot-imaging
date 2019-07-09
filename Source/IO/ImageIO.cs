@@ -113,7 +113,7 @@ namespace DotImaging
         /// <param name="image">Image to save.</param>
         /// <param name="fileName">Image filename.</param>
         private unsafe static void Save<TColor>(this Image<TColor> image, string fileName)
-            where TColor : struct, IColor
+            where TColor : unmanaged, IColor
         {
             var iplImage = image.AsCvIplImage();
             CvInvoke.cvSaveImage(fileName, &iplImage, IntPtr.Zero);
@@ -126,7 +126,7 @@ namespace DotImaging
         /// <param name="image">Image to save.</param>
         /// <param name="fileName">Image filename.</param>
         private unsafe static void Save<TColor>(this TColor[,] image, string fileName)
-            where TColor: struct, IColor
+            where TColor: unmanaged, IColor
         {
             using (var img = image.Lock())
             {
@@ -538,7 +538,7 @@ namespace DotImaging
         }
 
         static byte[] encodeAsJpeg<TColor>(TColor[,] image, int jpegQuality = 95)
-            where TColor : struct, IColor
+            where TColor : unmanaged, IColor
         {
             if (jpegQuality < 0 || jpegQuality > 100)
                 throw new ArgumentOutOfRangeException("Jpeg quality must be in range: 0-100.");
@@ -548,7 +548,7 @@ namespace DotImaging
         }
 
         static byte[] encodeAsPng<TColor>(TColor[,] image, int pngCompression = 3)
-            where TColor : struct, IColor
+            where TColor : unmanaged, IColor
         {
             if (pngCompression < 0 || pngCompression > 9)
                 throw new ArgumentOutOfRangeException("Png compression must be in range: 0-9.");
@@ -558,7 +558,7 @@ namespace DotImaging
         }
 
         static unsafe byte[] encode<TColor>(TColor[,] image, string extension, int[] parameters)
-           where TColor : struct, IColor
+           where TColor : unmanaged, IColor
         {
             CvMat* matEncoded; //a single-row image
 
@@ -606,7 +606,7 @@ namespace DotImaging
         }
 
         unsafe static TColor[,] decodeImage<TColor>(byte[] encodedImage, ImageLoadType loadType)
-            where TColor : struct, IColor
+            where TColor : unmanaged, IColor
         {
             CvMat* matDecoded;
             fixed (byte* encodedImPtr = encodedImage)

@@ -30,7 +30,7 @@ namespace DotImaging
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Bgr<T> : IColor3<T>
-        where T : struct
+        where T : unmanaged
     {
         /// <summary>
         /// Creates new Bgr color.

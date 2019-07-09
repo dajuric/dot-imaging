@@ -121,7 +121,7 @@ namespace DotImaging
         /// <param name="slice">Slice.</param>
         /// <returns>Cloned portion of the array.</returns>
         public static unsafe T[,] Clone<T>(this Slice2D<T> slice)
-            where T : struct
+            where T : unmanaged
         {
             T[,] patch = null;
 

@@ -17,7 +17,7 @@
   
   <!-- NuGet --> 
   <PropertyGroup>
-    <Version>5.2.0</Version>
+    <Version>5.3.0</Version>
     
     <PackageId>DotImaging.IO</PackageId>
     <Description>Loading and saving images and image streams (file, in-memory, camera, video, directory).</Description>
@@ -44,14 +44,16 @@
 
     <!-- Windows -->
     <Content Include="runtimes\win10-x64\*.dll">
+      <Link>runtimes\win10-x64\%(FileName)%(Extension)</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <PackagePath>runtimes\native\win-x64\</PackagePath>
+      <PackagePath>runtimes/win10-x64/native/</PackagePath>
     </Content>
 
     <!-- Linux -->
     <Content Include="runtimes\ubuntu.16.04-x64\*.so*">
+      <Link>runtimes\ubuntu.16.04-x64\%(FileName)%(Extension)</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <PackagePath>runtimes\native\ubuntu.16.04-x64\</PackagePath>
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
     </Content>
   </ItemGroup>
 </Project>

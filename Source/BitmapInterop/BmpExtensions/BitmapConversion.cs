@@ -50,7 +50,7 @@ namespace DotImaging
         /// <typeparam name="TColor">Target color type.</typeparam>
         /// <returns>2D array.</returns>
         public static TColor[,] ToImage<TColor>(this Bitmap bmp)
-            where TColor: struct, IColor
+            where TColor: unmanaged, IColor
         {
             if (mapingTable.TryGetValue(typeof(TColor), out var targetPixelFmt) == false)
                 throw new NotSupportedException("Target mapping not found.");

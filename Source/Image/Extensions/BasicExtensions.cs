@@ -69,7 +69,7 @@ namespace DotImaging
         /// <param name="array">The array to lock.</param>
         /// <returns>The generic image which shares data with the pined array.</returns>
         public static Image<TColor> Lock<TColor>(this TColor[,] array)
-            where TColor : struct
+            where TColor: unmanaged
         {
             return Image<TColor>.Lock(array);
         }
@@ -82,7 +82,7 @@ namespace DotImaging
         /// <param name="area">Working area.</param>
         /// <returns>The generic image which shares data with the pined array.</returns>
         public static Image<TColor> Lock<TColor>(this TColor[,] array, Rectangle area)
-          where TColor : struct
+          where TColor: unmanaged
         {
             return Image<TColor>.Lock(array).GetSubRect(area);
         }
@@ -93,7 +93,7 @@ namespace DotImaging
         /// <typeparam name="T">Element type.</typeparam>
         /// <param name="array">Array to clear.</param>
         public static void Clear<T>(this T[,] array)
-            where T: struct
+            where T: unmanaged
         {
             Array.Clear(array, 0, array.Length);
         }
@@ -105,7 +105,7 @@ namespace DotImaging
         /// <param name="array">Array.</param>
         /// <returns>Cloned array.</returns>
         public static T[,] Clone<T>(this T[,] array)
-            where T: struct
+            where T: unmanaged
         {
             return (T[,])array.Clone();
         }
@@ -128,7 +128,7 @@ namespace DotImaging
         /// <param name="source">Array.</param>
         /// <returns>Array element info.</returns>
         public static ColorInfo ColorInfo<TColor>(this TColor[,] source)
-            where TColor: struct
+            where TColor: unmanaged
         {
             return DotImaging.ColorInfo.GetInfo<TColor>();
         }

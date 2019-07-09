@@ -28,7 +28,7 @@ namespace DotImaging
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Gray<T> : IColor<T>
-        where T: struct
+        where T: unmanaged
     {
         /// <summary>
         /// Creates new gray color.

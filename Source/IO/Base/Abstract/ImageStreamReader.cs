@@ -227,7 +227,7 @@ namespace DotImaging
         /// <param name="imageStream">Image stream.</param>
         /// <returns>Converted image or null if the image can not be read.</returns>
         public static Image<TColor> ReadAs<TColor>(this ImageStreamReader<IImage> imageStream)
-            where TColor: struct
+            where TColor: unmanaged
         {
             var image = imageStream.Read();
             if (image == null)
@@ -247,7 +247,7 @@ namespace DotImaging
         /// <para>The specified buffer can be null, as it is managed by the function itself.</para>
         /// </param>
         public static void ReadTo<TColor>(this ImageStreamReader<IImage> imageStream, ref TColor[,] buffer)
-            where TColor: struct
+            where TColor: unmanaged
         { 
             imageStream.ReadAs<TColor>().CopyToOrCreate(ref buffer);
         }

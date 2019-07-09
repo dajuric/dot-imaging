@@ -31,8 +31,8 @@ namespace DotImaging
     /// <param name="source">Source element.</param>
     /// <param name="destination">Destination element.</param>
     public delegate void Convert<TSrc, TDst>(TSrc source, ref TDst destination)
-        where TSrc : struct
-        where TDst : struct;
+        where TSrc : unmanaged
+        where TDst : unmanaged;
 
     /// <summary>
     /// Provides generic element conversion extensions.
@@ -48,8 +48,8 @@ namespace DotImaging
         /// <param name="convert">Conversion function.</param>
         /// <returns>Destination array.</returns>
         public static TDst[,] Convert<TSrc, TDst>(this TSrc[,] source, Convert<TSrc, TDst> convert)
-            where TSrc : struct
-            where TDst : struct
+            where TSrc : unmanaged
+            where TDst : unmanaged
         {
             var area = new Rectangle(0, 0, source.GetLength(1), source.GetLength(0));
             return source.Convert<TSrc, TDst>(convert, area);
@@ -64,8 +64,8 @@ namespace DotImaging
         /// <param name="convert">Conversion function.</param>
         /// <param name="area">Working area.</param>
         public static TDst[,] Convert<TSrc, TDst>(this TSrc[,] source, Convert<TSrc, TDst> convert, Rectangle area)
-            where TSrc : struct
-            where TDst : struct
+            where TSrc : unmanaged
+            where TDst : unmanaged
         {
             TDst[,] destination = new TDst[area.Height, area.Width];
             var offset = area.Location;

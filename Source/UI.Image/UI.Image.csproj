@@ -26,20 +26,22 @@
 
     <!-- Windows -->
     <Content Include="runtimes\win10-x64\*.dll">
+	  <Link>runtimes\win10-x64\%(FileName)%(Extension)</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <PackagePath>runtimes\native\win-x64\</PackagePath>
+      <PackagePath>runtimes/win-x64/native/</PackagePath>
     </Content>
 
     <!-- Linux -->
     <Content Include="runtimes\ubuntu.16.04-x64\*.so*">
+	  <Link>runtimes\win10-x64\%(FileName)%(Extension)</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <PackagePath>runtimes\native\ubuntu.16.04-x64\</PackagePath>
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
     </Content>
   </ItemGroup>
   
   <!-- NuGet -->
   <PropertyGroup>
-    <Version>5.2.0</Version>
+    <Version>5.3.0</Version>
 
     <PackageId>DotImaging.UI.Image</PackageId>
     <Description>

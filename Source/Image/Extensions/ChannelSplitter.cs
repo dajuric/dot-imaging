@@ -38,8 +38,8 @@ namespace DotImaging
         /// <param name="channelIndices">Channel indicies to extract. If null, all channels are extracted.</param>
         /// <returns>Channel collection.</returns>
         public static unsafe Gray<TDepth>[][,] SplitChannels<TSrcColor, TDepth>(this TSrcColor[,] image, params int[] channelIndices)
-            where TSrcColor : struct, IColor<TDepth>
-            where TDepth : struct
+            where TSrcColor : unmanaged, IColor<TDepth>
+            where TDepth : unmanaged
         { 
             Rectangle area = new Rectangle(0, 0, image.Width(), image.Height());
             return image.SplitChannels<TSrcColor, TDepth>(area, channelIndices);
@@ -55,8 +55,8 @@ namespace DotImaging
         /// <param name="channelIndices">Channel indicies to extract. If null, all channels are extracted.</param>
         /// <returns>Channel collection.</returns>
         public static unsafe Gray<TDepth>[][,] SplitChannels<TSrcColor, TDepth>(this TSrcColor[,] image, Rectangle area, params int[] channelIndices)
-            where TSrcColor: struct, IColor<TDepth>
-            where TDepth: struct
+            where TSrcColor: unmanaged, IColor<TDepth>
+            where TDepth: unmanaged
         {
             if (channelIndices == null || channelIndices.Length == 0)
             {
@@ -81,8 +81,8 @@ namespace DotImaging
         /// <param name="channelIndex">Channel index.</param>
         /// <returns>Extracted channel.</returns>
         public static unsafe Gray<TDepth>[,] GetChannel<TSrcColor, TDepth>(this TSrcColor[,] image, int channelIndex)
-            where TSrcColor : struct, IColor<TDepth>
-            where TDepth : struct
+            where TSrcColor : unmanaged, IColor<TDepth>
+            where TDepth : unmanaged
         {
             Rectangle area = new Rectangle(0, 0, image.Width(), image.Height());
             return image.GetChannel<TSrcColor, TDepth>(area, channelIndex);
@@ -98,8 +98,8 @@ namespace DotImaging
         /// <param name="channelIndex">Channel index.</param>
         /// <returns>Extracted channel.</returns>
         public static unsafe Gray<TDepth>[,] GetChannel<TSrcColor, TDepth>(this TSrcColor[,] image, Rectangle area, int channelIndex)
-            where TSrcColor: struct, IColor<TDepth>
-            where TDepth: struct
+            where TSrcColor: unmanaged, IColor<TDepth>
+            where TDepth: unmanaged
         {
             int width = area.Width;
             int height = area.Height;

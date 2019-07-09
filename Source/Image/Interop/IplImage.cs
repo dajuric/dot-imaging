@@ -277,7 +277,7 @@ namespace DotImaging
         class GenericImageConstructor
         {
             public static GenericImageConstructor Create<TColor>()
-                where TColor: struct, IColor
+                where TColor: unmanaged, IColor
             {
                 GenericImageConstructor ctor = new GenericImageConstructor();
                 ctor.ColorType = typeof(TColor);

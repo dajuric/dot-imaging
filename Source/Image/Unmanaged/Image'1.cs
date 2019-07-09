@@ -32,7 +32,7 @@ namespace DotImaging
     /// </summary>
     /// <typeparam name="TColor">Color type. The structure must be blittable.</typeparam>
     public class Image<TColor> : IImage, IEquatable<IImage>, IDisposable
-           where TColor: struct
+           where TColor: unmanaged
     {
         #region Constructor methods
 

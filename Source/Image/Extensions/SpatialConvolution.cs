@@ -140,7 +140,7 @@ namespace DotImaging
         /// <param name="kernel">Kernel.</param>
         /// <returns>Convolved image.</returns>
         public unsafe static TColor[,] Convolve<TColor>(this TColor[,] source, float[,] kernel)
-            where TColor: struct, IColor<float>
+            where TColor: unmanaged, IColor<float>
         {
             var channelCount = source.ColorInfo().ChannelCount;
             var destination = source.CopyBlank();

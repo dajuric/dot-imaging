@@ -38,8 +38,8 @@ namespace DotImaging
         /// <param name="channelIndices">Channel indicies. If null, all channels are taken.</param>
         /// <returns>Image.</returns>
         public static TSrcColor[,] MergeChannels<TSrcColor, TDepth>(this IList<Gray<TDepth>[,]> channels, params int[] channelIndices)
-            where TSrcColor : struct, IColor<TDepth>
-            where TDepth : struct
+            where TSrcColor : unmanaged, IColor<TDepth>
+            where TDepth : unmanaged
         {
             var area = new Rectangle(new Point(), channels[0].Size());
             return channels.MergeChannels<TSrcColor, TDepth>(area, channelIndices);
@@ -55,8 +55,8 @@ namespace DotImaging
         /// <param name="channelIndices">Channel indicies. If null, all channels are taken.</param>
         /// <returns>Image.</returns>
         public static TSrcColor[,] MergeChannels<TSrcColor, TDepth>(this IList<Gray<TDepth>[,]> channels, Rectangle area, params int[] channelIndices)
-            where TSrcColor : struct, IColor<TDepth>
-            where TDepth : struct
+            where TSrcColor : unmanaged, IColor<TDepth>
+            where TDepth : unmanaged
         {
             TSrcColor[,] image = new TSrcColor[area.Height, area.Width];
 
@@ -82,8 +82,8 @@ namespace DotImaging
         /// <param name="channel">Channel.</param>
         /// <param name="channelIndex">Index of a channel to replace.</param>
         public static void ReplaceChannel<TSrcColor, TDepth>(this TSrcColor[,] image, Gray<TDepth>[,] channel, int channelIndex)
-            where TSrcColor : struct, IColor<TDepth>
-            where TDepth : struct
+            where TSrcColor : unmanaged, IColor<TDepth>
+            where TDepth : unmanaged
         {
             using (var im = image.Lock())
             using (var ch = channel.Lock())
@@ -93,8 +93,8 @@ namespace DotImaging
         }
 
         private static unsafe void replaceChannel<TSrcColor, TDepth>(Image<TSrcColor> image, Image<Gray<TDepth>> channel, int channelIndex)
-            where TSrcColor : struct, IColor<TDepth>
-            where TDepth : struct
+            where TSrcColor : unmanaged, IColor<TDepth>
+            where TDepth : unmanaged
         {
             int width = image.Width;
             int height = image.Height;

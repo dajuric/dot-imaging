@@ -142,7 +142,7 @@ namespace DotImaging
         /// <param name="area">Working area.</param>
         /// <returns>Cloned portion of the array.</returns>
         public static T[,] Clone<T>(this T[,] array, Rectangle area)
-            where T : struct
+            where T : unmanaged
         {
             //error handling in Lock(...)
 
@@ -164,7 +164,7 @@ namespace DotImaging
         /// <param name="image">Image.</param>
         /// <returns>Cloned image.</returns>
         public static T[,] Clone<T>(this Image<T> image)
-            where T : struct
+            where T : unmanaged
         {
             if (image == null)
                 return null;
@@ -185,7 +185,7 @@ namespace DotImaging
         /// <param name="source">Source image.</param>
         /// <param name="destination">Destination image.</param>
         public static void CopyTo<T>(this Image<T> source, Image<T> destination)
-            where T : struct
+            where T : unmanaged
         {
             if (source.Size != destination.Size)
                 throw new ArgumentException("Source dimension must be the same as destination dimension.");
@@ -201,7 +201,7 @@ namespace DotImaging
         /// <param name="source">Source image.</param>
         /// <param name="destination">Destination image.</param>
         public static void CopyTo<T>(this Image<T> source, T[,] destination)
-            where T: struct
+            where T: unmanaged
         {
             //error handling in CopyTo(..)
 
@@ -219,8 +219,8 @@ namespace DotImaging
         /// <param name="source">Source image.</param>
         /// <param name="destination">Destination image.</param>
         /// <param name="destinationOffset">Destination location.</param>
-        public static void CopyTo<T>(this T[,] source, T[,] destination, Point destinationOffset)
-            where T: struct
+        public static void CopyTo<T>(this T[,] source, T[,] destination, Point destinationOffset = default)
+            where T: unmanaged
         {
             var destRect = new Rectangle(destinationOffset, source.Size());
 
@@ -239,7 +239,7 @@ namespace DotImaging
         /// <param name="source">Source image.</param>
         /// <param name="destinationBuffer">destination buffer.</param>
         public static void CopyToOrCreate<TColor>(this Image<TColor> source, ref TColor[,] destinationBuffer)
-            where TColor: struct
+            where TColor: unmanaged
         {
             if (source == null)
             {
@@ -266,7 +266,7 @@ namespace DotImaging
         /// <param name="destination">Destination image</param>
         /// <param name="mask">Mask. Color locations that need to be copied must be set to !=0 in mask.</param>
         public static void CopyTo<TColor>(this TColor[,] source, TColor[,] destination, Gray<byte>[,] mask)
-            where TColor: struct
+            where TColor: unmanaged
         {
             if (source.Size() != mask.Size() || source.Size() != destination.Size())
                 throw new Exception("Image, mask, destination image must have the same size.");

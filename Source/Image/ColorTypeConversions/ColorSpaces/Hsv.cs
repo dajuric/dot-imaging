@@ -29,7 +29,7 @@ namespace DotImaging
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Hsv<T>: IColor3<T>
-        where T: struct
+        where T: unmanaged
     {
         /// <summary>
         /// Creates new Hsv color.
@@ -146,25 +146,5 @@ namespace DotImaging
             Hsv<byte>.Convert(hsv, ref bgr);
             return bgr;
         }
-    }
-
-    /// <summary>
-    /// Represents 8-bit Hsv color type.
-    /// <para>Its usage should be restricted only for unsafe pixel manipulation.</para>
-    /// </summary>
-    public struct Hsv8
-    {
-        /// <summary>
-        /// Gets or sets hue.
-        /// </summary>
-        public byte H;
-        /// <summary>
-        /// Gets or sets saturation.
-        /// </summary>
-        public byte S;
-        /// <summary>
-        /// Gets or sets value.
-        /// </summary>
-        public byte V;
     }
 }

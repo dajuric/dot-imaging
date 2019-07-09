@@ -28,7 +28,7 @@ namespace DotImaging
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Bgra<T> : IColor4<T>
-        where T: struct
+        where T: unmanaged
     {
         /// <summary>
         /// Creates new Bgra color.
@@ -112,4 +112,29 @@ namespace DotImaging
             Bgr<byte>.Convert(bgr, ref gray);
         }
     }
+
+    /// <summary>
+    /// Represents 8-bit Bgra color type.
+    /// <para>Its usage should be restricted only for unsafe pixel manipulation.</para>
+    /// </summary>
+    public struct Bgra8
+    {
+        /// <summary>
+        /// Gets or sets the blue component.
+        /// </summary>
+        public byte B;
+        /// <summary>
+        /// Gets or sets the green component.
+        /// </summary>
+        public byte G;
+        /// <summary>
+        /// Gets or sets the red component.
+        /// </summary>
+        public byte R;
+        /// <summary>
+        /// Gets or sets the alpha component.
+        /// </summary>
+        public byte A;
+    }
+
 }

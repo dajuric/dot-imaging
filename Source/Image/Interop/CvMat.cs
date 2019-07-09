@@ -211,7 +211,7 @@ namespace DotImaging
         /// <param name="cvMat">OpenCV matrix.</param>
         /// <returns>Managed image representation.</returns>
         public static TColor[,] ToArray<TColor>(this CvMat cvMat)
-            where TColor: struct, IColor
+            where TColor: unmanaged, IColor
         {
             var im = new TColor[cvMat.Height, cvMat.Width];
 

@@ -109,7 +109,7 @@ namespace DotImaging
         /// <param name="image">Image to write.</param>
         /// <returns>True if the writing operation is successful, false otherwise.</returns>
         public static bool Write<TColor>(this ImageStreamWriter<Image<TColor>> writer, TColor[,] image)
-            where TColor: struct, IColor
+            where TColor: unmanaged, IColor
         {
             bool result = false;
             using (var uImg = image.Lock())

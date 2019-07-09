@@ -62,7 +62,7 @@ namespace DotImaging
         /// <param name="flipDirection">Flip direction.</param>
         /// <returns>Returns flipped image.</returns>
         public static TColor[,] FlipImage<TColor>(this TColor[,] source, FlipDirection flipDirection)
-            where TColor: struct
+            where TColor: unmanaged
         {
             TColor[,] dest = source.CopyBlank();
             var sourceArea = new Rectangle(0, 0, source.Width(), source.Height());
