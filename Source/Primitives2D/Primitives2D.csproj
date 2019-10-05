@@ -26,8 +26,8 @@
     <Copyright>Darko Jurić</Copyright>
     <PackageLicenseUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deploy/Licence.txt</PackageLicenseUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/master/Deploy/Logo/logo-small.png</PackageIconUrl>
-    <PackageProjectUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/</PackageProjectUrl>
-    <RepositoryUrl>https://raw.githubusercontent.com/dajuric/dot-imaging/</RepositoryUrl>
+    <PackageProjectUrl>https://www.GitHub.com/dajuric/dot-imaging/</PackageProjectUrl>
+    <RepositoryUrl>https://www.GitHub.com/dajuric/dot-imaging/</RepositoryUrl>
 
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageOutputPath>../../Deploy/NuGet/bin/</PackageOutputPath>
