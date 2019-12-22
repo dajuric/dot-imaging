@@ -27,6 +27,7 @@ namespace DotImaging
 {
     /// <summary>
     /// Provides functions for natural string comparison.
+    /// Reference: <seealso cref="https://www.codeproject.com/Articles/22517/Natural-Sort-Comparer"/>.
     /// </summary>
     class NaturalSortComparer: IComparer<string>
     {
